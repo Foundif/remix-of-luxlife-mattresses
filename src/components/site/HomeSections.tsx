@@ -55,13 +55,13 @@ export function FeaturedCollection() {
           <ProductCard product={lead} ratio="aspect-[4/5] lg:aspect-[16/13]" />
         </Reveal>
         <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:col-span-5 lg:mt-24">
-          {rest.slice(0, 2).map((p, i) => (
+          {[second, third].map((p, i) => (
             <Reveal key={p.id} delay={i * 100}>
               <ProductCard product={p} />
             </Reveal>
           ))}
           <Reveal delay={200} className="sm:col-span-2">
-            <ProductCard product={rest[2]} ratio="aspect-[16/10]" />
+            <ProductCard product={fourth} ratio="aspect-[16/10]" />
           </Reveal>
         </div>
       </div>
