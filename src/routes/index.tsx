@@ -36,7 +36,6 @@ function Index() {
     <>
       <Header />
       <main>
-        <h1 className="sr-only">KRUX — premium performance socks</h1>
         <Hero />
         <BrandStatement />
         <FeaturedCollection />
