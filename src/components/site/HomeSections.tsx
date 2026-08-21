@@ -36,7 +36,6 @@ export function BrandStatement() {
 export function FeaturedCollection() {
   const [lead, second, third, fourth] = products;
   if (!lead || !second || !third || !fourth) return null;
-  const rest = [second, third, fourth];
   return (
     <section className="edge bg-bone pb-24 md:pb-36">
       <div className="flex flex-wrap items-end justify-between gap-6 border-t border-border pt-10">
