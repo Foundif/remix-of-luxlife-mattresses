@@ -1,23 +1,51 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Pause, Play, Volume2, VolumeX } from "lucide-react";
+import { useRef, useState } from "react";
 import { useScrollY } from "@/hooks/use-in-view";
 import { media } from "@/data/products";
+import heroLoop from "@/assets/hero-loop.mp4.asset.json";
 
 export function Hero() {
   const y = useScrollY();
-  const scale = 1 + Math.min(y, 900) / 6000;
-  const shift = Math.min(y, 900) * 0.12;
   const fade = Math.max(0, 1 - Math.min(y, 600) / 600);
+  const shift = Math.min(y, 900) * 0.12;
+
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [playing, setPlaying] = useState(true);
+  const [muted, setMuted] = useState(true);
+
+  const togglePlay = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (v.paused) {
+      void v.play();
+      setPlaying(true);
+    } else {
+      v.pause();
+      setPlaying(false);
+    }
+  };
+
+  const toggleMute = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = !v.muted;
+    setMuted(v.muted);
+  };
 
   return (
     <section className="relative h-[86svh] min-h-[560px] overflow-hidden bg-ink text-bone md:h-screen">
-      <div className="absolute inset-0">
-        <img
-          src={media.heroAthlete}
-          alt="Athlete mid-stride wearing ribbed performance crew socks and sneakers"
-          width={1600}
-          height={1920}
+      <div className="absolute inset-0" style={{ transform: `translate3d(0, ${shift}px, 0)` }}>
+        <video
+          ref={videoRef}
+          src={heroLoop.url}
+          poster={media.heroAthlete}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-label="Athlete sprinting at night wearing KRUX performance socks"
           className="anim-image h-full w-full object-cover object-[62%_center] md:object-[68%_center]"
-          style={{ transform: `scale(${scale}) translate3d(0, ${shift}px, 0)` }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/70 to-ink/10" />
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink to-transparent" />
@@ -25,10 +53,7 @@ export function Hero() {
 
       <div className="edge relative flex h-full flex-col justify-end pb-14 md:justify-center md:pb-0">
         <div style={{ opacity: fade }}>
-          <p
-            className="label-xs anim-rise mb-5 text-volt md:mb-8"
-            style={{ animationDelay: "0.35s" }}
-          >
+          <p className="label-xs anim-rise mb-5 text-volt md:mb-8" style={{ animationDelay: "0.35s" }}>
             New Collection — 2026
           </p>
 
@@ -77,15 +102,30 @@ export function Hero() {
         </div>
       </div>
 
+      <div className="absolute right-5 bottom-5 flex items-center gap-2 md:right-10" style={{ opacity: fade }}>
+        <button
+          onClick={toggleMute}
+          aria-label={muted ? "Unmute film" : "Mute film"}
+          className="rounded-full border border-bone/25 p-2.5 backdrop-blur-sm transition-colors hover:border-bone hover:bg-bone/10"
+        >
+          {muted ? <VolumeX className="size-4" strokeWidth={1.6} /> : <Volume2 className="size-4" strokeWidth={1.6} />}
+        </button>
+        <button
+          onClick={togglePlay}
+          aria-label={playing ? "Pause film" : "Play film"}
+          className="rounded-full border border-bone/25 p-2.5 backdrop-blur-sm transition-colors hover:border-bone hover:bg-bone/10"
+        >
+          {playing ? <Pause className="size-4" strokeWidth={1.6} /> : <Play className="size-4" strokeWidth={1.6} />}
+        </button>
+      </div>
+
       <div
         className="edge pointer-events-none absolute inset-x-0 bottom-5 hidden items-end justify-between md:flex"
         style={{ opacity: fade }}
       >
         <p className="label-xs anim-cue text-concrete">Scroll to explore ↓</p>
         <div className="flex items-center gap-6">
-          <p className="label-xs hidden text-concrete lg:block">
-            Performance / Comfort / Everyday
-          </p>
+          <p className="label-xs hidden text-concrete lg:block">Performance / Comfort / Everyday</p>
           <p className="label-xs text-bone">
             01 <span className="text-concrete">/ 04</span>
           </p>
