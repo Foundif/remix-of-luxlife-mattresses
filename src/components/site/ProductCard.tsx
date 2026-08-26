@@ -1,82 +1,79 @@
-import { Heart, Plus, Star } from "lucide-react";
-import { toast } from "sonner";
+import { Heart, Plus } from "lucide-react";
+import { useState } from "react";
 import type { Product } from "@/data/products";
+import { rupee, useCart } from "@/components/site/cart-store";
 import { cn } from "@/lib/utils";
 
-const rupee = (n: number) => `₹${n.toLocaleString("en-IN")}`;
+const badgeLabel: Record<NonNullable<Product["badge"]>, string> = {
+  NEW: "Just In",
+  BESTSELLER: "Best Seller",
+  "LOW STOCK": "Almost Gone",
+};
 
 export function ProductCard({
   product,
   className,
-  ratio = "aspect-[4/5]",
+  ratio = "aspect-square",
 }: {
   product: Product;
   className?: string;
   ratio?: string;
 }) {
+  const { add } = useCart();
+  const [saved, setSaved] = useState(false);
   const off = product.mrp ? Math.round(((product.mrp - product.price) / product.mrp) * 100) : 0;
 
   return (
-    <article className={cn("group relative", className)}>
+    <article className={cn("group relative flex flex-col", className)}>
       <div className={cn("relative overflow-hidden bg-secondary", ratio)}>
         <img
           src={product.image}
           alt={product.name}
           loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover transition-all duration-[900ms] ease-[var(--ease-brand)] group-hover:scale-[1.03] group-hover:opacity-0"
+          className="absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-[var(--ease-brand)] group-hover:opacity-0"
         />
         <img
           src={product.hoverImage}
           alt=""
           aria-hidden
           loading="lazy"
-          className="absolute inset-0 h-full w-full scale-[1.04] object-cover opacity-0 transition-all duration-[900ms] ease-[var(--ease-brand)] group-hover:scale-100 group-hover:opacity-100"
+          className="absolute inset-0 h-full w-full scale-[1.03] object-cover opacity-0 transition-all duration-700 ease-[var(--ease-brand)] group-hover:scale-100 group-hover:opacity-100"
         />
 
-        {product.badge && (
-          <span className="label-xs absolute top-3 left-3 bg-ink px-2.5 py-1.5 text-bone">
-            {product.badge}
-          </span>
-        )}
-
         <button
-          aria-label={`Add ${product.name} to wishlist`}
-          onClick={() => toast.success("Saved to wishlist")}
-          className="absolute top-3 right-3 grid size-9 place-items-center bg-bone/85 text-ink opacity-0 backdrop-blur transition-opacity duration-500 group-hover:opacity-100 focus-visible:opacity-100"
+          aria-label={`Save ${product.name}`}
+          aria-pressed={saved}
+          onClick={() => setSaved((v) => !v)}
+          className="absolute top-3 right-3 grid size-9 place-items-center rounded-full bg-background/90 text-foreground shadow-sm transition-transform duration-300 hover:scale-105"
         >
-          <Heart className="size-4" strokeWidth={1.6} />
+          <Heart className={cn("size-4", saved && "fill-current")} strokeWidth={1.6} />
         </button>
 
         <button
-          onClick={() => toast.success(`${product.name} added to bag`)}
-          className="absolute inset-x-3 bottom-3 flex translate-y-3 items-center justify-between bg-ink px-4 py-3 text-bone opacity-0 transition-all duration-500 ease-[var(--ease-brand)] group-hover:translate-y-0 group-hover:opacity-100 focus-visible:translate-y-0 focus-visible:opacity-100"
+          onClick={() => add(product)}
+          className="absolute inset-x-3 bottom-3 flex translate-y-2 items-center justify-center gap-2 rounded-full bg-primary py-3 text-primary-foreground opacity-0 transition-all duration-500 ease-[var(--ease-brand)] group-hover:translate-y-0 group-hover:opacity-100 focus-visible:translate-y-0 focus-visible:opacity-100"
         >
+          <Plus className="size-4" strokeWidth={2} />
           <span className="label-xs">Quick Add</span>
-          <Plus className="size-4" strokeWidth={1.8} />
         </button>
       </div>
 
-      <div className="flex items-start justify-between gap-4 pt-4">
-        <div>
-          <p className="label-xs text-muted-foreground">{product.category}</p>
-          <h3 className="mt-1.5 text-[15px] font-semibold tracking-tight">{product.name}</h3>
-          <div className="mt-1.5 flex items-center gap-1.5 text-xs text-muted-foreground">
-            <Star className="size-3.5 fill-current text-ink" strokeWidth={0} />
-            <span className="font-semibold text-foreground">{product.rating}</span>
-            <span>({product.reviews})</span>
-            <span className="mx-1 opacity-40">·</span>
-            <span>{product.colors.length} colours</span>
-          </div>
-        </div>
-        <div className="text-right">
-          <p className="text-[15px] font-semibold tracking-tight">{rupee(product.price)}</p>
+      <div className="pt-4">
+        {product.badge && <p className="label-xs text-volt-foreground/70">{badgeLabel[product.badge]}</p>}
+        <h3 className="mt-1 text-[15px] font-semibold tracking-tight">{product.name}</h3>
+        <p className="mt-1 text-sm text-muted-foreground">{product.category}</p>
+        <p className="text-sm text-muted-foreground">{product.colors.length} Colours</p>
+        <p className="mt-2 text-[15px] font-semibold tracking-tight">
+          {rupee(product.price)}
           {product.mrp && (
-            <p className="mt-0.5 text-xs text-muted-foreground">
-              <span className="line-through">{rupee(product.mrp)}</span>{" "}
-              <span className="font-semibold text-foreground">{off}% off</span>
-            </p>
+            <>
+              <span className="ml-2 text-sm font-normal text-muted-foreground line-through">
+                {rupee(product.mrp)}
+              </span>
+              <span className="ml-2 text-sm font-semibold text-volt-foreground/80">{off}% off</span>
+            </>
           )}
-        </div>
+        </p>
       </div>
     </article>
   );

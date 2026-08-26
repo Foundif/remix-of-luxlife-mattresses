@@ -3,16 +3,11 @@ import { Header } from "@/components/site/Header";
 import { NoticeBar } from "@/components/site/NoticeBar";
 import { Hero } from "@/components/site/Hero";
 import { Footer } from "@/components/site/Footer";
-import {
-  BrandStatement,
-  FeaturedCollection,
-  MaterialStory,
-  OfferBanner,
-  PerformanceStory,
-  ShopByActivity,
-  ShopByCategory,
-  SocialProof,
-} from "@/components/site/HomeSections";
+import { CartProvider } from "@/components/site/cart-store";
+import { FlyCart } from "@/components/site/FlyCart";
+import { BestSellersGrid, NewThisWeek } from "@/components/site/HomeShop";
+import { OfferBanner, ShopByCategory } from "@/components/site/HomeSections";
+
 
 const title = "KRUX — Premium Performance Socks Built For Every Move";
 const description =
@@ -34,21 +29,19 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <>
+    <CartProvider>
       <NoticeBar />
       <Header />
       <main>
         <Hero />
-        <BrandStatement />
-        <FeaturedCollection />
+        <NewThisWeek />
+        <BestSellersGrid />
         <ShopByCategory />
-        <PerformanceStory />
-        <MaterialStory />
-        <ShopByActivity />
         <OfferBanner />
-        <SocialProof />
       </main>
       <Footer />
-    </>
+      <FlyCart />
+    </CartProvider>
   );
+
 }

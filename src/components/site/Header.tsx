@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useScrollY } from "@/hooks/use-in-view";
 import { cn } from "@/lib/utils";
 import { media } from "@/data/products";
+import { useCart } from "@/components/site/cart-store";
+
 
 type MenuGroup = { title: string; items: string[] };
 type NavItem = { label: string; groups: MenuGroup[]; feature?: { image: string; title: string; copy: string } };
@@ -53,9 +55,11 @@ const nav: NavItem[] = [
 export function Header() {
   const y = useScrollY();
   const stuck = y > 40;
+  const { count, setOpen: setCartOpen } = useCart();
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState<string | null>(null);
+
 
   const activeItem = nav.find((n) => n.label === active && n.groups.length > 0);
 
@@ -116,10 +120,21 @@ export function Header() {
           <button aria-label="Wishlist" className="hidden p-2 opacity-80 transition hover:opacity-100 md:block">
             <Heart className="size-[18px]" strokeWidth={1.6} />
           </button>
-          <button aria-label="Bag" className="relative p-2 opacity-80 transition hover:opacity-100">
+          <button
+            aria-label={`Bag (${count} items)`}
+            onClick={() => setCartOpen(true)}
+            className="relative p-2 opacity-80 transition hover:opacity-100"
+          >
             <ShoppingBag className="size-[18px]" strokeWidth={1.6} />
-            <span className="absolute top-1 right-0 size-1.5 rounded-full bg-volt" />
+            {count > 0 ? (
+              <span className="absolute -top-0.5 -right-0.5 grid min-w-4 place-items-center rounded-full bg-volt px-1 text-[10px] leading-4 font-bold text-volt-foreground">
+                {count}
+              </span>
+            ) : (
+              <span className="absolute top-1 right-0 size-1.5 rounded-full bg-volt" />
+            )}
           </button>
+
           <button
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
