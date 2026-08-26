@@ -29,21 +29,19 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <>
+    <CartProvider>
       <NoticeBar />
       <Header />
       <main>
         <Hero />
-        <BrandStatement />
-        <FeaturedCollection />
+        <NewThisWeek />
+        <BestSellersGrid />
         <ShopByCategory />
-        <PerformanceStory />
-        <MaterialStory />
-        <ShopByActivity />
         <OfferBanner />
-        <SocialProof />
       </main>
       <Footer />
-    </>
+      <FlyCart />
+    </CartProvider>
   );
+
 }
