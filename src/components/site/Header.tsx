@@ -5,18 +5,23 @@ import { useScrollY } from "@/hooks/use-in-view";
 import { cn } from "@/lib/utils";
 import { media } from "@/data/products";
 import { useCart } from "@/components/site/cart-store";
-
+import { useAuth } from "@/lib/auth";
 
 type MenuGroup = { title: string; items: string[] };
-type NavItem = { label: string; groups: MenuGroup[]; feature?: { image: string; title: string; copy: string } };
+type NavItem = {
+  label: string;
+  filter?: string;
+  groups: MenuGroup[];
+  feature?: { image: string; title: string; copy: string };
+};
 
 const nav: NavItem[] = [
   {
     label: "Shop",
     groups: [
-      { title: "Featured", items: ["New Arrivals", "Best Sellers", "Members Only", "Sale"] },
+      { title: "Featured", items: ["New Arrivals", "Best Sellers", "Sale"] },
       { title: "Shop By Style", items: ["Crew", "Ankle", "No-Show", "Knee High", "Multipacks"] },
-      { title: "Shop By Gender", items: ["Men", "Women", "Unisex", "Kids"] },
+      { title: "Shop By Activity", items: ["Running", "Gym", "Lifestyle", "Everyday", "Sports"] },
     ],
     feature: {
       image: media.collectionLifestyle,
@@ -27,8 +32,8 @@ const nav: NavItem[] = [
   {
     label: "Collections",
     groups: [
-      { title: "Signature", items: ["Kinetic Series", "Pace Series", "Grip Series", "Everyday Essentials"] },
-      { title: "Capsules", items: ["Monochrome", "Volt Edition", "Winter Thermal"] },
+      { title: "Signature", items: ["Unisex", "Running", "Training", "Everyday"] },
+      { title: "Capsules", items: ["Studio", "Recovery", "Football", "Basketball"] },
     ],
     feature: {
       image: media.macroFabric,
@@ -38,9 +43,10 @@ const nav: NavItem[] = [
   },
   {
     label: "Sports",
+    filter: "Sports",
     groups: [
-      { title: "Train", items: ["Running", "Gym & Training", "Football", "Basketball", "Tennis"] },
-      { title: "Recover", items: ["Compression", "Recovery Socks", "Thermal"] },
+      { title: "Train", items: ["Running", "Gym", "Football", "Basketball"] },
+      { title: "Recover", items: ["Recovery", "Studio", "Everyday"] },
     ],
     feature: {
       image: media.catSports,
@@ -48,35 +54,38 @@ const nav: NavItem[] = [
       copy: "Tested with athletes across 4 disciplines.",
     },
   },
-  { label: "New Arrivals", groups: [] },
-  { label: "Best Sellers", groups: [] },
+  { label: "New Arrivals", filter: "New", groups: [] },
+  { label: "Best Sellers", filter: "Best Sellers", groups: [] },
 ];
 
-export function Header() {
+export function Header({ solid = false }: { solid?: boolean }) {
   const y = useScrollY();
   const stuck = y > 40;
   const { count, setOpen: setCartOpen } = useCart();
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState<string | null>(null);
-
 
   const activeItem = nav.find((n) => n.label === active && n.groups.length > 0);
 
   return (
     <header
       onMouseLeave={() => setActive(null)}
-      style={{ transform: `translate3d(0, ${Math.max(0, 36 - y)}px, 0)` }}
+      style={solid ? undefined : { transform: `translate3d(0, ${Math.max(0, 36 - y)}px, 0)` }}
       className={cn(
-        "fixed inset-x-0 top-0 z-50 text-bone transition-colors duration-500 ease-[var(--ease-brand)]",
-        (stuck || activeItem) && "border-b border-white/10 bg-ink/80 backdrop-blur-xl",
-        activeItem && "bg-ink/95",
+        "z-50 text-bone transition-colors duration-500 ease-[var(--ease-brand)]",
+        solid
+          ? "sticky top-0 border-b border-white/10 bg-ink"
+          : "fixed inset-x-0 top-0",
+        !solid && (stuck || activeItem) && "border-b border-white/10 bg-ink/80 backdrop-blur-xl",
+        !solid && activeItem && "bg-ink/95",
       )}
     >
       <div
         className={cn(
           "edge flex items-center justify-between transition-all duration-500 ease-[var(--ease-brand)]",
-          stuck ? "h-14" : "h-20",
+          solid ? "h-16" : stuck ? "h-14" : "h-20",
         )}
       >
         <Link to="/" className="font-display text-xl leading-none font-extrabold tracking-[-0.04em] uppercase">
@@ -85,8 +94,10 @@ export function Header() {
 
         <nav className="hidden items-center gap-8 lg:flex">
           {nav.map((item) => (
-            <button
+            <Link
               key={item.label}
+              to="/shop"
+              search={item.filter ? { c: item.filter } : {}}
               onMouseEnter={() => setActive(item.label)}
               onFocus={() => setActive(item.label)}
               className="label-xs group relative py-2 opacity-80 transition-opacity hover:opacity-100"
@@ -98,28 +109,36 @@ export function Header() {
                   active === item.label ? "scale-x-100" : "scale-x-0",
                 )}
               />
-            </button>
+            </Link>
           ))}
         </nav>
 
         <div className="flex items-center gap-1 md:gap-3">
-          <div className="hidden items-center gap-2 rounded-full bg-white/10 px-4 py-2 lg:flex">
+          <Link
+            to="/shop"
+            className="hidden items-center gap-2 rounded-full bg-white/10 px-4 py-2 lg:flex"
+            aria-label="Search products"
+          >
             <Search className="size-4 opacity-70" strokeWidth={1.6} />
-            <input
-              aria-label="Search products"
-              placeholder="Search"
-              className="w-24 bg-transparent text-xs tracking-wide outline-none placeholder:text-bone/50 focus:w-40 transition-[width] duration-500 ease-[var(--ease-brand)]"
-            />
-          </div>
-          <button aria-label="Search" className="p-2 opacity-80 transition hover:opacity-100 lg:hidden">
+            <span className="text-xs tracking-wide text-bone/60">Search</span>
+          </Link>
+          <Link to="/shop" aria-label="Search" className="p-2 opacity-80 transition hover:opacity-100 lg:hidden">
             <Search className="size-[18px]" strokeWidth={1.6} />
-          </button>
-          <button aria-label="Account" className="hidden p-2 opacity-80 transition hover:opacity-100 md:block">
+          </Link>
+          <Link
+            to={user ? "/account" : "/auth"}
+            aria-label={user ? "My account" : "Sign in"}
+            className="hidden p-2 opacity-80 transition hover:opacity-100 md:block"
+          >
             <User className="size-[18px]" strokeWidth={1.6} />
-          </button>
-          <button aria-label="Wishlist" className="hidden p-2 opacity-80 transition hover:opacity-100 md:block">
+          </Link>
+          <Link
+            to="/account"
+            aria-label="Wishlist"
+            className="hidden p-2 opacity-80 transition hover:opacity-100 md:block"
+          >
             <Heart className="size-[18px]" strokeWidth={1.6} />
-          </button>
+          </Link>
           <button
             aria-label={`Bag (${count} items)`}
             onClick={() => setCartOpen(true)}
@@ -156,7 +175,8 @@ export function Header() {
                   {group.items.map((sub) => (
                     <li key={sub}>
                       <Link
-                        to="/"
+                        to="/shop"
+                        search={{ c: sub }}
                         onClick={() => setActive(null)}
                         className="text-sm text-bone/75 transition-colors hover:text-bone"
                       >
@@ -190,7 +210,12 @@ export function Header() {
             {nav.map((item) => (
               <li key={item.label} className="py-1">
                 {item.groups.length === 0 ? (
-                  <Link to="/" onClick={() => setOpen(false)} className="display-md block py-2">
+                  <Link
+                    to="/shop"
+                    search={item.filter ? { c: item.filter } : {}}
+                    onClick={() => setOpen(false)}
+                    className="display-md block py-2"
+                  >
                     {item.label}
                   </Link>
                 ) : (
@@ -218,7 +243,8 @@ export function Header() {
                               {group.items.map((sub) => (
                                 <li key={sub}>
                                   <Link
-                                    to="/"
+                                    to="/shop"
+                                    search={{ c: sub }}
                                     onClick={() => setOpen(false)}
                                     className="text-sm text-bone/75"
                                   >
@@ -236,7 +262,18 @@ export function Header() {
               </li>
             ))}
           </ul>
-          <p className="label-xs mt-8 text-concrete">New Collection — 2026</p>
+          <div className="mt-8 flex gap-3">
+            <Link
+              to={user ? "/account" : "/auth"}
+              onClick={() => setOpen(false)}
+              className="label-xs flex-1 border border-white/20 py-3 text-center"
+            >
+              {user ? "My Account" : "Sign In"}
+            </Link>
+            <Link to="/cart" onClick={() => setOpen(false)} className="label-xs flex-1 bg-volt py-3 text-center text-volt-foreground">
+              View Bag
+            </Link>
+          </div>
         </div>
       )}
     </header>
