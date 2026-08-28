@@ -14,7 +14,134 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      order_items: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+          image: string
+          name: string
+          order_id: string
+          product_id: string
+          qty: number
+          size: string
+          unit_price: number
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          id?: string
+          image?: string
+          name: string
+          order_id: string
+          product_id: string
+          qty?: number
+          size?: string
+          unit_price: number
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          image?: string
+          name?: string
+          order_id?: string
+          product_id?: string
+          qty?: number
+          size?: string
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          created_at: string
+          discount: number
+          id: string
+          order_number: string
+          payment_method: string
+          ship_address: string
+          ship_city: string
+          ship_name: string
+          ship_phone: string
+          ship_pincode: string
+          ship_state: string
+          shipping_fee: number
+          status: string
+          subtotal: number
+          total: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          discount?: number
+          id?: string
+          order_number?: string
+          payment_method?: string
+          ship_address: string
+          ship_city: string
+          ship_name: string
+          ship_phone: string
+          ship_pincode: string
+          ship_state: string
+          shipping_fee?: number
+          status?: string
+          subtotal: number
+          total: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          discount?: number
+          id?: string
+          order_number?: string
+          payment_method?: string
+          ship_address?: string
+          ship_city?: string
+          ship_name?: string
+          ship_phone?: string
+          ship_pincode?: string
+          ship_state?: string
+          shipping_fee?: number
+          status?: string
+          subtotal?: number
+          total?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
