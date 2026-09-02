@@ -10,12 +10,12 @@ const title = "Shop All Socks — Performance & Everyday | KRUX";
 const description =
   "Browse the full KRUX range: crew, ankle, no-show and knee-high socks engineered for running, gym, sport and everyday wear.";
 
-type ShopSearch = { c?: string; sort?: string };
+type ShopSearch = { c?: string | undefined; sort?: string | undefined };
 
 export const Route = createFileRoute("/shop")({
   validateSearch: (search: Record<string, unknown>): ShopSearch => ({
-    c: typeof search.c === "string" ? search.c : undefined,
-    sort: typeof search.sort === "string" ? search.sort : undefined,
+    c: typeof search['c'] === "string" ? search['c'] : undefined,
+    sort: typeof search['sort'] === "string" ? search['sort'] : undefined,
   }),
   head: () => ({
     meta: [
