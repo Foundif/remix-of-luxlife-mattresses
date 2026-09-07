@@ -1,9 +1,11 @@
+import { Link } from "@tanstack/react-router";
 import { Minus, Plus, ShoppingBag, X } from "lucide-react";
 import { cartKeyOf, rupee, useCart } from "@/components/site/cart-store";
 import { cn } from "@/lib/utils";
 
 export function FlyCart() {
-  const { lines, count, subtotal, open, setOpen, remove, setQty } = useCart();
+  const { lines, count, subtotal, discount, shipping, total, open, setOpen, remove, setQty } = useCart();
+
 
   return (
     <>
@@ -88,20 +90,54 @@ export function FlyCart() {
         )}
 
         <div className="border-t border-border px-5 py-5">
-          <div className="flex items-center justify-between text-sm">
-            <span className="label-xs">Subtotal</span>
-            <span className="font-semibold">{rupee(subtotal)}</span>
-          </div>
+          <dl className="space-y-2 text-sm">
+            <div className="flex items-center justify-between">
+              <dt className="label-xs">Subtotal</dt>
+              <dd className="font-semibold">{rupee(subtotal)}</dd>
+            </div>
+            {discount > 0 && (
+              <div className="flex items-center justify-between text-volt-foreground/80">
+                <dt className="label-xs">Multi-buy saving</dt>
+                <dd className="font-semibold">−{rupee(discount)}</dd>
+              </div>
+            )}
+            <div className="flex items-center justify-between">
+              <dt className="label-xs">Shipping</dt>
+              <dd className="font-semibold">{shipping === 0 ? "Free" : rupee(shipping)}</dd>
+            </div>
+            <div className="flex items-center justify-between border-t border-border pt-2 text-base">
+              <dt className="label-xs">Total</dt>
+              <dd className="font-semibold">{rupee(total)}</dd>
+            </div>
+          </dl>
           <p className="mt-2 text-xs text-muted-foreground">
             Free shipping on orders above ₹999. Taxes included.
           </p>
-          <button
-            disabled={lines.length === 0}
-            className="mt-5 w-full bg-primary py-4 text-primary-foreground transition-colors duration-500 hover:bg-charcoal disabled:opacity-40"
-          >
-            <span className="label-xs">Checkout</span>
-          </button>
+          <div className="mt-5 flex gap-3">
+            <Link
+              to="/cart"
+              onClick={() => setOpen(false)}
+              className="label-xs flex-1 border border-border py-4 text-center transition-colors hover:bg-secondary"
+            >
+              View bag
+            </Link>
+            <Link
+              to="/checkout"
+              onClick={(e) => {
+                if (lines.length === 0) e.preventDefault();
+                else setOpen(false);
+              }}
+              aria-disabled={lines.length === 0}
+              className={cn(
+                "label-xs flex-1 bg-primary py-4 text-center text-primary-foreground transition-colors duration-500 hover:bg-charcoal",
+                lines.length === 0 && "pointer-events-none opacity-40",
+              )}
+            >
+              Checkout
+            </Link>
+          </div>
         </div>
+
       </aside>
     </>
   );

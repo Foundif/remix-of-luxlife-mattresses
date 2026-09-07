@@ -1,4 +1,6 @@
+import { Link } from "@tanstack/react-router";
 import { Heart, Plus } from "lucide-react";
+
 import { useState } from "react";
 import type { Product } from "@/data/products";
 import { rupee, useCart } from "@/components/site/cart-store";
@@ -26,19 +28,26 @@ export function ProductCard({
   return (
     <article className={cn("group relative flex flex-col", className)}>
       <div className={cn("relative overflow-hidden bg-secondary", ratio)}>
-        <img
-          src={product.image}
-          alt={product.name}
-          loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-[var(--ease-brand)] group-hover:opacity-0"
-        />
-        <img
-          src={product.hoverImage}
-          alt=""
-          aria-hidden
-          loading="lazy"
-          className="absolute inset-0 h-full w-full scale-[1.03] object-cover opacity-0 transition-all duration-700 ease-[var(--ease-brand)] group-hover:scale-100 group-hover:opacity-100"
-        />
+        <Link
+          to="/product/$id"
+          params={{ id: product.id }}
+          aria-label={product.name}
+          className="absolute inset-0 block"
+        >
+          <img
+            src={product.image}
+            alt={product.name}
+            loading="lazy"
+            className="absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-[var(--ease-brand)] group-hover:opacity-0"
+          />
+          <img
+            src={product.hoverImage}
+            alt=""
+            aria-hidden
+            loading="lazy"
+            className="absolute inset-0 h-full w-full scale-[1.03] object-cover opacity-0 transition-all duration-700 ease-[var(--ease-brand)] group-hover:scale-100 group-hover:opacity-100"
+          />
+        </Link>
 
         <button
           aria-label={`Save ${product.name}`}
@@ -54,14 +63,19 @@ export function ProductCard({
           className="absolute inset-x-3 bottom-3 flex translate-y-2 items-center justify-center gap-2 rounded-full bg-primary py-3 text-primary-foreground opacity-0 transition-all duration-500 ease-[var(--ease-brand)] group-hover:translate-y-0 group-hover:opacity-100 focus-visible:translate-y-0 focus-visible:opacity-100"
         >
           <Plus className="size-4" strokeWidth={2} />
-          <span className="label-xs">Quick Add</span>
+          <span className="label-xs">Add to bag</span>
         </button>
       </div>
 
       <div className="pt-4">
         {product.badge && <p className="label-xs text-volt-foreground/70">{badgeLabel[product.badge]}</p>}
-        <h3 className="mt-1 text-[15px] font-semibold tracking-tight">{product.name}</h3>
+        <h3 className="mt-1 text-[15px] font-semibold tracking-tight">
+          <Link to="/product/$id" params={{ id: product.id }}>
+            {product.name}
+          </Link>
+        </h3>
         <p className="mt-1 text-sm text-muted-foreground">{product.category}</p>
+
         <p className="text-sm text-muted-foreground">{product.colors.length} Colours</p>
         <p className="mt-2 text-[15px] font-semibold tracking-tight">
           {rupee(product.price)}
