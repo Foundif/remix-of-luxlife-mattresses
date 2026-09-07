@@ -28,7 +28,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <CartProvider>
+    <>
       <NoticeBar />
       <Header />
       <main>
@@ -39,8 +39,8 @@ function Index() {
         <OfferBanner />
       </main>
       <Footer />
-      <FlyCart />
-    </CartProvider>
+    </>
+
   );
 
 }
