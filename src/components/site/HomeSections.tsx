@@ -1,5 +1,7 @@
+import { Link } from "@tanstack/react-router";
 import { ArrowRight, Wind, Footprints, ShieldCheck, Ruler } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
+
 import { ProductCard } from "@/components/site/ProductCard";
 import { activities, categories, media, products } from "@/data/products";
 import { useScrollY } from "@/hooks/use-in-view";
@@ -80,7 +82,7 @@ export function ShopByCategory() {
       <div className="edge mt-12 grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
         {categories.map((cat, i) => (
           <Reveal key={cat.name} delay={i * 80}>
-            <a href="/" className="group relative block aspect-[3/4] overflow-hidden bg-charcoal">
+            <Link to="/shop" search={{ c: cat.name }} className="group relative block aspect-[3/4] overflow-hidden bg-charcoal">
               <img
                 src={cat.image}
                 alt={`${cat.name} socks`}
@@ -97,7 +99,8 @@ export function ShopByCategory() {
                 </div>
                 <ArrowRight className="size-5 -translate-x-1 opacity-0 transition-all duration-500 ease-[var(--ease-brand)] group-hover:translate-x-0 group-hover:opacity-100" strokeWidth={1.8} />
               </div>
-            </a>
+            </Link>
+
           </Reveal>
         ))}
       </div>
@@ -217,13 +220,14 @@ export function OfferBanner() {
             Buy 2 get 10% off · Buy 3 get 18% off · Buy 5 get 25% off. Applied automatically at bag.
           </p>
         </div>
-        <a
-          href="/"
+        <Link
+          to="/shop"
           className="group inline-flex items-center gap-3 bg-ink px-7 py-4 text-bone transition-colors duration-500 hover:bg-charcoal"
         >
           <span className="label-xs">Shop the offer</span>
           <ArrowRight className="size-4 transition-transform duration-500 ease-[var(--ease-brand)] group-hover:translate-x-1.5" strokeWidth={1.8} />
-        </a>
+        </Link>
+
       </div>
     </section>
   );

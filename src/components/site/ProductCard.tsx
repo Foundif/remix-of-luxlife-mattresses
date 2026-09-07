@@ -25,7 +25,12 @@ export function ProductCard({
 
   return (
     <article className={cn("group relative flex flex-col", className)}>
-      <div className={cn("relative overflow-hidden bg-secondary", ratio)}>
+      <Link
+        to="/product/$id"
+        params={{ id: product.id }}
+        aria-label={product.name}
+        className={cn("relative block overflow-hidden bg-secondary", ratio)}
+      >
         <img
           src={product.image}
           alt={product.name}
@@ -39,6 +44,9 @@ export function ProductCard({
           loading="lazy"
           className="absolute inset-0 h-full w-full scale-[1.03] object-cover opacity-0 transition-all duration-700 ease-[var(--ease-brand)] group-hover:scale-100 group-hover:opacity-100"
         />
+      </Link>
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-10">
+
 
         <button
           aria-label={`Save ${product.name}`}
