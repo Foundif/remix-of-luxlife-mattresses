@@ -62,7 +62,6 @@ export const getProductBySlug = createServerFn({ method: "GET" })
 
 export const getSiteContent = createServerFn({ method: "GET" }).handler(async () => {
   const { data } = await publicClient().from("site_content").select("key, data");
-  const map: Record<string, unknown> = {};
-  for (const row of data ?? []) map[row.key] = row.data;
-  return map;
+  return (data ?? []) as { key: string; data: unknown }[];
 });
+
