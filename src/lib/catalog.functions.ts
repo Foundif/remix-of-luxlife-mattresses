@@ -62,6 +62,6 @@ export const getProductBySlug = createServerFn({ method: "GET" })
 
 export const getSiteContent = createServerFn({ method: "GET" }).handler(async () => {
   const { data } = await publicClient().from("site_content").select("key, data");
-  return (data ?? []) as { key: string; data: unknown }[];
+  return (data ?? []).map((row) => ({ key: row.key, data: JSON.stringify(row.data) }));
 });
 

@@ -70,7 +70,9 @@ export type CategoryRow = {
   sort_order: number;
 };
 
-export function toProduct(row: ProductRow): Product & { stock: number; description: string; slug: string } {
+export type CatalogProduct = Product & { stock: number; description: string; slug: string };
+
+export function toProduct(row: ProductRow): CatalogProduct {
   return {
     id: row.slug,
     slug: row.slug,
@@ -85,11 +87,12 @@ export function toProduct(row: ProductRow): Product & { stock: number; descripti
     stock: row.stock,
     image: imageSrc(row.image),
     hoverImage: imageSrc(row.hover_image),
-    ...(row.badge ? { badge: row.badge as Product["badge"] } : {}),
+    ...(row.badge ? { badge: row.badge as NonNullable<Product["badge"]> } : {}),
     colors: row.colors.length > 0 ? row.colors : ["Ink"],
     sizes: row.sizes.length > 0 ? row.sizes : ["S", "M", "L"],
-  };
+  } as CatalogProduct;
 }
+
 
 export const productsQuery = queryOptions({
   queryKey: ["catalog", "products"],
