@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { SlidersHorizontal } from "lucide-react";
 import { Shell } from "@/components/site/Shell";
 import { ProductCard } from "@/components/site/ProductCard";
@@ -60,6 +60,10 @@ function ShopPage() {
   const { c, sort, q } = Route.useSearch();
   const navigate = Route.useNavigate();
   const [query, setQuery] = useState(q ?? "");
+
+  useEffect(() => {
+    setQuery(q ?? "");
+  }, [q]);
 
   const filtered = useMemo(() => {
     let list = products;
