@@ -5,6 +5,7 @@ import { useState } from "react";
 import type { Product } from "@/data/products";
 import { rupee, useCart } from "@/components/site/cart-store";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 const badgeLabel: Record<NonNullable<Product["badge"]>, string> = {
   NEW: "Just In",
@@ -49,22 +50,26 @@ export function ProductCard({
           />
         </Link>
 
-        <button
+        <Button
+          type="button"
+          variant="secondary"
+          size="icon"
           aria-label={`Save ${product.name}`}
           aria-pressed={saved}
           onClick={() => setSaved((v) => !v)}
-          className="absolute top-3 right-3 grid size-9 place-items-center rounded-full bg-background/90 text-foreground shadow-sm transition-transform duration-300 hover:scale-105"
+          className="absolute top-3 right-3 z-10 size-9 rounded-full bg-background/90 text-foreground shadow-sm transition-transform duration-300 hover:scale-105"
         >
           <Heart className={cn("size-4", saved && "fill-current")} strokeWidth={1.6} />
-        </button>
+        </Button>
 
-        <button
+        <Button
+          type="button"
           onClick={() => add(product)}
-          className="absolute inset-x-3 bottom-3 flex translate-y-2 items-center justify-center gap-2 rounded-full bg-primary py-3 text-primary-foreground opacity-0 transition-all duration-500 ease-[var(--ease-brand)] group-hover:translate-y-0 group-hover:opacity-100 focus-visible:translate-y-0 focus-visible:opacity-100"
+          className="absolute inset-x-3 bottom-3 z-10 h-11 rounded-full bg-primary text-primary-foreground shadow-md transition-transform duration-300 ease-[var(--ease-brand)] hover:scale-[1.02]"
         >
           <Plus className="size-4" strokeWidth={2} />
           <span className="label-xs">Add to bag</span>
-        </button>
+        </Button>
       </div>
 
       <div className="pt-4">

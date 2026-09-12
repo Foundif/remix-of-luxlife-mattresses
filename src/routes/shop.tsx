@@ -10,12 +10,13 @@ const title = "Shop All Socks — Performance & Everyday | KRUX";
 const description =
   "Browse the full KRUX range: crew, ankle, no-show and knee-high socks engineered for running, gym, sport and everyday wear.";
 
-type ShopSearch = { c?: string | undefined; sort?: string | undefined };
+type ShopSearch = { c?: string | undefined; sort?: string | undefined; q?: string | undefined };
 
 export const Route = createFileRoute("/shop")({
   validateSearch: (search: Record<string, unknown>): ShopSearch => ({
     c: typeof search['c'] === "string" ? search['c'] : undefined,
     sort: typeof search['sort'] === "string" ? search['sort'] : undefined,
+    q: typeof search['q'] === "string" ? search['q'] : undefined,
   }),
   head: () => ({
     meta: [
@@ -56,9 +57,9 @@ function matches(term: string, p: (typeof products)[number]) {
 }
 
 function ShopPage() {
-  const { c, sort } = Route.useSearch();
+  const { c, sort, q } = Route.useSearch();
   const navigate = Route.useNavigate();
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(q ?? "");
 
   const filtered = useMemo(() => {
     let list = products;
