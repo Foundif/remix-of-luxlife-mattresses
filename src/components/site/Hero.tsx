@@ -38,13 +38,34 @@ export function Hero() {
   const [playing, setPlaying] = useState(true);
   const [muted, setMuted] = useState(true);
   const refs = useRef<(HTMLVideoElement | null)[]>([]);
+  const sequenceRef = useRef<HTMLElement | null>(null);
   const slide = slides[index]!;
 
   useEffect(() => {
-    if (!playing) return;
-    const id = setTimeout(() => setIndex((i) => (i + 1) % slides.length), 7000);
-    return () => clearTimeout(id);
-  }, [index, playing]);
+    const sequence = sequenceRef.current;
+    if (!sequence) return;
+
+    let frame = 0;
+    const updateFromScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const rect = sequence.getBoundingClientRect();
+        const scrollRange = sequence.offsetHeight - window.innerHeight;
+        if (scrollRange <= 0) return;
+        const progress = Math.min(0.999, Math.max(0, -rect.top / scrollRange));
+        setIndex(Math.min(slides.length - 1, Math.floor(progress * slides.length)));
+      });
+    };
+
+    updateFromScroll();
+    window.addEventListener("scroll", updateFromScroll, { passive: true });
+    window.addEventListener("resize", updateFromScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", updateFromScroll);
+      window.removeEventListener("resize", updateFromScroll);
+    };
+  }, []);
 
   useEffect(() => {
     refs.current.forEach((v, i) => {
@@ -75,8 +96,20 @@ export function Hero() {
     });
   };
 
+  const showSlide = (nextIndex: number) => {
+    const sequence = sequenceRef.current;
+    if (!sequence) {
+      setIndex(nextIndex);
+      return;
+    }
+    const scrollRange = sequence.offsetHeight - window.innerHeight;
+    const target = sequence.offsetTop + scrollRange * ((nextIndex + 0.08) / slides.length);
+    window.scrollTo({ top: target, behavior: "smooth" });
+  };
+
   return (
-    <section className="relative h-[92svh] min-h-[600px] overflow-hidden bg-ink text-bone">
+    <section ref={sequenceRef} className="relative h-[300svh] bg-ink text-bone" aria-label="KRUX campaigns">
+      <div className="sticky top-0 h-svh min-h-[600px] overflow-hidden">
       {slides.map((s, i) => (
         <video
           key={s.src}
@@ -100,10 +133,10 @@ export function Hero() {
       <div className="absolute inset-0 bg-ink/45" />
       <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink/90 to-transparent" />
 
-      <div className="edge relative flex h-full flex-col items-center justify-center text-center">
+      <div className="edge relative flex h-full flex-col items-center justify-center pb-16 text-center md:pb-0">
         <div key={index} className="anim-rise">
           <p className="label-xs text-volt">{slide.eyebrow}</p>
-          <h1 className="display-xl mt-5 max-w-[14ch] mx-auto">{slide.title}</h1>
+          <h1 className="hero-title mx-auto mt-5 max-w-[14ch]">{slide.title}</h1>
           <p className="mt-6 text-sm text-bone/85 md:text-base">{slide.copy}</p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
             <a
@@ -132,7 +165,7 @@ export function Hero() {
             key={s.src}
             aria-label={`Show film ${i + 1}`}
             aria-current={i === index}
-            onClick={() => setIndex(i)}
+            onClick={() => showSlide(i)}
             className={cn(
               "h-1 rounded-full transition-all duration-500",
               i === index ? "w-10 bg-bone" : "w-4 bg-bone/40 hover:bg-bone/70",
@@ -156,6 +189,8 @@ export function Hero() {
         >
           {playing ? <Pause className="size-4" strokeWidth={1.6} /> : <Play className="size-4" strokeWidth={1.6} />}
         </button>
+      </div>
+      <p className="label-xs absolute bottom-7 left-5 hidden text-bone/65 md:block">Scroll to explore</p>
       </div>
     </section>
   );
