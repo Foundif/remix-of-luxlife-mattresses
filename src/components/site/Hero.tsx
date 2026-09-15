@@ -1,4 +1,4 @@
-import { ArrowRight, Pause, Play, Volume2, VolumeX } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { media } from "@/data/products";
 import { cn } from "@/lib/utils";
@@ -35,8 +35,6 @@ const slides = [
 
 export function Hero() {
   const [index, setIndex] = useState(0);
-  const [playing, setPlaying] = useState(false);
-  const [muted, setMuted] = useState(true);
   const refs = useRef<(HTMLVideoElement | null)[]>([]);
   const sequenceRef = useRef<HTMLElement | null>(null);
   const slide = slides[index]!;
@@ -46,18 +44,25 @@ export function Hero() {
     if (!sequence) return;
 
     let frame = 0;
-    let previousScrollY = window.scrollY;
     const updateFromScroll = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
-        const currentScrollY = window.scrollY;
-        if (Math.abs(currentScrollY - previousScrollY) > 1) setPlaying(true);
-        previousScrollY = currentScrollY;
         const rect = sequence.getBoundingClientRect();
         const scrollRange = sequence.offsetHeight - window.innerHeight;
         if (scrollRange <= 0) return;
-        const progress = Math.min(0.999, Math.max(0, -rect.top / scrollRange));
-        setIndex(Math.min(slides.length - 1, Math.floor(progress * slides.length)));
+        const progress = Math.min(1, Math.max(0, -rect.top / scrollRange));
+        const position = Math.min(slides.length - 0.001, progress * slides.length);
+        const nextIndex = Math.min(slides.length - 1, Math.floor(position));
+        const filmProgress = position - nextIndex;
+
+        refs.current.forEach((video, videoIndex) => {
+          if (!video) return;
+          video.pause();
+          if (videoIndex !== nextIndex || !Number.isFinite(video.duration) || video.duration <= 0) return;
+          const nextTime = Math.min(video.duration - 0.04, Math.max(0, filmProgress * video.duration));
+          if (Math.abs(video.currentTime - nextTime) > 0.04) video.currentTime = nextTime;
+        });
+        setIndex(nextIndex);
       });
     };
 
@@ -71,35 +76,6 @@ export function Hero() {
     };
   }, []);
 
-  useEffect(() => {
-    refs.current.forEach((v, i) => {
-      if (!v) return;
-      if (i === index) {
-        v.currentTime = 0;
-        if (playing) void v.play();
-      } else {
-        v.pause();
-      }
-    });
-  }, [index, playing]);
-
-  const togglePlay = () => {
-    const v = refs.current[index];
-    setPlaying((p) => {
-      if (!v) return !p;
-      if (p) v.pause();
-      else void v.play();
-      return !p;
-    });
-  };
-
-  const toggleMute = () => {
-    setMuted((m) => {
-      refs.current.forEach((v) => v && (v.muted = !m));
-      return !m;
-    });
-  };
-
   const showSlide = (nextIndex: number) => {
     const sequence = sequenceRef.current;
     if (!sequence) {
@@ -112,7 +88,7 @@ export function Hero() {
   };
 
   return (
-    <section ref={sequenceRef} className="relative h-[300svh] bg-ink text-bone" aria-label="KRUX campaigns">
+    <section ref={sequenceRef} className="relative h-[400svh] bg-ink text-bone" aria-label="KRUX campaigns">
       <div className="sticky top-0 h-svh min-h-[600px] overflow-hidden">
       {slides.map((s, i) => (
         <video
@@ -126,7 +102,8 @@ export function Hero() {
           muted
           loop
           playsInline
-          preload={i === 0 ? "auto" : "metadata"}
+          preload="auto"
+          onLoadedMetadata={(event) => event.currentTarget.pause()}
           aria-label={s.alt}
           className={cn(
             "absolute inset-0 h-full w-full object-cover transition-opacity duration-[1200ms] ease-[var(--ease-brand)]",
@@ -178,22 +155,6 @@ export function Hero() {
         ))}
       </div>
 
-      <div className="absolute right-5 bottom-5 flex items-center gap-2 md:right-10">
-        <button
-          onClick={toggleMute}
-          aria-label={muted ? "Unmute film" : "Mute film"}
-          className="rounded-full border border-bone/25 p-2.5 backdrop-blur-sm transition-colors hover:border-bone hover:bg-bone/10"
-        >
-          {muted ? <VolumeX className="size-4" strokeWidth={1.6} /> : <Volume2 className="size-4" strokeWidth={1.6} />}
-        </button>
-        <button
-          onClick={togglePlay}
-          aria-label={playing ? "Pause film" : "Play film"}
-          className="rounded-full border border-bone/25 p-2.5 backdrop-blur-sm transition-colors hover:border-bone hover:bg-bone/10"
-        >
-          {playing ? <Pause className="size-4" strokeWidth={1.6} /> : <Play className="size-4" strokeWidth={1.6} />}
-        </button>
-      </div>
       <p className="label-xs absolute bottom-7 left-5 hidden text-bone/65 md:block">Scroll to explore</p>
       </div>
     </section>
