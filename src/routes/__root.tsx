@@ -13,6 +13,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/lib/auth";
 import { CartProvider } from "@/components/site/cart-store";
 import { FlyCart } from "@/components/site/FlyCart";
+import { BottomNav } from "@/components/site/BottomNav";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { registerKruxPwa } from "@/lib/pwa";
@@ -141,6 +142,7 @@ function RootComponent() {
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
           <FlyCart />
+          <BottomNav />
           <Toaster position="bottom-right" />
         </CartProvider>
       </AuthProvider>
