@@ -35,7 +35,7 @@ const slides = [
 
 export function Hero() {
   const [index, setIndex] = useState(0);
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
   const refs = useRef<(HTMLVideoElement | null)[]>([]);
   const sequenceRef = useRef<HTMLElement | null>(null);
@@ -46,9 +46,13 @@ export function Hero() {
     if (!sequence) return;
 
     let frame = 0;
+    let previousScrollY = window.scrollY;
     const updateFromScroll = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY;
+        if (Math.abs(currentScrollY - previousScrollY) > 1) setPlaying(true);
+        previousScrollY = currentScrollY;
         const rect = sequence.getBoundingClientRect();
         const scrollRange = sequence.offsetHeight - window.innerHeight;
         if (scrollRange <= 0) return;
@@ -118,7 +122,7 @@ export function Hero() {
           }}
           src={s.src}
           poster={s.poster}
-          autoPlay={i === 0}
+          autoPlay={false}
           muted
           loop
           playsInline
