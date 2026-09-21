@@ -1,71 +1,129 @@
-import { ArrowRight } from "lucide-react";
-import { toast } from "sonner";
-
-const columns = [
-  { title: "Shop", links: ["All Socks", "Sports", "Everyday", "New Arrivals", "Best Sellers", "Offers"] },
-  { title: "Help", links: ["Size Guide", "Shipping", "Returns", "Track Order", "Contact"] },
-  { title: "Brand", links: ["Our Story", "Technology", "Sustainability", "Careers", "Press"] },
-];
+import { Link } from "@tanstack/react-router";
+import { Phone, Mail, MapPin, MessageCircle, Instagram } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="bg-ink text-bone">
-      <div className="edge grid gap-14 py-16 md:grid-cols-[1.2fr_2fr] md:py-24">
-        <div>
-          <h2 className="display-md max-w-[18ch]">
-            Join the movement<span className="text-volt">.</span>
-          </h2>
-          <p className="mt-4 max-w-sm text-sm text-concrete">
-            Early access to drops, restocks and members-only pricing. No noise.
-          </p>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              toast.success("You're on the list");
-            }}
-            className="mt-8 flex max-w-md items-center gap-4 border-b border-bone/25 pb-3"
-          >
-            <label htmlFor="newsletter" className="sr-only">
-              Email address
-            </label>
-            <input
-              id="newsletter"
-              type="email"
-              required
-              placeholder="your@email.com"
-              className="w-full bg-transparent text-sm placeholder:text-concrete/70 focus:outline-none"
-            />
-            <button aria-label="Subscribe" className="text-volt transition-transform hover:translate-x-1">
-              <ArrowRight className="size-5" strokeWidth={1.6} />
-            </button>
-          </form>
-        </div>
+    <footer className="border-t border-concrete/20 bg-ink text-bone">
+      <div className="edge py-16">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
+          {/* Brand Col */}
+          <div className="md:col-span-1">
+            <h3 className="font-heading text-xl tracking-tight text-bone">LUXLIFE</h3>
+            <p className="mt-1 text-xs uppercase tracking-widest text-volt">Sleep Better · Live Better</p>
+            <p className="mt-4 text-xs leading-relaxed text-concrete">
+              Manufacturer of premium orthopedic, memory foam, pocket spring, and natural latex mattresses. Direct from
+              Salem factory to your home.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-3">
-          {columns.map((col) => (
-            <div key={col.title}>
-              <p className="label-xs text-volt">{col.title}</p>
-              <ul className="mt-5 space-y-3">
-                {col.links.map((link) => (
-                  <li key={link}>
-                    <a href="/" className="text-sm text-concrete transition-colors hover:text-bone">
-                      {link}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+          {/* Mattresses Col */}
+          <div>
+            <h4 className="label-xs text-bone">Mattresses</h4>
+            <ul className="mt-4 space-y-2.5 text-xs text-concrete">
+              <li>
+                <Link to="/shop" search={{ c: "Orthopedic" }} className="hover:text-bone">
+                  Orthopedic Range
+                </Link>
+              </li>
+              <li>
+                <Link to="/shop" search={{ c: "Memory Foam" }} className="hover:text-bone">
+                  Memory Foam
+                </Link>
+              </li>
+              <li>
+                <Link to="/shop" search={{ c: "Pocket Spring" }} className="hover:text-bone">
+                  Pocket Spring
+                </Link>
+              </li>
+              <li>
+                <Link to="/shop" search={{ c: "Natural Latex" }} className="hover:text-bone">
+                  100% Natural Latex
+                </Link>
+              </li>
+              <li>
+                <Link to="/shop" search={{ c: "Cooling Gel" }} className="hover:text-bone">
+                  Cooling Hybrid
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h4 className="label-xs text-bone">Support & Custom</h4>
+            <ul className="mt-4 space-y-2.5 text-xs text-concrete">
+              <li>
+                <Link to="/shop" className="hover:text-bone">
+                  All Mattresses
+                </Link>
+              </li>
+              <li>
+                <Link to="/account" className="hover:text-bone">
+                  My Orders
+                </Link>
+              </li>
+              <li>
+                <span className="text-bone/80">100-Night Sleep Trial</span>
+              </li>
+              <li>
+                <span className="text-bone/80">10-Year Factory Warranty</span>
+              </li>
+              <li>
+                <span className="text-bone/80">Free Delivery across Salem</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Col */}
+          <div>
+            <h4 className="label-xs text-bone">Factory & Showroom</h4>
+            <div className="mt-4 space-y-3 text-xs text-concrete">
+              <div className="flex items-start gap-2.5">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-volt" />
+                <span>R.S.NO.78/3D, Mariamman Kovil Street, Seelanaickenpatti, Salem – 636201</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <Phone className="h-4 w-4 shrink-0 text-volt" />
+                <a href="tel:+916382654934" className="hover:text-bone">
+                  +91 63826 54934 (T. Karthikeyan, MD)
+                </a>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <MessageCircle className="h-4 w-4 shrink-0 text-volt" />
+                <a
+                  href="https://wa.me/916382654934"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-bone"
+                >
+                  Chat on WhatsApp
+                </a>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <Mail className="h-4 w-4 shrink-0 text-volt" />
+                <a href="mailto:luxlifemattresses@gmail.com" className="hover:text-bone">
+                  luxlifemattresses@gmail.com
+                </a>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <Instagram className="h-4 w-4 shrink-0 text-volt" />
+                <a
+                  href="https://instagram.com/luxlife_mattresses_"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-bone"
+                >
+                  @luxlife_mattresses_
+                </a>
+              </div>
             </div>
-          ))}
+          </div>
         </div>
-      </div>
 
-      <div className="edge border-t border-bone/10 py-8">
-        <p className="font-display text-[13vw] leading-[0.8] font-extrabold tracking-[-0.05em] uppercase text-bone/10 select-none">
-          Krux
-        </p>
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
-          <p className="label-xs text-concrete">© 2026 Krux Athletics — Made in India</p>
-          <p className="label-xs text-concrete">Privacy · Terms · Cookies</p>
+        {/* Bottom Bar */}
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-concrete/10 pt-8 text-xs text-concrete sm:flex-row">
+          <p>© 2026 Luxlife Mattresses. All rights reserved.</p>
+          <p className="tracking-wide">Engineered in Salem, Tamil Nadu</p>
         </div>
       </div>
     </footer>
