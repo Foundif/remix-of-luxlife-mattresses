@@ -211,7 +211,6 @@ function ProductPage() {
             </div>
 
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              // ✅ With this:
               <button
                 onClick={handleAdd}
                 className="label-xs flex-1 bg-ink py-4 text-bone font-semibold transition-colors duration-300 hover:bg-volt hover:text-ink"
