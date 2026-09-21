@@ -87,8 +87,8 @@
   --card-foreground: var(--bone);
   --popover: var(--charcoal);
   --popover-foreground: var(--bone);
-  --primary: var(--bone);
-  --primary-foreground: var(--ink);
+  --primary: #b5fe3b;
+  --primary-foreground: #111827;
   --secondary: oklch(0.24 0.005 285);
   --secondary-foreground: var(--bone);
   --muted: oklch(0.24 0.005 285);
