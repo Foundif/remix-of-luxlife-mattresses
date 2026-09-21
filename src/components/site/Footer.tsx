@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Phone, Mail, MapPin, MessageCircle, Instagram } from "lucide-react";
-import luxlifeWhiteLogo from "@/assets/luxlife-logo-white.png.asset.json";
+import luxlifeWhiteLogo from "@/assets/luxlife-logo-white.png";
 
 export function Footer() {
   return (
