@@ -27,7 +27,7 @@ async function removeAppWorker() {
   );
 }
 
-export async function registerKruxPwa() {
+export async function registerLuxlifePwa() {
   const disabled = new URLSearchParams(window.location.search).get("sw") === "off";
   if (!import.meta.env.PROD || disabled || isPreviewContext()) {
     await removeAppWorker();

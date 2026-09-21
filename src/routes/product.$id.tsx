@@ -17,12 +17,12 @@ export const Route = createFileRoute("/product/$id")({
   head: ({ loaderData }) => {
     if (!loaderData) {
       return {
-        meta: [{ title: "Product unavailable — KRUX" }, { name: "robots", content: "noindex" }],
+        meta: [{ title: "Product unavailable — Luxlife Mattresses" }, { name: "robots", content: "noindex" }],
       };
     }
     const { product } = loaderData;
-    const title = `${product.name} — KRUX Socks`;
-    const description = `${product.name}: ${product.category} · ${product.activity} socks with engineered knit zones and targeted cushioning. ${rupee(product.price)}.`;
+    const title = `${product.name} — Luxlife Mattresses`;
+    const description = `${product.name}: a ${product.category} mattress with a ${product.activity.toLowerCase()} comfort feel, made for restorative sleep. ${rupee(product.price)}.`;
     return {
       meta: [
         { title },
@@ -41,7 +41,7 @@ export const Route = createFileRoute("/product/$id")({
         <h1 className="display-md">Product not found</h1>
         <p className="mt-3 text-sm text-muted-foreground">This style is no longer available.</p>
         <Link to="/shop" search={{}} className="label-xs mt-8 inline-block bg-primary px-7 py-4 text-primary-foreground">
-          Shop all socks
+          Shop all mattresses
         </Link>
       </div>
     </Shell>
@@ -138,7 +138,7 @@ function ProductPage() {
             <p className="mt-1 text-xs text-muted-foreground">Inclusive of all taxes.</p>
 
             <div className="mt-8">
-              <p className="label-xs">Colour — {color}</p>
+                <p className="label-xs">Comfort — {color}</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {product.colors.map((c) => (
                   <button
@@ -217,22 +217,22 @@ function ProductPage() {
 
             <ul className="mt-8 grid gap-4 border-t border-border pt-6 text-sm text-muted-foreground">
               <li className="flex items-center gap-3">
-                <Truck className="size-4" strokeWidth={1.6} /> Free shipping on orders above ₹999
+                <Truck className="size-4" strokeWidth={1.6} /> Free delivery across Salem
               </li>
               <li className="flex items-center gap-3">
-                <Undo2 className="size-4" strokeWidth={1.6} /> 14-day easy returns
+                <Undo2 className="size-4" strokeWidth={1.6} /> Easy replacement support
               </li>
               <li className="flex items-center gap-3">
-                <ShieldCheck className="size-4" strokeWidth={1.6} /> Knit-quality guarantee
+                <ShieldCheck className="size-4" strokeWidth={1.6} /> Up to 10-year warranty
               </li>
             </ul>
 
             <dl className="mt-8 divide-y divide-border border-y border-border">
               {[
-                ["Composition", "72% cotton · 24% polyamide · 4% elastane"],
-                ["Cushioning", "Dual-layer terry loop at heel and forefoot"],
-                ["Fit", "Anatomic left/right knit with compression arch band"],
-                ["Care", "Machine wash cold, tumble dry low"],
+                ["Comfort layers", "High-density comfort foam with pressure-relieving support"],
+                ["Support", `${product.activity} feel with balanced spinal alignment`],
+                ["Cover", "Breathable premium knitted fabric with a soft-touch finish"],
+                ["Care", "Rotate regularly and use with a supportive bed base"],
               ].map(([k, v]) => (
                 <div key={k} className="flex flex-wrap items-baseline justify-between gap-2 py-4">
                   <dt className="label-xs">{k}</dt>

@@ -8,8 +8,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
-const title = "Secure Checkout — KRUX";
-const description = "Complete your KRUX order with secure checkout, cash on delivery or online payment.";
+const title = "Secure Checkout — Luxlife Mattresses";
+const description = "Complete your Luxlife mattress order with cash on delivery or UPI.";
 
 export const Route = createFileRoute("/checkout")({
   ssr: false,
@@ -30,7 +30,6 @@ export const Route = createFileRoute("/checkout")({
 const payments = [
   { key: "cod", label: "Cash on delivery" },
   { key: "upi", label: "UPI / Netbanking" },
-  { key: "card", label: "Credit / Debit card" },
 ];
 
 function CheckoutPage() {
@@ -153,7 +152,7 @@ function CheckoutPage() {
           <div className="py-24 text-center">
             <p className="text-sm text-muted-foreground">Your bag is empty.</p>
             <Link to="/shop" search={{}} className="label-xs mt-6 inline-block bg-primary px-7 py-4 text-primary-foreground">
-              Shop socks
+              Shop mattresses
             </Link>
           </div>
         ) : (

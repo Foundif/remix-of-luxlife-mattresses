@@ -5,9 +5,9 @@ import { Shell } from "@/components/site/Shell";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
-const title = "Sign In or Join KRUX — Member Access";
+const title = "Sign In or Join Luxlife — Member Access";
 const description =
-  "Sign in to track orders, save favourites and get early access to KRUX drops. Join free with email or Google.";
+  "Sign in to track orders, save favourites and receive Luxlife comfort offers. Join free with email or Google.";
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
@@ -75,7 +75,7 @@ function AuthPage() {
         <div>
           <p className="label-xs text-muted-foreground">Member access</p>
           <h1 className="display-md mt-4 max-w-[18ch]">
-            {mode === "login" ? "Welcome back to KRUX" : "Become a KRUX member"}
+            {mode === "login" ? "Welcome back to Luxlife" : "Become a Luxlife member"}
           </h1>
           <p className="mt-4 max-w-md text-sm text-muted-foreground">
             Members get order tracking, faster checkout, early access to drops and free shipping on
@@ -183,7 +183,7 @@ function AuthPage() {
           </button>
 
           <p className="mt-6 text-xs text-muted-foreground">
-            By continuing you agree to the KRUX terms of use and privacy policy.{" "}
+            By continuing you agree to the Luxlife terms of use and privacy policy.{" "}
             <Link to="/shop" search={{}} className="underline underline-offset-4">
               Keep shopping
             </Link>

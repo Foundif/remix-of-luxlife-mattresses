@@ -2,6 +2,7 @@ import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef } from "react";
 import { ProductCard } from "@/components/site/ProductCard";
 import { products } from "@/data/products";
+import { Reveal } from "@/components/site/Reveal";
 
 export function NewThisWeek() {
   const railRef = useRef<HTMLDivElement | null>(null);
@@ -16,7 +17,7 @@ export function NewThisWeek() {
   return (
     <section id="new-this-week" className="bg-background py-14 md:py-20">
       <div className="edge flex flex-wrap items-end justify-between gap-4">
-        <h2 className="display-md">New This Week</h2>
+        <Reveal><h2 className="display-md">New Comforts</h2></Reveal>
         <div className="flex items-center gap-3">
           <a href="#best-sellers" className="group hidden items-center gap-2 sm:inline-flex">
             <span className="label-xs">Shop all</span>
@@ -61,7 +62,7 @@ export function BestSellersGrid() {
   return (
     <section id="best-sellers" className="edge bg-background pb-16 md:pb-24">
       <div className="flex flex-wrap items-end justify-between gap-4 border-t border-border pt-10">
-        <h2 className="display-md">Best Sellers</h2>
+        <Reveal><h2 className="display-md">Best Sellers</h2></Reveal>
         <a href="#new-this-week" className="group inline-flex items-center gap-2">
           <span className="label-xs">Shop all</span>
           <ArrowRight className="size-4 transition-transform duration-500 group-hover:translate-x-1" strokeWidth={1.8} />

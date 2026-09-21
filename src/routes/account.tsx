@@ -7,8 +7,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { rupee } from "@/components/site/cart-store";
 import { toast } from "sonner";
 
-const title = "My Account — KRUX";
-const description = "Manage your KRUX profile and track every order you've placed.";
+const title = "My Account — Luxlife Mattresses";
+const description = "Manage your Luxlife profile and track every mattress order you've placed.";
 
 export const Route = createFileRoute("/account")({
   head: () => ({
