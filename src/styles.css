@@ -56,8 +56,8 @@
   --charcoal: oklch(0.26 0.005 285);
   --concrete: oklch(0.72 0.005 285);
   --bone: oklch(0.965 0.004 90);
-  --volt: oklch(0.78 0.19 105);
-  --volt-foreground: oklch(0.16 0.004 285);
+  --volt: #b5fe3b;
+  --volt-foreground: #111827;
 
   --background: var(--bone);
   --foreground: var(--ink);
@@ -65,8 +65,8 @@
   --card-foreground: var(--ink);
   --popover: oklch(1 0 0);
   --popover-foreground: var(--ink);
-  --primary: var(--ink);
-  --primary-foreground: var(--bone);
+  --primary: #b5fe3b;
+  --primary-foreground: #111827;
   --secondary: oklch(0.93 0.003 90);
   --secondary-foreground: var(--ink);
   --muted: oklch(0.93 0.003 90);
