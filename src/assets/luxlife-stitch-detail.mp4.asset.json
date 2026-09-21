@@ -1,11 +1,11 @@
 {
-  "version": 1,
   "asset_id": "d73bad25-b4af-475d-90be-3eca7ea55c04",
-  "project_id": "b6110fae-d609-4983-8a37-1b8b533ee437",
-  "url": "/__l5e/assets-v1/d73bad25-b4af-475d-90be-3eca7ea55c04/luxlife-stitch-detail.mp4",
-  "r2_key": "a/v1/b6110fae-d609-4983-8a37-1b8b533ee437/d73bad25-b4af-475d-90be-3eca7ea55c04/luxlife-stitch-detail.mp4",
-  "original_filename": "luxlife-stitch-detail.mp4",
-  "size": 15208861,
   "content_type": "video/mp4",
-  "created_at": "2026-09-21T05:50:36Z"
+  "created_at": "2026-09-21T05:50:36Z",
+  "original_filename": "luxlife-stitch-detail.mp4",
+  "project_id": "f4913e2c-4977-4377-b1ee-f6279a7ba7d9",
+  "r2_key": "a/v1/f4913e2c-4977-4377-b1ee-f6279a7ba7d9/d73bad25-b4af-475d-90be-3eca7ea55c04/luxlife-stitch-detail.mp4",
+  "size": 15208861,
+  "url": "/__l5e/assets-v1/d73bad25-b4af-475d-90be-3eca7ea55c04/luxlife-stitch-detail.mp4",
+  "version": 1
 }

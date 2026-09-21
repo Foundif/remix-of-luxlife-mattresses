@@ -1,11 +1,11 @@
 {
-  "version": 1,
   "asset_id": "229fbea3-7bca-42d8-aa01-c02c516733a5",
-  "project_id": "b6110fae-d609-4983-8a37-1b8b533ee437",
-  "url": "/__l5e/assets-v1/229fbea3-7bca-42d8-aa01-c02c516733a5/luxlife-sunrise-bedroom.mp4",
-  "r2_key": "a/v1/b6110fae-d609-4983-8a37-1b8b533ee437/229fbea3-7bca-42d8-aa01-c02c516733a5/luxlife-sunrise-bedroom.mp4",
-  "original_filename": "luxlife-sunrise-bedroom.mp4",
-  "size": 15227319,
   "content_type": "video/mp4",
-  "created_at": "2026-09-21T05:50:43Z"
+  "created_at": "2026-09-21T05:50:43Z",
+  "original_filename": "luxlife-sunrise-bedroom.mp4",
+  "project_id": "f4913e2c-4977-4377-b1ee-f6279a7ba7d9",
+  "r2_key": "a/v1/f4913e2c-4977-4377-b1ee-f6279a7ba7d9/229fbea3-7bca-42d8-aa01-c02c516733a5/luxlife-sunrise-bedroom.mp4",
+  "size": 15227319,
+  "url": "/__l5e/assets-v1/229fbea3-7bca-42d8-aa01-c02c516733a5/luxlife-sunrise-bedroom.mp4",
+  "version": 1
 }

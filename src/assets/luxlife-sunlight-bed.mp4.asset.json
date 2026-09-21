@@ -1,11 +1,11 @@
 {
-  "version": 1,
   "asset_id": "fba73afc-7385-4df0-8423-01a616f6e5ce",
-  "project_id": "b6110fae-d609-4983-8a37-1b8b533ee437",
-  "url": "/__l5e/assets-v1/fba73afc-7385-4df0-8423-01a616f6e5ce/luxlife-sunlight-bed.mp4",
-  "r2_key": "a/v1/b6110fae-d609-4983-8a37-1b8b533ee437/fba73afc-7385-4df0-8423-01a616f6e5ce/luxlife-sunlight-bed.mp4",
-  "original_filename": "luxlife-sunlight-bed.mp4",
-  "size": 15221621,
   "content_type": "video/mp4",
-  "created_at": "2026-09-21T05:50:28Z"
+  "created_at": "2026-09-21T05:50:28Z",
+  "original_filename": "luxlife-sunlight-bed.mp4",
+  "project_id": "f4913e2c-4977-4377-b1ee-f6279a7ba7d9",
+  "r2_key": "a/v1/f4913e2c-4977-4377-b1ee-f6279a7ba7d9/fba73afc-7385-4df0-8423-01a616f6e5ce/luxlife-sunlight-bed.mp4",
+  "size": 15221621,
+  "url": "/__l5e/assets-v1/fba73afc-7385-4df0-8423-01a616f6e5ce/luxlife-sunlight-bed.mp4",
+  "version": 1
 }
