@@ -81,7 +81,7 @@ export function ProductCard({
         </h3>
         <p className="mt-1 text-sm text-muted-foreground">{product.category}</p>
 
-        <p className="text-sm text-muted-foreground">{product.colors.length} Colours</p>
+        <p className="text-sm text-muted-foreground">{product.colors.join(" · ")}</p>
         <p className="mt-2 text-[15px] font-semibold tracking-tight">
           {rupee(product.price)}
           {product.mrp && (

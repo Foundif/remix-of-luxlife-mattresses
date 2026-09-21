@@ -7,6 +7,7 @@ import { useCart } from "@/components/site/cart-store";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { StoreSearch } from "@/components/site/StoreSearch";
+import luxlifeLogo from "@/assets/luxlife-logo.png.asset.json";
 
 type MenuGroup = { title: string; items: string[] };
 type NavItem = { label: string; filter?: string; groups: MenuGroup[] };
@@ -16,23 +17,23 @@ const nav: NavItem[] = [
     label: "Shop",
     groups: [
       { title: "Featured", items: ["New Arrivals", "Best Sellers", "Sale"] },
-      { title: "Shop By Style", items: ["Crew", "Ankle", "No-Show", "Knee High", "Multipacks"] },
-      { title: "Shop By Activity", items: ["Running", "Gym", "Lifestyle", "Everyday", "Sports"] },
+      { title: "Shop By Type", items: ["Memory Foam", "Orthopedic", "Pocket Spring", "Latex", "Hybrid"] },
+      { title: "Shop By Feel", items: ["Plush", "Medium Soft", "Medium Firm", "Firm"] },
     ],
   },
   {
     label: "Collections",
     groups: [
-      { title: "Signature", items: ["Unisex", "Running", "Training", "Everyday"] },
-      { title: "Capsules", items: ["Studio", "Recovery", "Football", "Basketball"] },
+      { title: "Signature", items: ["CloudRest", "OrthoAlign", "BreezeGel", "Royal Spring"] },
+      { title: "Rooms", items: ["Master Bedroom", "Guest Room", "Kids", "Hotel Collection"] },
     ],
   },
   {
-    label: "Sports",
-    filter: "Sports",
+    label: "Sleep Solutions",
+    filter: "Orthopedic",
     groups: [
-      { title: "Train", items: ["Running", "Gym", "Football", "Basketball"] },
-      { title: "Recover", items: ["Recovery", "Studio", "Everyday"] },
+      { title: "By Need", items: ["Back Support", "Cooling", "Pressure Relief", "Motion Isolation"] },
+      { title: "By Material", items: ["Memory Foam", "Latex", "Pocket Spring", "Hybrid"] },
     ],
   },
   { label: "New Arrivals", filter: "New", groups: [] },
@@ -88,8 +89,8 @@ export function Header({ solid = false }: { solid?: boolean }) {
             <Menu className="size-5" strokeWidth={1.6} />
           </Button>
 
-          <Link to="/" className="absolute left-1/2 -translate-x-1/2 font-display text-xl leading-none font-extrabold uppercase">
-            Krux<span className="text-volt">.</span>
+          <Link to="/" className="absolute left-1/2 -translate-x-1/2 rounded-sm bg-bone px-2 py-1">
+            <img src={luxlifeLogo.url} alt="Luxlife Mattresses" className="h-7 w-auto sm:h-8" />
           </Link>
 
           <div className="flex items-center gap-1 md:gap-2">
@@ -143,7 +144,7 @@ export function Header({ solid = false }: { solid?: boolean }) {
           )}
         >
           <div className="flex h-20 items-center justify-between border-b border-white/10 px-5 md:px-8">
-            <span className="font-display text-xl font-extrabold uppercase">Krux<span className="text-volt">.</span></span>
+             <span className="rounded-sm bg-bone px-2 py-1"><img src={luxlifeLogo.url} alt="Luxlife Mattresses" className="h-9 w-auto" /></span>
             <Button type="button" variant="ghost" size="icon" onClick={closeMenu} aria-label="Close menu" className="text-bone hover:bg-white/10 hover:text-bone">
               <X className="size-5" />
             </Button>

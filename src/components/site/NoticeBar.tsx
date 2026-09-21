@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const notices = [
-  "Free shipping on orders over ₹999 — 30-day returns",
-  "New Collection 2026 — Members get early access",
-  "Buy 3 Get 1 Free on all Everyday packs",
+  "Free delivery across Salem — installation included",
+  "Premium comfort backed by up to 10-year warranty",
+  "Call or WhatsApp 63826 54934 for expert guidance",
 ];
 
 export function NoticeBar() {
@@ -51,7 +51,7 @@ export function NoticeBar() {
 
         <div className="hidden items-center gap-5 md:flex">
           <a href="/" className="label-xs opacity-70 transition-opacity hover:opacity-100">
-            Join KRUX
+             Join Luxlife
           </a>
           <a href="/" className="label-xs opacity-70 transition-opacity hover:opacity-100">
             Sign In

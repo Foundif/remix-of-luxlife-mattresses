@@ -56,8 +56,8 @@ export function StoreSearch({ open, onClose }: { open: boolean; onClose: () => v
               onKeyDown={(event) => {
                 if (event.key === "Escape") onClose();
               }}
-              placeholder="Search KRUX products"
-              aria-label="Search KRUX products"
+               placeholder="Search Luxlife mattresses"
+               aria-label="Search Luxlife mattresses"
               className="min-w-0 flex-1 bg-transparent font-display text-xl font-bold uppercase outline-none placeholder:text-muted-foreground md:text-3xl"
             />
             <Button type="button" variant="ghost" size="icon" onClick={onClose} aria-label="Close search">
@@ -87,7 +87,7 @@ export function StoreSearch({ open, onClose }: { open: boolean; onClose: () => v
               ))}
             </div>
           ) : (
-            <p className="py-12 text-sm text-muted-foreground">No matching products. Try a style or activity.</p>
+             <p className="py-12 text-sm text-muted-foreground">No matching products. Try a mattress type or comfort feel.</p>
           )}
 
           {query.trim() && (
