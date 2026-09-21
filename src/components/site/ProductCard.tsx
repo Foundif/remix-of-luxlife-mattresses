@@ -60,7 +60,6 @@ export function ProductCard({
         >
           <Heart className={cn("size-4", saved && "fill-current")} strokeWidth={1.6} />
         </Button>
-        // ✅ With this (black background, transitions to volt green with black text on hover):
         <Button
           type="button"
           onClick={() => add(product)}
