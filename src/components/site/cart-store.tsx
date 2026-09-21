@@ -58,12 +58,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, [lines]);
 
-  const add = useCallback((product: Product, size?: string, qty = 1) => {
-    // NEW:
-    const size = chosenSize ?? product.sizes[1] ?? product.sizes[0] ?? "Queen";
+  const add = useCallback((product: Product, chosenSize?: string, qty = 1) => {
+    const selectedSize = chosenSize ?? product.sizes[1] ?? product.sizes[0] ?? "Queen";
 
     setLines((prev) => {
-      const idx = prev.findIndex((l) => l.id === product.id && l.size === chosen);
+      const idx = prev.findIndex((l) => l.id === product.id && l.size === selectedSize);
       if (idx > -1) {
         const next = [...prev];
         const line = next[idx]!;
@@ -77,13 +76,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
           category: product.category,
           price: product.price,
           image: product.image,
-          size: chosen,
+          size: selectedSize,
           qty,
         },
         ...prev,
       ];
     });
-    setOpen(true);
+    setIsOpen(true);
   }, []);
 
   const remove = useCallback((key: string) => {
