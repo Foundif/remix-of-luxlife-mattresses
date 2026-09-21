@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Phone, Mail, MapPin, MessageCircle, Instagram } from "lucide-react";
-import luxlifeWhiteLogo from "@/assets/luxlife-logo-white.png";
+import luxlifeWhiteLogo from "@/assets/luxlife-logo-white.png.asset.json";
 
 export function Footer() {
   return (
@@ -11,7 +11,7 @@ export function Footer() {
           <div className="md:col-span-1">
             <Link to="/" className="inline-block">
               <img
-                src={luxlifeWhiteLogo}
+                src={luxlifeWhiteLogo.url}
                 alt="Luxlife Mattresses"
                 className="h-10 w-auto object-contain"
                 loading="lazy"
