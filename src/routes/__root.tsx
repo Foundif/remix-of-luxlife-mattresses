@@ -1,4 +1,3 @@
-import { CustomMattressProvider, CustomMattressBadge } from "@/components/site/CustomMattress";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Outlet, Link, createRootRouteWithContext, useRouter, HeadContent, Scripts } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
@@ -118,6 +117,7 @@ function RootShell({ children }: { children: ReactNode }) {
     </html>
   );
 }
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
@@ -128,16 +128,13 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <CustomMattressProvider>
-          <CartProvider>
-            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-            <Outlet />
-            <FlyCart />
-            <CustomMattressBadge />
-            <BottomNav />
-            <Toaster position="bottom-right" richColors />
-          </CartProvider>
-        </CustomMattressProvider>
+        <CartProvider>
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+          <FlyCart />
+          <BottomNav />
+          <Toaster position="bottom-right" richColors />
+        </CartProvider>
       </AuthProvider>
     </QueryClientProvider>
   );
