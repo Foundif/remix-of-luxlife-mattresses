@@ -172,22 +172,25 @@ function ProductPage() {
                 <p className="label-xs">Select size</p>
                 <span className="text-xs text-muted-foreground">Size guide</span>
               </div>
-              <div className="mt-3 grid grid-cols-4 gap-2">
-                {product.sizes.map((s) => (
-                  <button
-                    key={s}
-                    onClick={() => setSize(s)}
-                    className={cn(
-                      "border py-3.5 text-sm font-semibold transition-colors",
-                      size === s
-                        ? "border-foreground bg-primary text-primary-foreground"
-                        : "border-border hover:border-foreground",
-                    )}
-                  >
-                    {s}
-                  </button>
+            // ✅ FIXED:
+<div className="mt-3 grid grid-cols-4 gap-2">
+  {product.sizes.map((s) => (
+    <button
+      key={s}
+      onClick={() => setSize(s)}
+      className={cn(
+        "border py-3.5 text-sm font-semibold transition-colors",
+        size === s
+          ? "border-foreground bg-primary text-primary-foreground"
+          : "border-border hover:border-foreground",
+      )}
+    >
+      {s}
+    </button>
+  ))}
+</div>
 
-      <div className="mt-3 flex items-center justify-between text-xs">
+<div className="mt-3 flex items-center justify-between text-xs">
   <span className="text-concrete">Standard cot dimensions</span>
   <button
     type="button"
@@ -198,6 +201,7 @@ function ProductPage() {
     Need custom dimensions?
   </button>
 </div>
+
 
                 ))}
               </div>
