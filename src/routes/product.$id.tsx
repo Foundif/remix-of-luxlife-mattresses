@@ -1,5 +1,3 @@
-import { useCustomMattress } from "@/components/site/CustomMattress";
-import { Ruler } from "lucide-react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { Heart, Minus, Plus, ShieldCheck, Star, Truck, Undo2 } from "lucide-react";
@@ -55,8 +53,6 @@ export const Route = createFileRoute("/product/$id")({
 });
 
 function ProductPage() {
-  const { openCustomMattress } = useCustomMattress();
-
   const { product } = Route.useLoaderData();
   const { add, setOpen } = useCart();
   const [size, setSize] = useState<string | null>(null);
