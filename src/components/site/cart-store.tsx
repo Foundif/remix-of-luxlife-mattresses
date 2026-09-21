@@ -1,12 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  type ReactNode,
-} from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import type { Product } from "@/data/products";
 
 export type CartLine = {
@@ -67,7 +59,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [lines]);
 
   const add = useCallback((product: Product, size?: string, qty = 1) => {
-    const chosen = size ?? product.sizes[1] ?? product.sizes[0] ?? "M";
+    // NEW:
+    const size = chosenSize ?? product.sizes[1] ?? product.sizes[0] ?? "Queen";
+
     setLines((prev) => {
       const idx = prev.findIndex((l) => l.id === product.id && l.size === chosen);
       if (idx > -1) {
@@ -97,9 +91,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const setQty = useCallback((key: string, qty: number) => {
-    setLines((prev) =>
-      prev.flatMap((l) => (keyOf(l) === key ? (qty <= 0 ? [] : [{ ...l, qty }]) : [l])),
-    );
+    setLines((prev) => prev.flatMap((l) => (keyOf(l) === key ? (qty <= 0 ? [] : [{ ...l, qty }]) : [l])));
   }, []);
 
   const clear = useCallback(() => setLines([]), []);
