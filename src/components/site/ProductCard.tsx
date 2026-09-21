@@ -49,7 +49,6 @@ export function ProductCard({
             className="absolute inset-0 h-full w-full scale-[1.03] object-cover opacity-0 transition-all duration-700 ease-[var(--ease-brand)] group-hover:scale-100 group-hover:opacity-100"
           />
         </Link>
-
         <Button
           type="button"
           variant="secondary"
@@ -61,14 +60,14 @@ export function ProductCard({
         >
           <Heart className={cn("size-4", saved && "fill-current")} strokeWidth={1.6} />
         </Button>
-
+        // ✅ With this (black background, transitions to volt green with black text on hover):
         <Button
           type="button"
           onClick={() => add(product)}
-          className="absolute inset-x-3 bottom-3 z-10 h-11 rounded-full bg-primary text-primary-foreground shadow-md transition-transform duration-300 ease-[var(--ease-brand)] hover:scale-[1.02]"
+          className="absolute inset-x-3 bottom-3 z-10 h-11 rounded-full bg-ink text-bone shadow-md transition-all duration-300 ease-[var(--ease-brand)] hover:bg-volt hover:text-ink hover:scale-[1.02]"
         >
           <Plus className="size-4" strokeWidth={2} />
-          <span className="label-xs">Add to bag</span>
+          <span className="label-xs font-semibold">Add to bag</span>
         </Button>
       </div>
 
@@ -86,9 +85,7 @@ export function ProductCard({
           {rupee(product.price)}
           {product.mrp && (
             <>
-              <span className="ml-2 text-sm font-normal text-muted-foreground line-through">
-                {rupee(product.mrp)}
-              </span>
+              <span className="ml-2 text-sm font-normal text-muted-foreground line-through">{rupee(product.mrp)}</span>
               <span className="ml-2 text-sm font-semibold text-volt-foreground/80">{off}% off</span>
             </>
           )}
