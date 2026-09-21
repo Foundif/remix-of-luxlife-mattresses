@@ -146,7 +146,6 @@ export function TestimonialsCarousel() {
           className="mt-12 flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-none pb-4"
         >
           {testimonials.map((review, i) => (
-                    {testimonials.map((review, i) => (
             <article
               key={i}
               className="flex w-[85%] shrink-0 snap-start flex-col justify-between border border-concrete/20 bg-ink p-6 transition-all hover:border-volt/50 sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
@@ -177,7 +176,6 @@ export function TestimonialsCarousel() {
                 </p>
               </div>
             </article>
-
           ))}
         </div>
       </div>
