@@ -118,7 +118,6 @@ function RootShell({ children }: { children: ReactNode }) {
     </html>
   );
 }
-
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
@@ -129,13 +128,16 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <CartProvider>
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-          <Outlet />
-          <FlyCart />
-          <BottomNav />
-          <Toaster position="bottom-right" />
-        </CartProvider>
+        <CustomMattressProvider>
+          <CartProvider>
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <Outlet />
+            <FlyCart />
+            <CustomMattressBadge />
+            <BottomNav />
+            <Toaster position="bottom-right" richColors />
+          </CartProvider>
+        </CustomMattressProvider>
       </AuthProvider>
     </QueryClientProvider>
   );
