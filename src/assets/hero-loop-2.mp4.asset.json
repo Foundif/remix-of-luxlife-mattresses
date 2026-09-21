@@ -1,11 +1,11 @@
 {
-  "version": 1,
   "asset_id": "14aa2a04-c832-449a-b4ea-a529fef0884b",
-  "project_id": "fc28f380-2164-47e8-89ec-a3bfb8cf492f",
-  "url": "/__l5e/assets-v1/14aa2a04-c832-449a-b4ea-a529fef0884b/hero-loop-2.mp4",
-  "r2_key": "a/v1/fc28f380-2164-47e8-89ec-a3bfb8cf492f/14aa2a04-c832-449a-b4ea-a529fef0884b/hero-loop-2.mp4",
-  "original_filename": "hero-loop-2.mp4",
-  "size": 6096506,
   "content_type": "video/mp4",
-  "created_at": "2026-08-26T04:19:49Z"
+  "created_at": "2026-08-26T04:19:49Z",
+  "original_filename": "hero-loop-2.mp4",
+  "project_id": "b6110fae-d609-4983-8a37-1b8b533ee437",
+  "r2_key": "a/v1/b6110fae-d609-4983-8a37-1b8b533ee437/14aa2a04-c832-449a-b4ea-a529fef0884b/hero-loop-2.mp4",
+  "size": 6096506,
+  "url": "/__l5e/assets-v1/14aa2a04-c832-449a-b4ea-a529fef0884b/hero-loop-2.mp4",
+  "version": 1
 }
