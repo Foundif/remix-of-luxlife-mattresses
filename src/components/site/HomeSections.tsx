@@ -20,9 +20,21 @@ export function BrandStatement() {
       </Reveal>
       <div className="mt-14 grid gap-10 border-t border-border pt-10 md:grid-cols-3">
         {[
-          { icon: Wind, title: "Breathable zones", copy: "Mesh channels placed over the arch and instep to move heat out fast." },
-          { icon: Footprints, title: "Targeted cushioning", copy: "Density-mapped heel and forefoot pads that absorb impact, not shape." },
-          { icon: ShieldCheck, title: "Holds its fit", copy: "Reinforced elastic band tested past 100 washes without slipping." },
+          {
+            icon: Wind,
+            title: "Open-Cell Airflow",
+            copy: "Breathable pin-core and cooling gel layers dissipate body heat for sweat-free sleep.",
+          },
+          {
+            icon: Footprints,
+            title: "Zoned Spine Support",
+            copy: "Ergonomically engineered firmness zones align your shoulders, lower back, and hips.",
+          },
+          {
+            icon: ShieldCheck,
+            title: "Zero Motion Transfer",
+            copy: "Individually encased pocket springs isolate movement so neither partner is disturbed.",
+          },
         ].map((item, i) => (
           <Reveal key={item.title} delay={i * 90}>
             <item.icon className="size-5" strokeWidth={1.5} />
@@ -47,7 +59,10 @@ export function FeaturedCollection() {
         </div>
         <a href="/" className="group inline-flex items-center gap-3">
           <span className="label-xs">View all</span>
-          <ArrowRight className="size-4 transition-transform duration-500 ease-[var(--ease-brand)] group-hover:translate-x-1.5" strokeWidth={1.8} />
+          <ArrowRight
+            className="size-4 transition-transform duration-500 ease-[var(--ease-brand)] group-hover:translate-x-1.5"
+            strokeWidth={1.8}
+          />
         </a>
       </div>
 
@@ -76,13 +91,19 @@ export function ShopByCategory() {
       <div className="edge flex flex-wrap items-end justify-between gap-6">
         <div>
           <p className="label-xs text-volt">04 — Shop by category</p>
-          <Reveal delay={70}><h2 className="display-md mt-4">Find your comfort</h2></Reveal>
+          <Reveal delay={70}>
+            <h2 className="display-md mt-4">Find your comfort</h2>
+          </Reveal>
         </div>
       </div>
       <div className="edge mt-12 grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
         {categories.map((cat, i) => (
           <Reveal key={cat.name} delay={i * 80}>
-            <Link to="/shop" search={{ c: cat.name }} className="group relative block aspect-[3/4] overflow-hidden bg-charcoal">
+            <Link
+              to="/shop"
+              search={{ c: cat.name }}
+              className="group relative block aspect-[3/4] overflow-hidden bg-charcoal"
+            >
               <img
                 src={cat.image}
                 alt={`${cat.name} mattress collection`}
@@ -97,10 +118,12 @@ export function ShopByCategory() {
                   </h3>
                   <p className="label-xs mt-2 text-concrete">{cat.count} styles</p>
                 </div>
-                <ArrowRight className="size-5 -translate-x-1 opacity-0 transition-all duration-500 ease-[var(--ease-brand)] group-hover:translate-x-0 group-hover:opacity-100" strokeWidth={1.8} />
+                <ArrowRight
+                  className="size-5 -translate-x-1 opacity-0 transition-all duration-500 ease-[var(--ease-brand)] group-hover:translate-x-0 group-hover:opacity-100"
+                  strokeWidth={1.8}
+                />
               </div>
             </Link>
-
           </Reveal>
         ))}
       </div>
@@ -156,9 +179,7 @@ export function MaterialStory() {
             loading="lazy"
             className="h-full w-full object-cover"
           />
-          <span className="label-xs absolute bottom-4 left-4 bg-bone px-2.5 py-1.5">
-            200 needle knit
-          </span>
+          <span className="label-xs absolute bottom-4 left-4 bg-bone px-2.5 py-1.5">200 needle knit</span>
         </div>
       </Reveal>
       <Reveal delay={100}>
@@ -180,7 +201,10 @@ export function MaterialStory() {
         <a href="/" className="group mt-8 inline-flex items-center gap-3">
           <Ruler className="size-4" strokeWidth={1.6} />
           <span className="label-xs">Size guide</span>
-          <ArrowRight className="size-4 transition-transform duration-500 ease-[var(--ease-brand)] group-hover:translate-x-1.5" strokeWidth={1.8} />
+          <ArrowRight
+            className="size-4 transition-transform duration-500 ease-[var(--ease-brand)] group-hover:translate-x-1.5"
+            strokeWidth={1.8}
+          />
         </a>
       </Reveal>
     </section>
@@ -200,7 +224,10 @@ export function ShopByActivity() {
               <span className="display-md transition-transform duration-500 ease-[var(--ease-brand)] group-hover:translate-x-3">
                 {a}
               </span>
-              <ArrowRight className="size-6 -translate-x-2 opacity-30 transition-all duration-500 ease-[var(--ease-brand)] group-hover:translate-x-0 group-hover:opacity-100" strokeWidth={1.6} />
+              <ArrowRight
+                className="size-6 -translate-x-2 opacity-30 transition-all duration-500 ease-[var(--ease-brand)] group-hover:translate-x-0 group-hover:opacity-100"
+                strokeWidth={1.6}
+              />
             </a>
           </li>
         ))}
@@ -225,11 +252,12 @@ export function OfferBanner() {
           className="group inline-flex items-center gap-3 bg-ink px-7 py-4 text-bone transition-colors duration-500 hover:bg-charcoal"
         >
           <span className="label-xs">Shop the offer</span>
-          <ArrowRight className="size-4 transition-transform duration-500 ease-[var(--ease-brand)] group-hover:translate-x-1.5" strokeWidth={1.8} />
+          <ArrowRight
+            className="size-4 transition-transform duration-500 ease-[var(--ease-brand)] group-hover:translate-x-1.5"
+            strokeWidth={1.8}
+          />
         </Link>
-
       </div>
     </section>
   );
 }
-
