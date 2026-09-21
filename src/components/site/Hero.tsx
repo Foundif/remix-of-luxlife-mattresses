@@ -2,94 +2,56 @@ import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { media } from "@/data/products";
 import { cn } from "@/lib/utils";
-import heroLoop1 from "@/assets/hero-loop.mp4.asset.json";
-import heroLoop2 from "@/assets/hero-loop-2.mp4.asset.json";
-import heroLoop3 from "@/assets/hero-loop-3.mp4.asset.json";
+import heroLoop1 from "@/assets/luxlife-sunlight-bed.mp4.asset.json";
+import heroLoop2 from "@/assets/luxlife-stitch-detail.mp4.asset.json";
+import heroLoop3 from "@/assets/luxlife-sunrise-bedroom.mp4.asset.json";
 
 const slides = [
   {
     src: heroLoop1.url,
     poster: media.heroAthlete,
-    eyebrow: "New Collection — 2026",
-    title: "Built For Every Move",
-    copy: "Engineered knit. Zero slip.",
-    alt: "Athlete sprinting at night wearing KRUX performance socks",
+    eyebrow: "Sleep Better · Live Better",
+    title: "Luxury In Every Night",
+    copy: "Premium comfort, made for deeper sleep.",
+    alt: "Luxlife mattress illuminated by warm morning sunlight",
   },
   {
     src: heroLoop2.url,
     poster: media.catSports,
-    eyebrow: "Performance Series",
-    title: "Push The Pace",
-    copy: "Cushioned where it counts.",
-    alt: "Close-up of an athlete pushing off a gym floor in KRUX socks",
+    eyebrow: "Made With Precision",
+    title: "Comfort In Every Detail",
+    copy: "Fine stitching. Lasting support.",
+    alt: "Close-up of fine stitching on a Luxlife mattress",
   },
   {
     src: heroLoop3.url,
     poster: media.storyMove,
-    eyebrow: "Everyday Essentials",
-    title: "All Day Comfort",
-    copy: "Breathable. Built to last.",
-    alt: "Runner lacing sneakers over KRUX ribbed socks",
+    eyebrow: "Wake Up Renewed",
+    title: "Better Mornings Begin Here",
+    copy: "Rest easy. Rise refreshed.",
+    alt: "Beautiful bedroom with a Luxlife mattress at sunrise",
   },
 ];
 
 export function Hero() {
   const [index, setIndex] = useState(0);
   const refs = useRef<(HTMLVideoElement | null)[]>([]);
-  const sequenceRef = useRef<HTMLElement | null>(null);
   const slide = slides[index]!;
 
   useEffect(() => {
-    const sequence = sequenceRef.current;
-    if (!sequence) return;
+    const video = refs.current[index];
+    if (!video) return;
+    refs.current.forEach((item, videoIndex) => {
+      if (!item) return;
+      if (videoIndex === index) void item.play().catch(() => undefined);
+      else item.pause();
+    });
+  }, [index]);
 
-    let frame = 0;
-    const updateFromScroll = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        const rect = sequence.getBoundingClientRect();
-        const scrollRange = sequence.offsetHeight - window.innerHeight;
-        if (scrollRange <= 0) return;
-        const progress = Math.min(1, Math.max(0, -rect.top / scrollRange));
-        const position = Math.min(slides.length - 0.001, progress * slides.length);
-        const nextIndex = Math.min(slides.length - 1, Math.floor(position));
-        const filmProgress = position - nextIndex;
-
-        refs.current.forEach((video, videoIndex) => {
-          if (!video) return;
-          video.pause();
-          if (videoIndex !== nextIndex || !Number.isFinite(video.duration) || video.duration <= 0) return;
-          const nextTime = Math.min(video.duration - 0.04, Math.max(0, filmProgress * video.duration));
-          if (Math.abs(video.currentTime - nextTime) > 0.04) video.currentTime = nextTime;
-        });
-        setIndex(nextIndex);
-      });
-    };
-
-    updateFromScroll();
-    window.addEventListener("scroll", updateFromScroll, { passive: true });
-    window.addEventListener("resize", updateFromScroll);
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", updateFromScroll);
-      window.removeEventListener("resize", updateFromScroll);
-    };
-  }, []);
-
-  const showSlide = (nextIndex: number) => {
-    const sequence = sequenceRef.current;
-    if (!sequence) {
-      setIndex(nextIndex);
-      return;
-    }
-    const scrollRange = sequence.offsetHeight - window.innerHeight;
-    const target = sequence.offsetTop + scrollRange * ((nextIndex + 0.08) / slides.length);
-    window.scrollTo({ top: target, behavior: "smooth" });
-  };
+  const showSlide = (nextIndex: number) => setIndex(nextIndex);
 
   return (
-    <section ref={sequenceRef} className="relative h-[400svh] bg-ink text-bone" aria-label="KRUX campaigns">
-      <div className="sticky top-0 h-svh min-h-[600px] overflow-hidden">
+    <section className="relative h-svh min-h-[600px] overflow-hidden bg-ink text-bone" aria-label="Luxlife campaigns">
       {slides.map((s, i) => (
         <video
           key={s.src}
@@ -98,12 +60,12 @@ export function Hero() {
           }}
           src={s.src}
           poster={s.poster}
-          autoPlay={false}
+          autoPlay={i === 0}
           muted
-          loop
+          loop={false}
           playsInline
-          preload="auto"
-          onLoadedMetadata={(event) => event.currentTarget.pause()}
+          preload={i === 0 ? "auto" : "metadata"}
+          onEnded={() => setIndex((current) => (current + 1) % slides.length)}
           aria-label={s.alt}
           className={cn(
             "absolute inset-0 h-full w-full object-cover transition-opacity duration-[1200ms] ease-[var(--ease-brand)]",
@@ -121,10 +83,10 @@ export function Hero() {
           <p className="mt-6 text-sm text-bone/85 md:text-base">{slide.copy}</p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
             <a
-              href="#new-this-week"
+               href="#new-this-week"
               className="group inline-flex items-center gap-3 rounded-full bg-bone px-8 py-4 text-ink transition-colors duration-500 ease-[var(--ease-brand)] hover:bg-volt"
             >
-              <span className="label-xs">Shop Now</span>
+               <span className="label-xs">Shop Mattresses</span>
               <ArrowRight
                 className="size-4 transition-transform duration-500 ease-[var(--ease-brand)] group-hover:translate-x-1.5"
                 strokeWidth={1.8}
@@ -134,7 +96,7 @@ export function Hero() {
               href="#best-sellers"
               className="inline-flex items-center gap-3 rounded-full border border-bone/40 px-8 py-4 text-bone transition-colors duration-500 ease-[var(--ease-brand)] hover:bg-bone/10"
             >
-              <span className="label-xs">Best Sellers</span>
+               <span className="label-xs">Find Your Comfort</span>
             </a>
           </div>
         </div>
@@ -155,8 +117,7 @@ export function Hero() {
         ))}
       </div>
 
-      <p className="label-xs absolute bottom-7 left-5 hidden text-bone/65 md:block">Scroll to explore</p>
-      </div>
+       <p className="label-xs absolute bottom-7 left-5 hidden text-bone/65 md:block">Sleep better · Live better</p>
     </section>
   );
 }

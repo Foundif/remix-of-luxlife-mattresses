@@ -37,13 +37,11 @@ type CartApi = {
 const CartContext = createContext<CartApi | null>(null);
 
 const keyOf = (line: CartLine) => `${line.id}__${line.size}`;
-const STORAGE_KEY = "krux.cart.v1";
+const STORAGE_KEY = "luxlife.cart.v1";
 
-/** Multi-buy offer: 2+ = 10%, 3+ = 18%, 5+ = 25% */
 export function offerRate(count: number) {
-  if (count >= 5) return 0.25;
-  if (count >= 3) return 0.18;
-  if (count >= 2) return 0.1;
+  if (count >= 3) return 0.12;
+  if (count >= 2) return 0.08;
   return 0;
 }
 
