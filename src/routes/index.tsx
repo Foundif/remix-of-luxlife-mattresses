@@ -5,12 +5,13 @@ import { Hero } from "@/components/site/Hero";
 import { Footer } from "@/components/site/Footer";
 import { BestSellersGrid, NewThisWeek } from "@/components/site/HomeShop";
 import { OfferBanner, ShopByCategory } from "@/components/site/HomeSections";
+import { TestimonialsCarousel } from "@/components/site/TestimonialsCarousel";
 
 
 
-const title = "KRUX — Premium Performance Socks Built For Every Move";
+const title = "Luxlife Mattresses — Sleep Better, Live Better";
 const description =
-  "Engineered performance and everyday socks: breathable knit zones, targeted cushioning and a fit that holds. Shop the 2026 collection.";
+  "Premium memory foam, orthopedic, spring, latex and hybrid mattresses manufactured in Salem for deeper, healthier sleep.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -36,6 +37,7 @@ function Index() {
         <NewThisWeek />
         <BestSellersGrid />
         <ShopByCategory />
+        <TestimonialsCarousel />
         <OfferBanner />
       </main>
       <Footer />

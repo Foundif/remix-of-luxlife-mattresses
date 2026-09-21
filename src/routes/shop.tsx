@@ -6,9 +6,9 @@ import { ProductCard } from "@/components/site/ProductCard";
 import { activities, categories, products } from "@/data/products";
 import { cn } from "@/lib/utils";
 
-const title = "Shop All Socks — Performance & Everyday | KRUX";
+const title = "Shop All Mattresses — Luxlife Mattresses";
 const description =
-  "Browse the full KRUX range: crew, ankle, no-show and knee-high socks engineered for running, gym, sport and everyday wear.";
+  "Browse Luxlife memory foam, orthopedic, pocket spring, latex, cooling and hybrid mattresses, made for lasting comfort.";
 
 type ShopSearch = { c?: string | undefined; sort?: string | undefined; q?: string | undefined };
 
@@ -44,10 +44,6 @@ function matches(term: string, p: (typeof products)[number]) {
   if (t === "new" || t === "new arrivals") return p.badge === "NEW";
   if (t === "best sellers") return p.badge === "BESTSELLER";
   if (t === "sale") return Boolean(p.mrp);
-  if (t === "multipacks") return /pack/i.test(p.name);
-  if (t === "crew" || t === "ankle" || t === "no-show" || t === "knee high") {
-    return p.name.toLowerCase().includes(t.replace("no-show", "no-show"));
-  }
   return (
     p.category.toLowerCase() === t ||
     p.activity.toLowerCase() === t ||
@@ -101,7 +97,7 @@ function ShopPage() {
         </p>
         <div className="mt-4 flex flex-wrap items-end justify-between gap-6">
           <div>
-            <h1 className="display-md">{c ? c : "All Socks"}</h1>
+            <h1 className="display-md">{c ? c : "All Mattresses"}</h1>
             <p className="mt-2 text-sm text-muted-foreground">{filtered.length} products</p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
@@ -182,7 +178,7 @@ function ShopPage() {
               >
                 <img
                   src={cat.image}
-                  alt={`${cat.name} socks`}
+                  alt={`${cat.name} mattress collection`}
                   loading="lazy"
                   className="h-full w-full object-cover transition-transform duration-700 ease-[var(--ease-brand)] group-hover:scale-105"
                 />

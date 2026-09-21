@@ -8,6 +8,7 @@ import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { StoreSearch } from "@/components/site/StoreSearch";
 import luxlifeLogo from "@/assets/luxlife-logo.png.asset.json";
+import luxlifeWhiteLogo from "@/assets/luxlife-logo-white.png.asset.json";
 
 type MenuGroup = { title: string; items: string[] };
 type NavItem = { label: string; filter?: string; groups: MenuGroup[] };
@@ -43,6 +44,7 @@ const nav: NavItem[] = [
 export function Header({ solid = false }: { solid?: boolean }) {
   const y = useScrollY();
   const stuck = y > 40;
+  const lightHeader = solid || stuck;
   const { count, setOpen: setCartOpen } = useCart();
   const { user } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -72,9 +74,9 @@ export function Header({ solid = false }: { solid?: boolean }) {
       <header
         style={solid ? undefined : { transform: `translate3d(0, ${Math.max(0, 36 - y)}px, 0)` }}
         className={cn(
-          "z-50 text-bone transition-colors duration-500 ease-[var(--ease-brand)]",
-          solid ? "sticky top-0 border-b border-white/10 bg-ink" : "fixed inset-x-0 top-0",
-          !solid && stuck && "border-b border-white/10 bg-ink/85 backdrop-blur-xl",
+          "z-50 transition-[background-color,color,border-color,box-shadow] duration-500 ease-[var(--ease-brand)]",
+          solid ? "sticky top-0 border-b border-border bg-background text-foreground" : "fixed inset-x-0 top-0 text-bone",
+          !solid && stuck && "border-b border-border bg-background text-foreground shadow-sm",
         )}
       >
         <div className={cn("edge flex items-center justify-between transition-all duration-500", solid ? "h-16" : stuck ? "h-14" : "h-20")}>
@@ -84,13 +86,17 @@ export function Header({ solid = false }: { solid?: boolean }) {
             size="icon"
             onClick={() => setMenuOpen(true)}
             aria-label="Open menu"
-            className="text-bone hover:bg-white/10 hover:text-bone"
+            className={cn(lightHeader ? "text-foreground hover:bg-secondary" : "text-bone hover:bg-bone/10 hover:text-bone")}
           >
             <Menu className="size-5" strokeWidth={1.6} />
           </Button>
 
-          <Link to="/" className="absolute left-1/2 -translate-x-1/2 rounded-sm bg-bone px-2 py-1">
-            <img src={luxlifeLogo.url} alt="Luxlife Mattresses" className="h-7 w-auto sm:h-8" />
+          <Link to="/" className="absolute left-1/2 -translate-x-1/2">
+            <img
+              src={lightHeader ? luxlifeLogo.url : luxlifeWhiteLogo.url}
+              alt="Luxlife Mattresses"
+              className={cn("w-auto object-contain transition-all duration-500", lightHeader ? "h-9 sm:h-10" : "h-10 sm:h-12")}
+            />
           </Link>
 
           <div className="flex items-center gap-1 md:gap-2">
@@ -100,7 +106,7 @@ export function Header({ solid = false }: { solid?: boolean }) {
               size="icon"
               onClick={() => setSearchOpen(true)}
               aria-label="Search products"
-              className="text-bone hover:bg-white/10 hover:text-bone"
+              className={cn(lightHeader ? "text-foreground hover:bg-secondary" : "text-bone hover:bg-bone/10 hover:text-bone")}
             >
               <Search className="size-[18px]" strokeWidth={1.6} />
             </Button>
@@ -116,7 +122,7 @@ export function Header({ solid = false }: { solid?: boolean }) {
               size="icon"
               aria-label={`Bag (${count} items)`}
               onClick={() => setCartOpen(true)}
-              className="relative text-bone hover:bg-white/10 hover:text-bone"
+              className={cn("relative", lightHeader ? "text-foreground hover:bg-secondary" : "text-bone hover:bg-bone/10 hover:text-bone")}
             >
               <ShoppingBag className="size-[18px]" strokeWidth={1.6} />
               <span className="absolute -top-0.5 -right-0.5 grid min-w-4 place-items-center rounded-full bg-volt px-1 text-[10px] leading-4 font-bold text-volt-foreground">

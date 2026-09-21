@@ -14,7 +14,7 @@ export function BrandStatement() {
       </Reveal>
       <Reveal delay={80}>
         <h2 className="display-lg mt-8 max-w-[22ch]">
-          Not just socks. Engineered for how you move
+          Not just a mattress. Engineered for how you sleep
           <span className="text-volt">.</span>
         </h2>
       </Reveal>
@@ -76,7 +76,7 @@ export function ShopByCategory() {
       <div className="edge flex flex-wrap items-end justify-between gap-6">
         <div>
           <p className="label-xs text-volt">04 — Shop by category</p>
-          <h2 className="display-md mt-4">Pick your lane</h2>
+          <Reveal delay={70}><h2 className="display-md mt-4">Find your comfort</h2></Reveal>
         </div>
       </div>
       <div className="edge mt-12 grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
@@ -85,7 +85,7 @@ export function ShopByCategory() {
             <Link to="/shop" search={{ c: cat.name }} className="group relative block aspect-[3/4] overflow-hidden bg-charcoal">
               <img
                 src={cat.image}
-                alt={`${cat.name} socks`}
+                alt={`${cat.name} mattress collection`}
                 loading="lazy"
                 className="h-full w-full object-cover opacity-80 transition-all duration-[1100ms] ease-[var(--ease-brand)] group-hover:scale-105 group-hover:opacity-100"
               />
@@ -217,7 +217,7 @@ export function OfferBanner() {
           <p className="label-xs">13 — Offer</p>
           <h2 className="display-lg mt-4 max-w-[16ch]">Buy more. Save more.</h2>
           <p className="mt-4 max-w-md text-sm font-medium">
-            Buy 2 get 10% off · Buy 3 get 18% off · Buy 5 get 25% off. Applied automatically at bag.
+            Premium mattresses made in Salem, delivered directly from our factory with expert guidance.
           </p>
         </div>
         <Link
@@ -233,29 +233,3 @@ export function OfferBanner() {
   );
 }
 
-export function SocialProof() {
-  const reviews = [
-    { name: "Aditya R.", city: "Bengaluru", text: "Ran a half marathon in the Pace Ankle. Zero blisters, zero slipping." },
-    { name: "Meera S.", city: "Mumbai", text: "The ribbed crew holds its shape after months. Worth every rupee." },
-    { name: "Karan V.", city: "Delhi", text: "Cushioning under the forefoot is genuinely different from regular socks." },
-  ];
-  return (
-    <section className="edge bg-bone pb-24 md:pb-32">
-      <div className="border-t border-border pt-10">
-        <p className="label-xs text-muted-foreground">11 — Worn by</p>
-        <h2 className="display-md mt-4">4.8 average across 1,800+ reviews</h2>
-      </div>
-      <div className="mt-12 grid gap-6 md:grid-cols-3">
-        {reviews.map((r, i) => (
-          <Reveal key={r.name} delay={i * 90} className="border border-border bg-card p-7">
-            <p className="label-xs text-volt-foreground/60">★★★★★</p>
-            <p className="mt-4 text-[15px] leading-relaxed">{r.text}</p>
-            <p className="label-xs mt-6 text-muted-foreground">
-              {r.name} — {r.city}
-            </p>
-          </Reveal>
-        ))}
-      </div>
-    </section>
-  );
-}

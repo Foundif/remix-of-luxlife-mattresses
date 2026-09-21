@@ -5,8 +5,8 @@ import { ProductCard } from "@/components/site/ProductCard";
 import { cartKeyOf, offerRate, rupee, useCart } from "@/components/site/cart-store";
 import { products } from "@/data/products";
 
-const title = "Your Bag — KRUX";
-const description = "Review your KRUX bag, apply multi-buy savings and checkout in a few taps.";
+const title = "Your Bag — Luxlife Mattresses";
+const description = "Review your Luxlife mattress selection and complete your order securely.";
 
 export const Route = createFileRoute("/cart")({
   head: () => ({
@@ -159,7 +159,7 @@ function CartPage() {
 
         {recommended.length > 0 && (
           <section className="mt-20 border-t border-border pt-12">
-            <h2 className="display-md">Complete the set</h2>
+            <h2 className="display-md">You may also like</h2>
             <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 md:gap-x-6 lg:grid-cols-4">
               {recommended.map((p) => (
                 <ProductCard key={p.id} product={p} />

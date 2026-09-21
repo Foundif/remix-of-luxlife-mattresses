@@ -16,7 +16,7 @@ import { FlyCart } from "@/components/site/FlyCart";
 import { BottomNav } from "@/components/site/BottomNav";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { registerKruxPwa } from "@/lib/pwa";
+import { registerLuxlifePwa } from "@/lib/pwa";
 
 
 function NotFoundComponent() {
@@ -85,13 +85,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "theme-color", content: "#16161a" },
-      { name: "application-name", content: "KRUX" },
+      { name: "application-name", content: "Luxlife Mattresses" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
-      { name: "apple-mobile-web-app-title", content: "KRUX" },
-      { title: "KRUX — Performance Socks" },
-      { name: "description", content: "Engineered performance socks built for every move." },
-      { property: "og:site_name", content: "KRUX" },
+      { name: "apple-mobile-web-app-title", content: "Luxlife" },
+      { title: "Luxlife Mattresses — Sleep Better, Live Better" },
+      { name: "description", content: "Premium mattresses manufactured in Salem for deeper, healthier sleep." },
+      { property: "og:site_name", content: "Luxlife Mattresses" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -132,7 +132,7 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   useEffect(() => {
-    void registerKruxPwa();
+    void registerLuxlifePwa();
   }, []);
 
   return (
