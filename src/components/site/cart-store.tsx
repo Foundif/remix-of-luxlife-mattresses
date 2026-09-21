@@ -82,7 +82,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
         ...prev,
       ];
     });
-    setIsOpen(true);
+    // ✅ Replace line 85 with:
+    setOpen(true);
   }, []);
 
   const remove = useCallback((key: string) => {
