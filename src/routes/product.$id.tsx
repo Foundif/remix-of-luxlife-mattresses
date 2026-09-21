@@ -1,3 +1,5 @@
+import { useCustomMattress } from "@/components/site/CustomMattress";
+import { Ruler } from "lucide-react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { Heart, Minus, Plus, ShieldCheck, Star, Truck, Undo2 } from "lucide-react";
@@ -40,7 +42,11 @@ export const Route = createFileRoute("/product/$id")({
       <div className="edge py-32 text-center">
         <h1 className="display-md">Product not found</h1>
         <p className="mt-3 text-sm text-muted-foreground">This style is no longer available.</p>
-        <Link to="/shop" search={{}} className="label-xs mt-8 inline-block bg-primary px-7 py-4 text-primary-foreground">
+        <Link
+          to="/shop"
+          search={{}}
+          className="label-xs mt-8 inline-block bg-primary px-7 py-4 text-primary-foreground"
+        >
           Shop all mattresses
         </Link>
       </div>
@@ -114,7 +120,9 @@ function ProductPage() {
           </div>
 
           <div className="lg:pt-2">
-            <p className="label-xs text-muted-foreground">{product.category} · {product.activity}</p>
+            <p className="label-xs text-muted-foreground">
+              {product.category} · {product.activity}
+            </p>
             <h1 className="display-md mt-3">{product.name}</h1>
             <div className="mt-4 flex items-center gap-2 text-sm">
               <span className="flex items-center gap-1">
@@ -138,7 +146,7 @@ function ProductPage() {
             <p className="mt-1 text-xs text-muted-foreground">Inclusive of all taxes.</p>
 
             <div className="mt-8">
-                <p className="label-xs">Comfort — {color}</p>
+              <p className="label-xs">Comfort — {color}</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {product.colors.map((c) => (
                   <button
@@ -146,7 +154,9 @@ function ProductPage() {
                     onClick={() => setColor(c)}
                     className={cn(
                       "label-xs border px-4 py-2 transition-colors",
-                      color === c ? "border-foreground bg-primary text-primary-foreground" : "border-border hover:bg-secondary",
+                      color === c
+                        ? "border-foreground bg-primary text-primary-foreground"
+                        : "border-border hover:bg-secondary",
                     )}
                   >
                     {c}
@@ -167,7 +177,9 @@ function ProductPage() {
                     onClick={() => setSize(s)}
                     className={cn(
                       "border py-3.5 text-sm font-semibold transition-colors",
-                      size === s ? "border-foreground bg-primary text-primary-foreground" : "border-border hover:border-foreground",
+                      size === s
+                        ? "border-foreground bg-primary text-primary-foreground"
+                        : "border-border hover:border-foreground",
                     )}
                   >
                     {s}
