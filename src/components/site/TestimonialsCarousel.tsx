@@ -146,13 +146,14 @@ export function TestimonialsCarousel() {
           className="mt-12 flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-none pb-4"
         >
           {testimonials.map((review, i) => (
+                    {testimonials.map((review, i) => (
             <article
               key={i}
-              className="flex w-[85%] shrink-0 snap-start flex-col justify-between border border-border bg-card p-6 transition-all hover:border-foreground/30 sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
+              className="flex w-[85%] shrink-0 snap-start flex-col justify-between border border-concrete/20 bg-ink p-6 transition-all hover:border-volt/50 sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
             >
               <div>
                 <div className="flex items-center justify-between">
-                  {/* 5-Star Rating in Volt Accent */}
+                  {/* 5-Star Rating in Glowing Volt */}
                   <div className="flex gap-1 text-volt">
                     {Array.from({ length: review.rating }).map((_, starIndex) => (
                       <Star key={starIndex} className="size-4 fill-current" strokeWidth={0} />
@@ -161,18 +162,22 @@ export function TestimonialsCarousel() {
                   <Quote className="size-6 text-concrete/40" strokeWidth={1.5} />
                 </div>
 
-                <blockquote className="mt-5 text-sm md:text-base leading-relaxed text-foreground font-medium">
-                  “{review.quote}”
+                <blockquote className="mt-5 text-sm md:text-base leading-relaxed text-bone font-medium">
+                  "{review.quote}"
                 </blockquote>
               </div>
 
-              <div className="mt-8 border-t border-border/60 pt-4">
-                <p className="text-sm font-semibold text-foreground">
+              {/* High-visibility bottom section */}
+              <div className="mt-8 border-t border-concrete/20 pt-4">
+                <p className="text-sm font-semibold text-bone">
                   {review.name} <span className="font-normal text-concrete">· {review.city}</span>
                 </p>
-                <p className="label-xs mt-1 text-volt">Verified Owner · {review.product}</p>
+                <p className="label-xs mt-1 font-semibold tracking-wider text-volt">
+                  Verified Owner · {review.product}
+                </p>
               </div>
             </article>
+
           ))}
         </div>
       </div>
