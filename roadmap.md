@@ -5,3 +5,5 @@
 - [ ] Replace the complete local and live catalog concept with mattress products, sizes, categories, copy, and imagery.
 - [ ] Update product, bag, checkout, account, search, and footer language for mattress shopping.
 - [ ] Verify desktop and mobile pages, interactions, media playback, and remaining old-brand references.
+- [ ] Add premium reviews carousel, global custom-mattress enquiry panel, and product-page custom sizing action.
+- [ ] Refresh Luxlife footer/contact information and complete the mattress-language audit.
