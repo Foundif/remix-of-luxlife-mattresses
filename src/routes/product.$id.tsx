@@ -186,18 +186,6 @@ function ProductPage() {
                 ))}
               </div>
 
-              <div className="mt-3 flex items-center justify-between text-xs">
-                <span className="text-concrete">Standard cot dimensions</span>
-                <button
-                  type="button"
-                  onClick={() => openCustomMattress(product.name)}
-                  className="inline-flex items-center gap-1 font-medium text-volt hover:underline"
-                >
-                  <Ruler className="h-3.5 w-3.5" />
-                  Need custom dimensions?
-                </button>
-              </div>
-
               {!size && <p className="mt-2 text-xs text-muted-foreground">Please select a size.</p>}
             </div>
 
