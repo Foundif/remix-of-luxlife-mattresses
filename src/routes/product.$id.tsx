@@ -55,6 +55,8 @@ export const Route = createFileRoute("/product/$id")({
 });
 
 function ProductPage() {
+  const { openCustomMattress } = useCustomMattress();
+
   const { product } = Route.useLoaderData();
   const { add, setOpen } = useCart();
   const [size, setSize] = useState<string | null>(null);
