@@ -2,142 +2,178 @@ import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/site/Reveal";
-import { cn } from "@/lib/utils";
 
 const testimonials = [
   {
-    quote: "The OrthoAlign gives my back firm support without feeling hard. I wake up noticeably fresher now.",
+    quote:
+      "The OrthoAlign gives my lower back firm, restorative support without feeling like a hard plank. Wake up with zero stiffness.",
     name: "R. Prakash",
     city: "Salem",
-    product: "OrthoAlign Support",
+    product: "OrthoAlign Zoned Mattress",
+    rating: 5,
   },
   {
-    quote: "We ordered a custom king size and the team guided us through every measurement. The finish is excellent.",
+    quote:
+      "We ordered a custom 78x72 cot size. Karthikeyan personally verified our bed frame dimensions. Delivered right to our bedroom.",
     name: "Nivedha S.",
     city: "Erode",
-    product: "Custom Hybrid Mattress",
+    product: "Custom Hybrid King",
+    rating: 5,
   },
   {
-    quote: "BreezeGel stays comfortable through warm nights and isolates movement far better than our old mattress.",
+    quote:
+      "BreezeGel stays noticeably cool through humid Salem nights. Zero heat trapping and isolates motion completely when my partner turns.",
     name: "Arun Kumar",
     city: "Namakkal",
-    product: "BreezeGel Cooling",
+    product: "BreezeGel Cooling Memory",
+    rating: 5,
   },
   {
-    quote: "Factory-direct quality, clear advice and careful delivery. The mattress feels premium from the first night.",
+    quote:
+      "Direct factory pricing with unmatched build quality. Showroom brand comfort at almost half their retail cost. 10-year warranty is peace of mind.",
     name: "Meena K.",
     city: "Coimbatore",
     product: "Royal Pocket Spring",
+    rating: 5,
+  },
+  {
+    quote:
+      "Purchased the Natural Latex mattress for our parents. Firm orthopedic support with natural organic pin-core breathability.",
+    name: "S. Venkatesh",
+    city: "Salem",
+    product: "100% Natural Latex",
+    rating: 5,
+  },
+  {
+    quote:
+      "Exceptional edge support and zero sagging. Even after months of daily use, the quilted top feels plush and brand new.",
+    name: "Deepa Anand",
+    city: "Tirupur",
+    product: "CloudRest Euro Top",
+    rating: 5,
   },
 ];
 
 export function TestimonialsCarousel() {
-  const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const startX = useRef<number | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
 
-  const go = (direction: number) =>
-    setIndex((current) => (current + direction + testimonials.length) % testimonials.length);
+  const updateScrollState = () => {
+    if (!scrollRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+    setCanScrollLeft(scrollLeft > 10);
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+  };
 
+  const scrollByCard = (direction: "left" | "right") => {
+    if (!scrollRef.current) return;
+    const cardWidth = scrollRef.current.firstElementChild?.clientWidth ?? 350;
+    const gap = 24;
+    const offset = (cardWidth + gap) * (direction === "left" ? -1 : 1);
+    scrollRef.current.scrollBy({ left: offset, behavior: "smooth" });
+  };
+
+  // Auto-scroll every 5 seconds when not hovered
   useEffect(() => {
-    if (paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const timer = window.setInterval(() => go(1), 5200);
-    return () => window.clearInterval(timer);
-  }, [paused]);
+    if (isPaused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const interval = window.setInterval(() => {
+      if (!scrollRef.current) return;
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      // Loop back to start if reached end
+      if (scrollLeft + clientWidth >= scrollWidth - 20) {
+        scrollRef.current.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        scrollByCard("right");
+      }
+    }, 5000);
+
+    return () => window.clearInterval(interval);
+  }, [isPaused]);
 
   return (
     <section
-      className="overflow-hidden bg-background py-20 md:py-28"
-      aria-roledescription="carousel"
+      className="bg-background py-20 md:py-28 overflow-hidden"
       aria-label="Customer reviews"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocusCapture={() => setPaused(true)}
-      onBlurCapture={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false);
-      }}
-      onTouchStart={(event) => {
-        startX.current = event.touches[0]?.clientX ?? null;
-      }}
-      onTouchEnd={(event) => {
-        const endX = event.changedTouches[0]?.clientX;
-        if (startX.current !== null && endX !== undefined && Math.abs(endX - startX.current) > 45) {
-          go(endX < startX.current ? 1 : -1);
-        }
-        startX.current = null;
-      }}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={() => setIsPaused(true)}
+      onTouchEnd={() => setIsPaused(false)}
     >
       <div className="edge">
+        {/* Section Header with Left/Right Controls */}
         <div className="flex items-end justify-between gap-6 border-t border-border pt-10">
           <div>
-            <p className="label-xs text-muted-foreground">05 — Rested & reviewed</p>
+            <p className="label-xs text-muted-foreground">05 — Rested & Reviewed</p>
             <Reveal delay={70}>
-              <h2 className="display-md mt-4 max-w-[18ch]">Real sleep. Real difference.</h2>
+              <h2 className="display-md mt-4 max-w-[20ch]">Real sleep. Real difference.</h2>
             </Reveal>
+            <p className="mt-2 text-sm text-concrete">
+              Trusted by 10,000+ homes across Salem, Coimbatore & Tamil Nadu.
+            </p>
           </div>
-          <div className="hidden gap-2 sm:flex">
-            <Button variant="outline" size="icon" onClick={() => go(-1)} aria-label="Previous review" className="rounded-full">
-              <ChevronLeft />
+
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => scrollByCard("left")}
+              disabled={!canScrollLeft}
+              aria-label="Previous reviews"
+              className="rounded-full border-border hover:bg-secondary disabled:opacity-40"
+            >
+              <ChevronLeft className="h-4 w-4" />
             </Button>
-            <Button variant="outline" size="icon" onClick={() => go(1)} aria-label="Next review" className="rounded-full">
-              <ChevronRight />
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => scrollByCard("right")}
+              disabled={!canScrollRight}
+              aria-label="Next reviews"
+              className="rounded-full border-border hover:bg-secondary disabled:opacity-40"
+            >
+              <ChevronRight className="h-4 w-4" />
             </Button>
           </div>
         </div>
 
-        <div className="relative mt-12 min-h-[300px] md:min-h-[270px]" aria-live="polite">
-          {testimonials.map((review, reviewIndex) => (
+        {/* 3-Column Snap-Scrolling Rail */}
+        <div
+          ref={scrollRef}
+          onScroll={updateScrollState}
+          className="mt-12 flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-none pb-4"
+        >
+          {testimonials.map((review, i) => (
             <article
-              key={review.name}
-              aria-hidden={reviewIndex !== index}
-              className={cn(
-                "absolute inset-0 grid content-center transition-all duration-700 ease-[var(--ease-brand)] md:grid-cols-[0.8fr_2.2fr] md:gap-16",
-                reviewIndex === index
-                  ? "pointer-events-auto translate-x-0 opacity-100"
-                  : reviewIndex < index
-                    ? "pointer-events-none -translate-x-10 opacity-0"
-                    : "pointer-events-none translate-x-10 opacity-0",
-              )}
+              key={i}
+              className="flex w-[85%] shrink-0 snap-start flex-col justify-between border border-border bg-card p-6 transition-all hover:border-foreground/30 sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
             >
-              <div className="flex items-start justify-between gap-4 md:block">
-                <Quote className="size-10 text-volt md:size-14" strokeWidth={1.2} />
-                <div className="flex gap-1 text-foreground md:mt-8">
-                  {Array.from({ length: 5 }).map((_, star) => (
-                    <Star key={star} className="size-4 fill-current" strokeWidth={0} />
-                  ))}
+              <div>
+                <div className="flex items-center justify-between">
+                  {/* 5-Star Rating in Volt Accent */}
+                  <div className="flex gap-1 text-volt">
+                    {Array.from({ length: review.rating }).map((_, starIndex) => (
+                      <Star key={starIndex} className="size-4 fill-current" strokeWidth={0} />
+                    ))}
+                  </div>
+                  <Quote className="size-6 text-concrete/40" strokeWidth={1.5} />
                 </div>
-              </div>
-              <div className="mt-8 md:mt-0">
-                <blockquote className="font-display text-2xl leading-tight font-semibold md:text-4xl lg:text-5xl">
+
+                <blockquote className="mt-5 text-sm md:text-base leading-relaxed text-foreground font-medium">
                   “{review.quote}”
                 </blockquote>
-                <div className="mt-8 border-t border-border pt-5">
-                  <p className="text-sm font-semibold">{review.name} · {review.city}</p>
-                  <p className="label-xs mt-2 text-muted-foreground">Verified owner · {review.product}</p>
-                </div>
+              </div>
+
+              <div className="mt-8 border-t border-border/60 pt-4">
+                <p className="text-sm font-semibold text-foreground">
+                  {review.name} <span className="font-normal text-concrete">· {review.city}</span>
+                </p>
+                <p className="label-xs mt-1 text-volt">Verified Owner · {review.product}</p>
               </div>
             </article>
           ))}
-        </div>
-
-        <div className="mt-8 flex items-center justify-between gap-6">
-          <p className="label-xs text-muted-foreground">{String(index + 1).padStart(2, "0")} / {String(testimonials.length).padStart(2, "0")}</p>
-          <div className="flex flex-1 justify-end gap-2">
-            {testimonials.map((review, reviewIndex) => (
-              <Button
-                key={review.name}
-                type="button"
-                variant="ghost"
-                size="icon"
-                aria-label={`Show review ${reviewIndex + 1}`}
-                aria-current={reviewIndex === index}
-                onClick={() => setIndex(reviewIndex)}
-                className="h-5 w-8 rounded-none p-0"
-              >
-                <span className={cn("h-0.5 w-full transition-colors", reviewIndex === index ? "bg-foreground" : "bg-border")} />
-              </Button>
-            ))}
-          </div>
         </div>
       </div>
     </section>
