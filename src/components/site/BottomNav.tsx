@@ -26,23 +26,35 @@ export function BottomNav() {
     <>
       <nav
         aria-label="Mobile navigation"
-        className="fixed inset-x-4 z-[55] mx-auto max-w-sm rounded-full border border-border/70 bg-background/95 p-1.5 shadow-[0_16px_40px_-6px_rgba(0,0,0,0.28)] backdrop-blur-2xl transition-all md:hidden"
+        className="fixed inset-x-3 z-[55] mx-auto max-w-md rounded-full border border-border/70 bg-background/95 p-1.5 shadow-[0_12px_40px_-6px_rgba(0,0,0,0.18)] backdrop-blur-2xl transition-all md:hidden"
         style={{ bottom: "max(1rem, env(safe-area-inset-bottom, 1rem))" }}
       >
-        <div className="flex items-center justify-around gap-1">
+        <div className="flex items-center justify-between gap-1 px-1">
           {/* Home */}
           <Link
             to="/"
             aria-current={isHome ? "page" : undefined}
             className={cn(
-              "flex items-center justify-center transition-all duration-300",
+              "flex flex-1 flex-col items-center justify-center gap-0.5 text-center transition-all duration-300",
               isHome
-                ? "gap-1.5 rounded-full bg-volt px-4 py-2 text-xs font-bold text-ink shadow-sm"
-                : "p-2.5 text-muted-foreground hover:text-foreground",
+                ? "rounded-full border border-border/80 bg-volt/20 px-3 py-1.5 shadow-sm"
+                : "px-2 py-1.5 text-muted-foreground hover:text-foreground",
             )}
           >
-            <Home className="size-4 shrink-0" strokeWidth={isHome ? 2.5 : 1.8} />
-            {isHome && <span className="tracking-tight">Home</span>}
+            <Home
+              className={cn(
+                "size-5 shrink-0 transition-transform",
+                isHome ? "text-foreground stroke-[2.4]" : "stroke-[1.8]",
+              )}
+            />
+            <span
+              className={cn(
+                "text-[10px] tracking-tight transition-colors",
+                isHome ? "font-bold text-foreground" : "font-medium text-muted-foreground",
+              )}
+            >
+              Home
+            </span>
           </Link>
 
           {/* Shop */}
@@ -51,14 +63,26 @@ export function BottomNav() {
             search={{}}
             aria-current={isShop ? "page" : undefined}
             className={cn(
-              "flex items-center justify-center transition-all duration-300",
+              "flex flex-1 flex-col items-center justify-center gap-0.5 text-center transition-all duration-300",
               isShop
-                ? "gap-1.5 rounded-full bg-volt px-4 py-2 text-xs font-bold text-ink shadow-sm"
-                : "p-2.5 text-muted-foreground hover:text-foreground",
+                ? "rounded-full border border-border/80 bg-volt/20 px-3 py-1.5 shadow-sm"
+                : "px-2 py-1.5 text-muted-foreground hover:text-foreground",
             )}
           >
-            <Store className="size-4 shrink-0" strokeWidth={isShop ? 2.5 : 1.8} />
-            {isShop && <span className="tracking-tight">Shop</span>}
+            <Store
+              className={cn(
+                "size-5 shrink-0 transition-transform",
+                isShop ? "text-foreground stroke-[2.4]" : "stroke-[1.8]",
+              )}
+            />
+            <span
+              className={cn(
+                "text-[10px] tracking-tight transition-colors",
+                isShop ? "font-bold text-foreground" : "font-medium text-muted-foreground",
+              )}
+            >
+              Shop
+            </span>
           </Link>
 
           {/* Search */}
@@ -67,14 +91,26 @@ export function BottomNav() {
             onClick={() => setSearchOpen(true)}
             aria-label="Search mattresses"
             className={cn(
-              "flex items-center justify-center transition-all duration-300",
+              "flex flex-1 flex-col items-center justify-center gap-0.5 text-center transition-all duration-300",
               searchOpen
-                ? "gap-1.5 rounded-full bg-volt px-4 py-2 text-xs font-bold text-ink shadow-sm"
-                : "p-2.5 text-muted-foreground hover:text-foreground",
+                ? "rounded-full border border-border/80 bg-volt/20 px-3 py-1.5 shadow-sm"
+                : "px-2 py-1.5 text-muted-foreground hover:text-foreground",
             )}
           >
-            <Search className="size-4 shrink-0" strokeWidth={searchOpen ? 2.5 : 1.8} />
-            {searchOpen && <span className="tracking-tight">Search</span>}
+            <Search
+              className={cn(
+                "size-5 shrink-0 transition-transform",
+                searchOpen ? "text-foreground stroke-[2.4]" : "stroke-[1.8]",
+              )}
+            />
+            <span
+              className={cn(
+                "text-[10px] tracking-tight transition-colors",
+                searchOpen ? "font-bold text-foreground" : "font-medium text-muted-foreground",
+              )}
+            >
+              Search
+            </span>
           </button>
 
           {/* Account */}
@@ -82,14 +118,26 @@ export function BottomNav() {
             to={user ? "/account" : "/auth"}
             aria-current={isAccount ? "page" : undefined}
             className={cn(
-              "flex items-center justify-center transition-all duration-300",
+              "flex flex-1 flex-col items-center justify-center gap-0.5 text-center transition-all duration-300",
               isAccount
-                ? "gap-1.5 rounded-full bg-volt px-4 py-2 text-xs font-bold text-ink shadow-sm"
-                : "p-2.5 text-muted-foreground hover:text-foreground",
+                ? "rounded-full border border-border/80 bg-volt/20 px-3 py-1.5 shadow-sm"
+                : "px-2 py-1.5 text-muted-foreground hover:text-foreground",
             )}
           >
-            <User className="size-4 shrink-0" strokeWidth={isAccount ? 2.5 : 1.8} />
-            {isAccount && <span className="tracking-tight">Account</span>}
+            <User
+              className={cn(
+                "size-5 shrink-0 transition-transform",
+                isAccount ? "text-foreground stroke-[2.4]" : "stroke-[1.8]",
+              )}
+            />
+            <span
+              className={cn(
+                "text-[10px] tracking-tight transition-colors",
+                isAccount ? "font-bold text-foreground" : "font-medium text-muted-foreground",
+              )}
+            >
+              Account
+            </span>
           </Link>
 
           {/* Bag */}
@@ -97,14 +145,17 @@ export function BottomNav() {
             type="button"
             onClick={() => setOpen(true)}
             aria-label={`Open bag with ${count} items`}
-            className="relative flex items-center justify-center p-2.5 text-muted-foreground transition-all duration-300 hover:text-foreground"
+            className="flex flex-1 flex-col items-center justify-center gap-0.5 px-2 py-1.5 text-center text-muted-foreground transition-all duration-300 hover:text-foreground"
           >
-            <ShoppingBag className="size-4 shrink-0" strokeWidth={1.8} />
-            {count > 0 && (
-              <span className="absolute top-1 right-1 grid min-w-4 place-items-center rounded-full bg-volt px-1 text-[9px] font-bold leading-4 text-ink shadow-sm">
-                {count > 99 ? "99+" : count}
-              </span>
-            )}
+            <span className="relative inline-flex items-center justify-center">
+              <ShoppingBag className="size-5 shrink-0 stroke-[1.8]" />
+              {count > 0 && (
+                <span className="absolute -top-1 -right-2 grid min-w-4 place-items-center rounded-full bg-volt px-1 text-[9px] font-bold leading-4 text-ink shadow-sm">
+                  {count > 99 ? "99+" : count}
+                </span>
+              )}
+            </span>
+            <span className="text-[10px] font-medium tracking-tight text-muted-foreground">Bag</span>
           </button>
         </div>
       </nav>
