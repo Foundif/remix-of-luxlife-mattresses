@@ -26,7 +26,7 @@ export function BottomNav() {
     <>
       <nav
         aria-label="Mobile navigation"
-        className="fixed inset-x-3 z-[55] mx-auto max-w-md rounded-full border border-border/70 bg-background/95 p-1.5 shadow-[0_12px_40px_-6px_rgba(0,0,0,0.18)] backdrop-blur-2xl transition-all md:hidden"
+        className="fixed inset-x-3 z-[55] mx-auto max-w-md rounded-full border border-border/80 bg-background/95 p-1.5 shadow-[0_12px_40px_-6px_rgba(0,0,0,0.18)] backdrop-blur-2xl transition-all md:hidden"
         style={{ bottom: "max(1rem, env(safe-area-inset-bottom, 1rem))" }}
       >
         <div className="flex items-center justify-between gap-1 px-1">
@@ -37,20 +37,20 @@ export function BottomNav() {
             className={cn(
               "flex flex-1 flex-col items-center justify-center gap-0.5 text-center transition-all duration-300",
               isHome
-                ? "rounded-full border border-border/80 bg-volt/20 px-3 py-1.5 shadow-sm"
+                ? "rounded-full bg-[#ADF831] text-ink px-3 py-1.5 shadow-sm"
                 : "px-2 py-1.5 text-muted-foreground hover:text-foreground",
             )}
           >
             <Home
               className={cn(
-                "size-5 shrink-0 transition-transform",
-                isHome ? "text-foreground stroke-[2.4]" : "stroke-[1.8]",
+                "size-5 shrink-0 transition-all",
+                isHome ? "fill-current stroke-[1.5]" : "fill-none stroke-[1.8]",
               )}
             />
             <span
               className={cn(
                 "text-[10px] tracking-tight transition-colors",
-                isHome ? "font-bold text-foreground" : "font-medium text-muted-foreground",
+                isHome ? "font-bold text-ink" : "font-medium text-muted-foreground",
               )}
             >
               Home
@@ -65,20 +65,20 @@ export function BottomNav() {
             className={cn(
               "flex flex-1 flex-col items-center justify-center gap-0.5 text-center transition-all duration-300",
               isShop
-                ? "rounded-full border border-border/80 bg-volt/20 px-3 py-1.5 shadow-sm"
+                ? "rounded-full bg-[#ADF831] text-ink px-3 py-1.5 shadow-sm"
                 : "px-2 py-1.5 text-muted-foreground hover:text-foreground",
             )}
           >
             <Store
               className={cn(
-                "size-5 shrink-0 transition-transform",
-                isShop ? "text-foreground stroke-[2.4]" : "stroke-[1.8]",
+                "size-5 shrink-0 transition-all",
+                isShop ? "fill-current stroke-[1.5]" : "fill-none stroke-[1.8]",
               )}
             />
             <span
               className={cn(
                 "text-[10px] tracking-tight transition-colors",
-                isShop ? "font-bold text-foreground" : "font-medium text-muted-foreground",
+                isShop ? "font-bold text-ink" : "font-medium text-muted-foreground",
               )}
             >
               Shop
@@ -93,20 +93,20 @@ export function BottomNav() {
             className={cn(
               "flex flex-1 flex-col items-center justify-center gap-0.5 text-center transition-all duration-300",
               searchOpen
-                ? "rounded-full border border-border/80 bg-volt/20 px-3 py-1.5 shadow-sm"
+                ? "rounded-full bg-[#ADF831] text-ink px-3 py-1.5 shadow-sm"
                 : "px-2 py-1.5 text-muted-foreground hover:text-foreground",
             )}
           >
             <Search
               className={cn(
-                "size-5 shrink-0 transition-transform",
-                searchOpen ? "text-foreground stroke-[2.4]" : "stroke-[1.8]",
+                "size-5 shrink-0 transition-all",
+                searchOpen ? "fill-current stroke-[2.4]" : "fill-none stroke-[1.8]",
               )}
             />
             <span
               className={cn(
                 "text-[10px] tracking-tight transition-colors",
-                searchOpen ? "font-bold text-foreground" : "font-medium text-muted-foreground",
+                searchOpen ? "font-bold text-ink" : "font-medium text-muted-foreground",
               )}
             >
               Search
@@ -120,20 +120,20 @@ export function BottomNav() {
             className={cn(
               "flex flex-1 flex-col items-center justify-center gap-0.5 text-center transition-all duration-300",
               isAccount
-                ? "rounded-full border border-border/80 bg-volt/20 px-3 py-1.5 shadow-sm"
+                ? "rounded-full bg-[#ADF831] text-ink px-3 py-1.5 shadow-sm"
                 : "px-2 py-1.5 text-muted-foreground hover:text-foreground",
             )}
           >
             <User
               className={cn(
-                "size-5 shrink-0 transition-transform",
-                isAccount ? "text-foreground stroke-[2.4]" : "stroke-[1.8]",
+                "size-5 shrink-0 transition-all",
+                isAccount ? "fill-current stroke-[1.5]" : "fill-none stroke-[1.8]",
               )}
             />
             <span
               className={cn(
                 "text-[10px] tracking-tight transition-colors",
-                isAccount ? "font-bold text-foreground" : "font-medium text-muted-foreground",
+                isAccount ? "font-bold text-ink" : "font-medium text-muted-foreground",
               )}
             >
               Account
@@ -148,9 +148,9 @@ export function BottomNav() {
             className="flex flex-1 flex-col items-center justify-center gap-0.5 px-2 py-1.5 text-center text-muted-foreground transition-all duration-300 hover:text-foreground"
           >
             <span className="relative inline-flex items-center justify-center">
-              <ShoppingBag className="size-5 shrink-0 stroke-[1.8]" />
+              <ShoppingBag className="size-5 shrink-0 fill-none stroke-[1.8]" />
               {count > 0 && (
-                <span className="absolute -top-1 -right-2 grid min-w-4 place-items-center rounded-full bg-volt px-1 text-[9px] font-bold leading-4 text-ink shadow-sm">
+                <span className="absolute -top-1 -right-2 grid min-w-4 place-items-center rounded-full bg-[#ADF831] px-1 text-[9px] font-bold leading-4 text-ink shadow-sm">
                   {count > 99 ? "99+" : count}
                 </span>
               )}
