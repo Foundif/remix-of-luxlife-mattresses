@@ -4,7 +4,7 @@ import luxlifeWhiteLogo from "@/assets/luxlife-logo-white.png.asset.json";
 
 export function Footer() {
   return (
-    <footer className="border-t border-concrete/20 bg-ink text-bone">
+    <footer className="border-t border-concrete/20 bg-ink text-bone pb-24 md:pb-0">
       <div className="edge py-16">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
           {/* Brand Col with Logo */}
