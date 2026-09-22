@@ -1,11 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Check, RotateCcw, Search, SlidersHorizontal, Star, X } from "lucide-react";
+import { ArrowRight, Check, RotateCcw, Search, SlidersHorizontal, Star, X } from "lucide-react";
 
 import { Shell } from "@/components/site/Shell";
 import { ProductCard } from "@/components/site/ProductCard";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { categories, products } from "@/data/products";
+import { rupee } from "@/components/site/cart-store";
 import { cn } from "@/lib/utils";
 
 const pageTitle = "Shop All Mattresses — Luxlife Mattresses";
@@ -98,9 +99,9 @@ function ShopPage() {
     navigate({ to: "/shop", search: (prev) => updater(prev) });
   };
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    updateSearch((prev) => ({ ...prev, q: query.trim() ? query.trim() : undefined }));
+  const handleSearchChange = (val: string) => {
+    setQuery(val);
+    updateSearch((prev) => ({ ...prev, q: val.trim() ? val.trim() : undefined }));
   };
 
   const clearAllFilters = () => {
@@ -108,6 +109,15 @@ function ShopPage() {
     navigate({ to: "/shop", search: (prev) => ({ sort: prev.sort }) });
     setMobileFilterOpen(false);
   };
+
+  // Recommended products while typing
+  const liveRecommendations = useMemo(() => {
+    const term = query.trim().toLowerCase();
+    if (!term) return [];
+    return products
+      .filter((p) => [p.name, p.category, p.activity, p.description].some((v) => v.toLowerCase().includes(term)))
+      .slice(0, 3);
+  }, [query]);
 
   // Count active filters (excluding sort)
   const activeFilterCount = useMemo(() => {
@@ -174,17 +184,17 @@ function ShopPage() {
     return sorted;
   }, [activeCategory, q, activeFeel, activeRating, activePriceLabel, sort]);
 
-  // Sidebar filter component (shared between desktop & mobile)
-  const FilterControls = () => (
+  // Reusable Filter Block (Passed directly to eliminate focus drops)
+  const renderFilterContent = () => (
     <div className="space-y-7 text-sm">
-      {/* Search Input */}
+      {/* Search Input with Live Suggestions */}
       <div>
         <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Search</h4>
-        <form onSubmit={handleSearchSubmit} className="relative mt-2.5">
+        <div className="relative mt-2.5">
           <input
             type="text"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => handleSearchChange(e.target.value)}
             placeholder="Search comfort, model..."
             className="h-10 w-full rounded-xl border border-border bg-background pl-9 pr-8 text-xs outline-none transition-colors focus:border-foreground"
           />
@@ -201,7 +211,36 @@ function ShopPage() {
               <X className="size-4" />
             </button>
           )}
-        </form>
+        </div>
+
+        {/* Live Typing Recommendations Dropdown */}
+        {liveRecommendations.length > 0 && (
+          <div className="mt-2 rounded-xl border border-border bg-background p-2 shadow-lg">
+            <span className="block px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+              Recommendations
+            </span>
+            <div className="mt-1 space-y-1">
+              {liveRecommendations.map((prod) => (
+                <Link
+                  key={prod.id}
+                  to="/product/$id"
+                  params={{ id: prod.id }}
+                  onClick={() => setMobileFilterOpen(false)}
+                  className="flex items-center gap-2.5 rounded-lg p-1.5 transition-colors hover:bg-secondary"
+                >
+                  <img src={prod.image} alt="" className="size-9 rounded-md object-cover" />
+                  <div className="min-w-0 flex-1">
+                    <span className="block truncate text-xs font-semibold text-foreground">{prod.name}</span>
+                    <span className="block text-[10px] text-muted-foreground">
+                      {prod.activity} · {rupee(prod.price)}
+                    </span>
+                  </div>
+                  <ArrowRight className="size-3 text-muted-foreground" />
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Category Filter */}
@@ -383,7 +422,7 @@ function ShopPage() {
           </div>
         </div>
 
-        {/* Top Control Bar: Total count + Mobile Filter Button + Desktop Sort */}
+        {/* Top Control Bar */}
         <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-y border-border/80 py-3">
           <div className="flex items-center gap-3">
             {/* Mobile Filter Sheet Trigger Button */}
@@ -402,11 +441,11 @@ function ShopPage() {
                   )}
                 </button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-[85vw] max-w-sm overflow-y-auto p-6">
+              <SheetContent side="left" className="z-[100] w-[85vw] max-w-sm overflow-y-auto p-6">
                 <SheetHeader className="mb-6 border-b border-border pb-4 text-left">
                   <SheetTitle className="text-base font-bold">Filter Mattresses</SheetTitle>
                 </SheetHeader>
-                <FilterControls />
+                {renderFilterContent()}
               </SheetContent>
             </Sheet>
 
@@ -438,7 +477,7 @@ function ShopPage() {
           </div>
         </div>
 
-        {/* Main Content Area: Left Sticky Sidebar + Right Product Grid */}
+        {/* Main Content Area */}
         <div className="mt-8 flex gap-8 xl:gap-12">
           {/* Desktop Left-Side Filter Sidebar */}
           <aside className="hidden w-60 xl:w-68 shrink-0 lg:block">
@@ -455,13 +494,12 @@ function ShopPage() {
                   </button>
                 )}
               </div>
-              <FilterControls />
+              {renderFilterContent()}
             </div>
           </aside>
 
           {/* Right Column: Active Chips + Product Cards Grid */}
           <main className="flex-1 min-w-0">
-            {/* Active Filter Chips Bar */}
             {activeFilterCount > 0 && (
               <div className="mb-6 flex flex-wrap items-center gap-1.5">
                 <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mr-1">
@@ -485,7 +523,7 @@ function ShopPage() {
                     onClick={() => updateSearch((prev) => ({ ...prev, feel: undefined }))}
                     className="inline-flex items-center gap-1 rounded-full border border-border bg-secondary px-2.5 py-1 text-xs font-medium text-foreground transition-colors hover:border-foreground"
                   >
-                    <span>Feel: {activeFeel}</span>
+                    <span>{activeFeel}</span>
                     <X className="size-3" />
                   </button>
                 )}
@@ -529,64 +567,34 @@ function ShopPage() {
                 <button
                   type="button"
                   onClick={clearAllFilters}
-                  className="ml-1 text-xs font-semibold text-muted-foreground hover:text-foreground underline"
+                  className="ml-2 text-xs font-semibold text-muted-foreground underline hover:text-foreground"
                 >
                   Clear all
                 </button>
               </div>
             )}
 
-            {/* Product Cards Grid */}
-            {filtered.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-border py-20 text-center">
-                <p className="text-base font-semibold text-foreground">No mattresses match your selected filters</p>
-                <p className="mt-1 text-xs text-muted-foreground">Try removing some filters to see more results.</p>
+            {/* Product Grid */}
+            {filtered.length > 0 ? (
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+                {filtered.map((product) => (
+                  <ProductCard key={product.id} product={product} ratio="aspect-square" />
+                ))}
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-dashed border-border py-16 text-center">
+                <p className="text-base font-semibold text-foreground">No mattresses match your filters</p>
+                <p className="mt-1 text-xs text-muted-foreground">Try clearing your filters or search terms.</p>
                 <button
                   type="button"
                   onClick={clearAllFilters}
-                  className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-xs font-bold text-bone hover:bg-[#ADF831] hover:text-ink"
+                  className="mt-5 rounded-full bg-ink px-6 py-2.5 text-xs font-semibold text-bone transition-colors hover:bg-[#ADF831] hover:text-ink"
                 >
-                  <RotateCcw className="size-3.5" />
-                  Reset all filters
+                  Reset All Filters
                 </button>
-              </div>
-            ) : (
-              <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5 xl:grid-cols-3">
-                {filtered.map((p) => (
-                  <ProductCard key={p.id} product={p} />
-                ))}
               </div>
             )}
           </main>
-        </div>
-
-        {/* Shop By Category Showcase at the Bottom */}
-        <div className="mt-20 border-t border-border pt-10">
-          <h2 className="display-md">Explore Collections</h2>
-          <div className="mt-6 grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
-            {categories.map((cat) => (
-              <Link
-                key={cat.name}
-                to="/shop"
-                search={{ c: cat.name }}
-                className="group relative block aspect-[3/4] overflow-hidden rounded-2xl bg-secondary"
-              >
-                <img
-                  src={cat.image}
-                  alt={`${cat.name} collection`}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-700 ease-[var(--ease-brand)] group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/85 to-transparent" />
-                <div className="absolute inset-x-4 bottom-4 text-bone">
-                  <h3 className="font-display text-xl sm:text-2xl leading-none font-extrabold tracking-[-0.03em] uppercase">
-                    {cat.name}
-                  </h3>
-                  <p className="label-xs mt-2 text-concrete">{cat.count} models</p>
-                </div>
-              </Link>
-            ))}
-          </div>
         </div>
       </div>
     </Shell>
