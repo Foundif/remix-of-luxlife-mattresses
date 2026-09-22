@@ -17,11 +17,16 @@ export function NewThisWeek() {
   return (
     <section id="new-this-week" className="bg-background py-14 md:py-20">
       <div className="edge flex flex-wrap items-end justify-between gap-4">
-        <Reveal><h2 className="display-md">New Comforts</h2></Reveal>
+        <Reveal>
+          <h2 className="display-md">New Comforts</h2>
+        </Reveal>
         <div className="flex items-center gap-3">
           <a href="#best-sellers" className="group hidden items-center gap-2 sm:inline-flex">
             <span className="label-xs">Shop all</span>
-            <ArrowRight className="size-4 transition-transform duration-500 group-hover:translate-x-1" strokeWidth={1.8} />
+            <ArrowRight
+              className="size-4 transition-transform duration-500 group-hover:translate-x-1"
+              strokeWidth={1.8}
+            />
           </a>
           <div className="flex items-center gap-2">
             <button
@@ -50,6 +55,7 @@ export function NewThisWeek() {
           <ProductCard
             key={p.id}
             product={p}
+            ratio="aspect-[4/3] sm:aspect-square"
             className="w-[74vw] shrink-0 snap-start sm:w-[46vw] lg:w-[30vw] xl:w-[23vw]"
           />
         ))}
@@ -62,10 +68,15 @@ export function BestSellersGrid() {
   return (
     <section id="best-sellers" className="edge bg-background pb-16 md:pb-24">
       <div className="flex flex-wrap items-end justify-between gap-4 border-t border-border pt-10">
-        <Reveal><h2 className="display-md">Best Sellers</h2></Reveal>
+        <Reveal>
+          <h2 className="display-md">Best Sellers</h2>
+        </Reveal>
         <a href="#new-this-week" className="group inline-flex items-center gap-2">
           <span className="label-xs">Shop all</span>
-          <ArrowRight className="size-4 transition-transform duration-500 group-hover:translate-x-1" strokeWidth={1.8} />
+          <ArrowRight
+            className="size-4 transition-transform duration-500 group-hover:translate-x-1"
+            strokeWidth={1.8}
+          />
         </a>
       </div>
       <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 md:gap-x-6 lg:grid-cols-4">

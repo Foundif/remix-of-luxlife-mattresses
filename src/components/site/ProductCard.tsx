@@ -24,7 +24,7 @@ const badgeConfig: Record<NonNullable<Product["badge"]>, { label: string; classN
 export function ProductCard({
   product,
   className,
-  ratio = "aspect-[3/4] sm:aspect-[4/5]",
+  ratio = "aspect-square",
 }: {
   product: Product;
   className?: string;
@@ -41,7 +41,7 @@ export function ProductCard({
         className,
       )}
     >
-      {/* Taller Visual Image Media Container */}
+      {/* Visual Image Media Container (Golden Square Ratio) */}
       <div className={cn("relative overflow-hidden bg-secondary/40", ratio)}>
         <Link
           to="/product/$id"
@@ -95,22 +95,22 @@ export function ProductCard({
           />
         </button>
 
-        {/* Sleek Quick Add To Bag Pill Button */}
+        {/* Quick Add To Bag Pill Button */}
         <button
           type="button"
           onClick={() => add(product)}
-          className="absolute inset-x-2 sm:inset-x-3 bottom-2 sm:bottom-3 z-10 flex h-8 sm:h-10 items-center justify-center gap-1.5 rounded-full bg-ink px-3 text-bone shadow-md transition-all duration-300 ease-[var(--ease-brand)] hover:scale-[1.02] hover:bg-[#ADF831] hover:text-ink active:scale-95"
+          className="absolute inset-x-2.5 sm:inset-x-3 bottom-2.5 sm:bottom-3 z-10 flex h-8 sm:h-9.5 items-center justify-center gap-1.5 rounded-full bg-ink px-3 text-bone shadow-md transition-all duration-300 ease-[var(--ease-brand)] hover:scale-[1.02] hover:bg-[#ADF831] hover:text-ink active:scale-95"
         >
           <Plus className="size-3.5 sm:size-4 shrink-0" strokeWidth={2.5} />
           <span className="text-[11px] sm:text-xs font-bold tracking-tight">Add to Bag</span>
         </button>
       </div>
 
-      {/* Product Details Section with Balanced Padding */}
-      <div className="flex flex-1 flex-col justify-between p-3 sm:p-4.5">
+      {/* Product Details Section */}
+      <div className="flex flex-1 flex-col justify-between p-3 sm:p-4">
         <div>
           {/* Rating + Firmness Spec Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-1">
+          <div className="flex items-center justify-between gap-1">
             <div className="flex items-center gap-1">
               <Star className="size-3 sm:size-3.5 fill-[#ADF831] text-[#ADF831]" />
               <span className="text-[11px] sm:text-xs font-bold text-foreground">{product.rating.toFixed(1)}</span>
@@ -121,13 +121,13 @@ export function ProductCard({
             {product.activity && (
               <span className="inline-flex items-center gap-1 rounded-full bg-secondary px-1.5 py-0.5 text-[9px] sm:text-[10px] font-medium text-muted-foreground">
                 <span className="size-1 sm:size-1.5 rounded-full bg-[#ADF831]" />
-                <span className="truncate max-w-[75px] sm:max-w-none">{product.activity}</span>
+                <span className="truncate max-w-[70px] sm:max-w-none">{product.activity}</span>
               </span>
             )}
           </div>
 
           {/* Product Title */}
-          <h3 className="mt-1.5 sm:mt-2 text-xs sm:text-base font-bold tracking-tight text-foreground line-clamp-1">
+          <h3 className="mt-1.5 sm:mt-2 text-xs sm:text-sm font-bold tracking-tight text-foreground line-clamp-1">
             <Link to="/product/$id" params={{ id: product.id }} className="hover:underline">
               {product.name}
             </Link>
@@ -139,21 +139,20 @@ export function ProductCard({
           </p>
         </div>
 
-        {/* Pricing Block */}
-        <div className="mt-3 flex items-baseline justify-between border-t border-border/50 pt-2.5">
-          <div className="flex items-baseline gap-1.5">
-            <span className="text-sm font-extrabold tracking-tight text-foreground sm:text-lg">
+        {/* Premium Unbreakable Pricing Block */}
+        <div className="mt-2.5 border-t border-border/50 pt-2">
+          <div className="flex items-baseline justify-between gap-1">
+            <span className="text-sm sm:text-base font-extrabold tracking-tight text-foreground">
               {rupee(product.price)}
             </span>
-            {product.mrp && (
-              <span className="text-[10px] sm:text-xs text-muted-foreground line-through">{rupee(product.mrp)}</span>
+            {off > 0 && (
+              <span className="shrink-0 rounded-full bg-[#ADF831] px-1.5 py-0.5 text-[9px] sm:text-[10px] font-black tracking-tight text-ink shadow-xs">
+                {off}% OFF
+              </span>
             )}
           </div>
-
-          {off > 0 && (
-            <span className="rounded-full bg-[#ADF831]/20 px-1.5 sm:px-2 py-0.5 text-[9px] sm:text-[11px] font-black text-ink dark:text-[#ADF831]">
-              {off}% OFF
-            </span>
+          {product.mrp && (
+            <p className="mt-0.5 text-[10px] sm:text-[11px] text-muted-foreground line-through">{rupee(product.mrp)}</p>
           )}
         </div>
       </div>
