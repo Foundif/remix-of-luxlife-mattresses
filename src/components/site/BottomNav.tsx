@@ -13,6 +13,11 @@ export function BottomNav() {
   const { user } = useAuth();
   const [searchOpen, setSearchOpen] = useState(false);
 
+  // Hide the standard 5-tab bar on single product pages
+  if (pathname.startsWith("/product/")) {
+    return null;
+  }
+
   const isHome = pathname === "/";
   const isShop = pathname.startsWith("/shop");
   const isAccount = pathname === "/account" || pathname === "/auth";
@@ -21,56 +26,39 @@ export function BottomNav() {
     <>
       <nav
         aria-label="Mobile navigation"
-        className="fixed inset-x-3 z-[55] mx-auto max-w-md rounded-3xl border border-border/70 bg-background/90 p-1.5 shadow-[0_12px_40px_-8px_rgba(0,0,0,0.22)] backdrop-blur-2xl transition-all md:hidden"
-        style={{ bottom: "max(0.75rem, env(safe-area-inset-bottom, 0.75rem))" }}
+        className="fixed inset-x-4 z-[55] mx-auto max-w-sm rounded-full border border-border/70 bg-background/95 p-1.5 shadow-[0_16px_40px_-6px_rgba(0,0,0,0.28)] backdrop-blur-2xl transition-all md:hidden"
+        style={{ bottom: "max(1rem, env(safe-area-inset-bottom, 1rem))" }}
       >
-        <div className="grid grid-cols-5 items-center justify-items-center">
+        <div className="flex items-center justify-around gap-1">
           {/* Home */}
           <Link
             to="/"
             aria-current={isHome ? "page" : undefined}
-            className="group flex w-full flex-col items-center justify-center gap-0.5 py-1 text-center transition-all"
+            className={cn(
+              "flex items-center justify-center transition-all duration-300",
+              isHome
+                ? "gap-1.5 rounded-full bg-volt px-4 py-2 text-xs font-bold text-ink shadow-sm"
+                : "p-2.5 text-muted-foreground hover:text-foreground",
+            )}
           >
-            <span
-              className={cn(
-                "flex h-7 w-12 items-center justify-center rounded-full transition-all duration-300",
-                isHome ? "bg-volt text-ink shadow-sm" : "text-muted-foreground group-hover:text-foreground",
-              )}
-            >
-              <Home className="size-4 shrink-0" strokeWidth={isHome ? 2.4 : 1.8} />
-            </span>
-            <span
-              className={cn(
-                "text-[10px] tracking-tight transition-colors",
-                isHome ? "font-bold text-foreground" : "font-medium text-muted-foreground",
-              )}
-            >
-              Home
-            </span>
+            <Home className="size-4 shrink-0" strokeWidth={isHome ? 2.5 : 1.8} />
+            {isHome && <span className="tracking-tight">Home</span>}
           </Link>
 
           {/* Shop */}
           <Link
             to="/shop"
+            search={{}}
             aria-current={isShop ? "page" : undefined}
-            className="group flex w-full flex-col items-center justify-center gap-0.5 py-1 text-center transition-all"
+            className={cn(
+              "flex items-center justify-center transition-all duration-300",
+              isShop
+                ? "gap-1.5 rounded-full bg-volt px-4 py-2 text-xs font-bold text-ink shadow-sm"
+                : "p-2.5 text-muted-foreground hover:text-foreground",
+            )}
           >
-            <span
-              className={cn(
-                "flex h-7 w-12 items-center justify-center rounded-full transition-all duration-300",
-                isShop ? "bg-volt text-ink shadow-sm" : "text-muted-foreground group-hover:text-foreground",
-              )}
-            >
-              <Store className="size-4 shrink-0" strokeWidth={isShop ? 2.4 : 1.8} />
-            </span>
-            <span
-              className={cn(
-                "text-[10px] tracking-tight transition-colors",
-                isShop ? "font-bold text-foreground" : "font-medium text-muted-foreground",
-              )}
-            >
-              Shop
-            </span>
+            <Store className="size-4 shrink-0" strokeWidth={isShop ? 2.5 : 1.8} />
+            {isShop && <span className="tracking-tight">Shop</span>}
           </Link>
 
           {/* Search */}
@@ -78,43 +66,30 @@ export function BottomNav() {
             type="button"
             onClick={() => setSearchOpen(true)}
             aria-label="Search mattresses"
-            className="group flex w-full flex-col items-center justify-center gap-0.5 py-1 text-center transition-all"
+            className={cn(
+              "flex items-center justify-center transition-all duration-300",
+              searchOpen
+                ? "gap-1.5 rounded-full bg-volt px-4 py-2 text-xs font-bold text-ink shadow-sm"
+                : "p-2.5 text-muted-foreground hover:text-foreground",
+            )}
           >
-            <span
-              className={cn(
-                "flex h-7 w-12 items-center justify-center rounded-full transition-all duration-300",
-                searchOpen ? "bg-volt text-ink shadow-sm" : "text-muted-foreground group-hover:text-foreground",
-              )}
-            >
-              <Search className="size-4 shrink-0" strokeWidth={1.8} />
-            </span>
-            <span className="text-[10px] font-medium tracking-tight text-muted-foreground transition-colors group-hover:text-foreground">
-              Search
-            </span>
+            <Search className="size-4 shrink-0" strokeWidth={searchOpen ? 2.5 : 1.8} />
+            {searchOpen && <span className="tracking-tight">Search</span>}
           </button>
 
           {/* Account */}
           <Link
             to={user ? "/account" : "/auth"}
             aria-current={isAccount ? "page" : undefined}
-            className="group flex w-full flex-col items-center justify-center gap-0.5 py-1 text-center transition-all"
+            className={cn(
+              "flex items-center justify-center transition-all duration-300",
+              isAccount
+                ? "gap-1.5 rounded-full bg-volt px-4 py-2 text-xs font-bold text-ink shadow-sm"
+                : "p-2.5 text-muted-foreground hover:text-foreground",
+            )}
           >
-            <span
-              className={cn(
-                "flex h-7 w-12 items-center justify-center rounded-full transition-all duration-300",
-                isAccount ? "bg-volt text-ink shadow-sm" : "text-muted-foreground group-hover:text-foreground",
-              )}
-            >
-              <User className="size-4 shrink-0" strokeWidth={isAccount ? 2.4 : 1.8} />
-            </span>
-            <span
-              className={cn(
-                "text-[10px] tracking-tight transition-colors",
-                isAccount ? "font-bold text-foreground" : "font-medium text-muted-foreground",
-              )}
-            >
-              Account
-            </span>
+            <User className="size-4 shrink-0" strokeWidth={isAccount ? 2.5 : 1.8} />
+            {isAccount && <span className="tracking-tight">Account</span>}
           </Link>
 
           {/* Bag */}
@@ -122,19 +97,14 @@ export function BottomNav() {
             type="button"
             onClick={() => setOpen(true)}
             aria-label={`Open bag with ${count} items`}
-            className="group flex w-full flex-col items-center justify-center gap-0.5 py-1 text-center transition-all"
+            className="relative flex items-center justify-center p-2.5 text-muted-foreground transition-all duration-300 hover:text-foreground"
           >
-            <span className="relative flex h-7 w-12 items-center justify-center rounded-full text-muted-foreground transition-all duration-300 group-hover:text-foreground">
-              <ShoppingBag className="size-4 shrink-0" strokeWidth={1.8} />
-              {count > 0 && (
-                <span className="absolute -top-1 -right-0.5 grid min-w-4 place-items-center rounded-full bg-volt px-1 text-[9px] font-bold leading-4 text-ink shadow-sm">
-                  {count > 99 ? "99+" : count}
-                </span>
-              )}
-            </span>
-            <span className="text-[10px] font-medium tracking-tight text-muted-foreground transition-colors group-hover:text-foreground">
-              Bag
-            </span>
+            <ShoppingBag className="size-4 shrink-0" strokeWidth={1.8} />
+            {count > 0 && (
+              <span className="absolute top-1 right-1 grid min-w-4 place-items-center rounded-full bg-volt px-1 text-[9px] font-bold leading-4 text-ink shadow-sm">
+                {count > 99 ? "99+" : count}
+              </span>
+            )}
           </button>
         </div>
       </nav>
