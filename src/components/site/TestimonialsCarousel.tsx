@@ -1,6 +1,4 @@
-import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Quote, Star } from "lucide-react";
 
 const testimonials = [
   {
@@ -59,53 +57,38 @@ const testimonials = [
   },
 ];
 
+// Duplicate items for a seamless infinite loop
+const marqueeItems = [...testimonials, ...testimonials];
+
 export function TestimonialsCarousel() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-  const [isPaused, setIsPaused] = useState(false);
-
-  const updateScrollState = () => {
-    if (!scrollRef.current) return;
-    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-    setCanScrollLeft(scrollLeft > 10);
-    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
-  };
-
-  const scrollByCard = (direction: "left" | "right") => {
-    if (!scrollRef.current) return;
-    const cardWidth = scrollRef.current.firstElementChild?.clientWidth ?? 380;
-    const gap = 24;
-    const offset = (cardWidth + gap) * (direction === "left" ? -1 : 1);
-    scrollRef.current.scrollBy({ left: offset, behavior: "smooth" });
-  };
-
-  // Auto-slide every 4.5 seconds
-  useEffect(() => {
-    if (isPaused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const interval = window.setInterval(() => {
-      if (!scrollRef.current) return;
-      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-      if (scrollLeft + clientWidth >= scrollWidth - 20) {
-        scrollRef.current.scrollTo({ left: 0, behavior: "smooth" });
-      } else {
-        scrollByCard("right");
-      }
-    }, 4500);
-
-    return () => window.clearInterval(interval);
-  }, [isPaused]);
-
   return (
-    <section
-      className="relative overflow-hidden bg-ink py-24 md:py-32 text-bone"
-      aria-label="Customer reviews"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-      onTouchStart={() => setIsPaused(true)}
-      onTouchEnd={() => setIsPaused(false)}
-    >
+    <section className="relative overflow-hidden bg-ink py-24 md:py-32 text-bone" aria-label="Customer reviews">
+      <style>{`
+        @keyframes marqueeScroll {
+          0% {
+            transform: translateX(0%);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+        .animate-marquee-smooth {
+          display: flex;
+          width: max-content;
+          animation: marqueeScroll 36s linear infinite;
+        }
+        .animate-marquee-smooth:hover,
+        .animate-marquee-smooth:active {
+          animation-play-state: paused;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .animate-marquee-smooth {
+            animation: none;
+            overflow-x: auto;
+          }
+        }
+      `}</style>
+
       {/* Subtle radial ambient glow */}
       <div
         className="pointer-events-none absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-volt/5 blur-[120px]"
@@ -114,7 +97,7 @@ export function TestimonialsCarousel() {
 
       <div className="edge">
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_1.6fr] xl:gap-16">
-          {/* Left Column: Architectural Brand Statement & Metrics */}
+          {/* Left Column: Brand Statement & Metrics */}
           <div className="relative max-w-xl">
             {/* Blufacade-style tag pill */}
             <div className="mb-6 flex items-center gap-3">
@@ -130,7 +113,7 @@ export function TestimonialsCarousel() {
 
             <p className="mt-6 text-base md:text-lg leading-relaxed text-concrete">
               Handcrafted in our Salem factory with zero middleman markups. Discover why homeowners, doctors, and
-              athletes across Tamil Nadu choose Luxlife.
+              families across Tamil Nadu choose Luxlife.
             </p>
 
             {/* Metrics counter bar */}
@@ -153,47 +136,23 @@ export function TestimonialsCarousel() {
               </div>
             </div>
 
-            {/* Navigation Buttons */}
-            <div className="mt-8 flex items-center gap-3">
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => scrollByCard("left")}
-                disabled={!canScrollLeft}
-                aria-label="Previous reviews"
-                className="size-11 rounded-full border-white/20 bg-white/5 text-bone hover:bg-volt hover:text-ink hover:border-volt disabled:opacity-30 transition-all"
-              >
-                <ChevronLeft className="size-5" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => scrollByCard("right")}
-                disabled={!canScrollRight}
-                aria-label="Next reviews"
-                className="size-11 rounded-full border-white/20 bg-white/5 text-bone hover:bg-volt hover:text-ink hover:border-volt disabled:opacity-30 transition-all"
-              >
-                <ChevronRight className="size-5" />
-              </Button>
-              <span className="ml-2 text-xs font-medium text-concrete/70">Swipe or use arrows</span>
+            <div className="mt-6 flex items-center gap-2 text-xs font-medium text-concrete/70">
+              <span className="size-2 rounded-full bg-volt animate-pulse" />
+              <span>Hover or tap any card to pause</span>
             </div>
           </div>
 
-          {/* Right Column: Cards Carousel with Edge Fades */}
+          {/* Right Column: Continuous Smooth Marquee Rail */}
           <div className="relative w-full overflow-hidden">
             {/* Left & Right gradient edge masks */}
-            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-ink to-transparent" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-ink to-transparent" />
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-ink to-transparent" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-ink to-transparent" />
 
-            <div
-              ref={scrollRef}
-              onScroll={updateScrollState}
-              className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-none py-4 px-2"
-            >
-              {testimonials.map((review, i) => (
+            <div className="animate-marquee-smooth gap-6 py-4 px-2">
+              {marqueeItems.map((review, i) => (
                 <article
                   key={i}
-                  className="group relative flex w-[300px] sm:w-[380px] shrink-0 snap-start flex-col justify-between rounded-3xl border border-white/10 bg-white/[0.04] p-8 backdrop-blur-xl transition-all duration-300 hover:border-volt/60 hover:bg-white/[0.08] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)]"
+                  className="group relative flex w-[300px] sm:w-[380px] shrink-0 flex-col justify-between rounded-3xl border border-white/10 bg-white/[0.04] p-8 backdrop-blur-xl transition-all duration-300 hover:border-volt/60 hover:bg-white/[0.08] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)]"
                 >
                   {/* Decorative quote icon watermark */}
                   <Quote
