@@ -14,9 +14,9 @@ type ShopSearch = { c?: string | undefined; sort?: string | undefined; q?: strin
 
 export const Route = createFileRoute("/shop")({
   validateSearch: (search: Record<string, unknown>): ShopSearch => ({
-    c: typeof search['c'] === "string" ? search['c'] : undefined,
-    sort: typeof search['sort'] === "string" ? search['sort'] : undefined,
-    q: typeof search['q'] === "string" ? search['q'] : undefined,
+    c: typeof search["c"] === "string" ? search["c"] : undefined,
+    sort: typeof search["sort"] === "string" ? search["sort"] : undefined,
+    q: typeof search["q"] === "string" ? search["q"] : undefined,
   }),
   head: () => ({
     meta: [
@@ -144,9 +144,7 @@ function ShopPage() {
               search={{ c: chip }}
               className={cn(
                 "label-xs border border-border px-4 py-2 transition-colors",
-                c?.toLowerCase() === chip.toLowerCase()
-                  ? "bg-primary text-primary-foreground"
-                  : "hover:bg-secondary",
+                c?.toLowerCase() === chip.toLowerCase() ? "bg-primary text-primary-foreground" : "hover:bg-secondary",
               )}
             >
               {chip}
@@ -159,7 +157,7 @@ function ShopPage() {
             No products match that search. Try another term.
           </p>
         ) : (
-          <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-10 md:gap-x-6 lg:grid-cols-4">
+          <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 md:gap-6 lg:grid-cols-4">
             {filtered.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}
