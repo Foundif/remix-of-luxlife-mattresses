@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { Heart, Minus, Plus, ShieldCheck, Star, Truck, Undo2 } from "lucide-react";
+import { Heart, Minus, Plus, ShieldCheck, Star, Truck, ShoppingBag, Undo2 } from "lucide-react";
 import { toast } from "sonner";
 import { Shell } from "@/components/site/Shell";
 import { ProductCard } from "@/components/site/ProductCard";
@@ -263,6 +263,28 @@ function ProductPage() {
             ))}
           </div>
         </section>
+      </div>
+
+      {/* Sticky Mobile Rounded Add to Bag Bar */}
+      <div
+        className="fixed inset-x-0 bottom-0 z-50 flex items-center justify-between border-t border-border bg-background/95 px-5 py-3 shadow-[0_-8px_30px_rgba(0,0,0,0.12)] backdrop-blur-xl md:hidden"
+        style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom, 0.75rem))" }}
+      >
+        <div className="flex flex-col">
+          <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+            {size ? `${size} size` : "Select a size"}
+          </span>
+          <span className="text-lg font-bold text-foreground">₹{product.price.toLocaleString("en-IN")}</span>
+        </div>
+
+        <button
+          type="button"
+          onClick={handleAdd}
+          className="flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-xs font-semibold uppercase tracking-wider text-bone shadow-md transition-all duration-300 hover:bg-volt hover:text-ink active:scale-95"
+        >
+          <ShoppingBag className="size-4" />
+          <span>Add to bag</span>
+        </button>
       </div>
     </Shell>
   );
