@@ -112,7 +112,6 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    padding-bottom: calc(4rem + env(safe-area-inset-bottom));
   }
 
   @media (min-width: 768px) {
