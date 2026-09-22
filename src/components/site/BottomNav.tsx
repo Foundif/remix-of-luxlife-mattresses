@@ -1,5 +1,4 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Search, ShoppingBag, User } from "lucide-react";
 import { useState } from "react";
 
 import { StoreSearch } from "@/components/site/StoreSearch";
@@ -7,59 +6,59 @@ import { useCart } from "@/components/site/cart-store";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
-// Custom Home icon with open-door cutout
-function HomeIcon({ filled, className }: { filled: boolean; className?: string }) {
-  if (filled) {
-    return (
-      <svg viewBox="0 0 24 24" className={className} fill="currentColor">
-        {/* Roof + walls with cut-out open door */}
-        <path d="M12 2.5a1 1 0 0 0-.64.24l-8 6.5A1 1 0 0 0 4 11h1v9a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-9h1a1 1 0 0 0 .64-1.76l-8-6.5A1 1 0 0 0 12 2.5Z" />
-      </svg>
-    );
-  }
+// 1. Solid Home Icon with open doorway
+function HomeIcon({ className }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      className={className}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-      <polyline points="9 22 9 12 15 12 15 22" />
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+      <path d="M12 2.5a1 1 0 0 0-.64.24l-8 6.5A1 1 0 0 0 4 11h1v9a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-9h1a1 1 0 0 0 .64-1.76l-8-6.5A1 1 0 0 0 12 2.5Z" />
     </svg>
   );
 }
 
-// Custom Shop icon with open entrance arch
-function ShopIcon({ filled, className }: { filled: boolean; className?: string }) {
-  if (filled) {
-    return (
-      <svg viewBox="0 0 24 24" className={className} fill="currentColor">
-        {/* Awning */}
-        <path d="M2 4a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1l-1 5a2.8 2.8 0 0 1-5 0 2.8 2.8 0 0 1-5 0 2.8 2.8 0 0 1-5 0L2 4Z" />
-        {/* Storefront with open door */}
-        <path d="M4 11.5h16V19a1.5 1.5 0 0 1-1.5 1.5H15v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5H5.5A1.5 1.5 0 0 1 4 19v-7.5Z" />
-      </svg>
-    );
-  }
+// 2. Solid Shop Icon with clean awning + open entrance doorway (fixed, no broken lines)
+function ShopIcon({ className }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      className={className}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7" />
-      <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-      <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4" />
-      <path d="M2 7h20" />
-      <path d="M22 7a3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1-3 3 3 3 0 0 1-3-3" />
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+      {/* Top awning */}
+      <path d="M3.5 3A1.5 1.5 0 0 0 2 4.5v1A2.5 2.5 0 0 0 4.5 8h15A2.5 2.5 0 0 0 22 5.5v-1A1.5 1.5 0 0 0 20.5 3h-17Z" />
+      {/* Storefront walls with open entrance doorway */}
+      <path d="M4 10h16v9a1.5 1.5 0 0 1-1.5 1.5H15v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5H5.5A1.5 1.5 0 0 1 4 19V10Z" />
+    </svg>
+  );
+}
+
+// 3. Solid Search Icon (filled magnifying glass)
+function SearchIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M10.5 3.5a7 7 0 1 0 4.38 12.46l4.83 4.83a1 1 0 0 0 1.41-1.42l-4.83-4.82A7 7 0 0 0 10.5 3.5Zm-5 7a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z"
+      />
+    </svg>
+  );
+}
+
+// 4. Solid User Icon (filled avatar)
+function UserIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+      <circle cx="12" cy="7" r="4.5" />
+      <path d="M4 19.5c0-3.5 3.5-5.5 8-5.5s8 2 8 5.5v.5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-.5Z" />
+    </svg>
+  );
+}
+
+// 5. Solid Shopping Bag Icon
+function BagIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M8.5 7V6a3.5 3.5 0 0 1 7 0v1h2.75a1 1 0 0 1 1 .91l1 12A2 2 0 0 1 18.26 22H5.74a2 2 0 0 1-1.99-2.09l1-12A1 1 0 0 1 5.75 7H8.5Zm2-1a1.5 1.5 0 0 1 3 0v1h-3V6Z"
+      />
     </svg>
   );
 }
@@ -70,7 +69,7 @@ export function BottomNav() {
   const { user } = useAuth();
   const [searchOpen, setSearchOpen] = useState(false);
 
-  // Hide the standard 5-tab bar on single product pages
+  // Auto-hide the standard 5-tab bar on single product pages
   if (pathname.startsWith("/product/")) {
     return null;
   }
@@ -98,7 +97,7 @@ export function BottomNav() {
                 : "px-2 py-1.5 text-muted-foreground hover:text-foreground",
             )}
           >
-            <HomeIcon filled={isHome} className="size-5 shrink-0 transition-all" />
+            <HomeIcon className="size-5 shrink-0 transition-all" />
             <span
               className={cn(
                 "text-[10px] tracking-tight transition-colors",
@@ -121,7 +120,7 @@ export function BottomNav() {
                 : "px-2 py-1.5 text-muted-foreground hover:text-foreground",
             )}
           >
-            <ShopIcon filled={isShop} className="size-5 shrink-0 transition-all" />
+            <ShopIcon className="size-5 shrink-0 transition-all" />
             <span
               className={cn(
                 "text-[10px] tracking-tight transition-colors",
@@ -144,12 +143,7 @@ export function BottomNav() {
                 : "px-2 py-1.5 text-muted-foreground hover:text-foreground",
             )}
           >
-            <Search
-              className={cn(
-                "size-5 shrink-0 transition-all",
-                searchOpen ? "fill-current stroke-[2.4]" : "fill-none stroke-[1.8]",
-              )}
-            />
+            <SearchIcon className="size-5 shrink-0 transition-all" />
             <span
               className={cn(
                 "text-[10px] tracking-tight transition-colors",
@@ -171,12 +165,7 @@ export function BottomNav() {
                 : "px-2 py-1.5 text-muted-foreground hover:text-foreground",
             )}
           >
-            <User
-              className={cn(
-                "size-5 shrink-0 transition-all",
-                isAccount ? "fill-current stroke-[1.5]" : "fill-none stroke-[1.8]",
-              )}
-            />
+            <UserIcon className="size-5 shrink-0 transition-all" />
             <span
               className={cn(
                 "text-[10px] tracking-tight transition-colors",
@@ -195,7 +184,7 @@ export function BottomNav() {
             className="flex flex-1 flex-col items-center justify-center gap-0.5 px-2 py-1.5 text-center text-muted-foreground transition-all duration-300 hover:text-foreground"
           >
             <span className="relative inline-flex items-center justify-center">
-              <ShoppingBag className="size-5 shrink-0 fill-none stroke-[1.8]" />
+              <BagIcon className="size-5 shrink-0 transition-all" />
               {count > 0 && (
                 <span className="absolute -top-1 -right-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#ADF831] px-1 text-[9px] font-black leading-none text-ink shadow-sm">
                   {count > 99 ? "99+" : count}

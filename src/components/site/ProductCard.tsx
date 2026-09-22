@@ -17,14 +17,14 @@ const badgeConfig: Record<NonNullable<Product["badge"]>, { label: string; classN
   },
   "LOW STOCK": {
     label: "SELLING FAST",
-    className: "bg-red-500/90 text-white font-bold backdrop-blur-md",
+    className: "bg-red-500/95 text-white font-bold backdrop-blur-md",
   },
 };
 
 export function ProductCard({
   product,
   className,
-  ratio = "aspect-[4/3] sm:aspect-square",
+  ratio = "aspect-[3/4] sm:aspect-[4/5]",
 }: {
   product: Product;
   className?: string;
@@ -37,12 +37,12 @@ export function ProductCard({
   return (
     <article
       className={cn(
-        "group relative flex flex-col overflow-hidden rounded-2xl border border-border/70 bg-card transition-all duration-300 ease-[var(--ease-brand)] hover:-translate-y-1 hover:border-border hover:shadow-[0_16px_36px_-12px_rgba(0,0,0,0.14)]",
+        "group relative flex flex-col overflow-hidden rounded-xl sm:rounded-2xl border border-border/70 bg-card transition-all duration-300 ease-[var(--ease-brand)] hover:-translate-y-1 hover:border-border hover:shadow-[0_16px_36px_-12px_rgba(0,0,0,0.14)]",
         className,
       )}
     >
-      {/* Visual Image Media Container */}
-      <div className={cn("relative overflow-hidden bg-secondary/50", ratio)}>
+      {/* Taller Visual Image Media Container */}
+      <div className={cn("relative overflow-hidden bg-secondary/40", ratio)}>
         <Link
           to="/product/$id"
           params={{ id: product.id }}
@@ -66,10 +66,10 @@ export function ProductCard({
 
         {/* Floating Top Badge */}
         {product.badge && (
-          <div className="absolute top-3 left-3 z-10">
+          <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10">
             <span
               className={cn(
-                "inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] tracking-wider uppercase",
+                "inline-flex items-center rounded-full px-2 py-0.5 text-[9px] sm:text-[10px] tracking-wider uppercase",
                 badgeConfig[product.badge]?.className,
               )}
             >
@@ -84,67 +84,74 @@ export function ProductCard({
           aria-label={`Save ${product.name}`}
           aria-pressed={saved}
           onClick={() => setSaved((v) => !v)}
-          className="absolute top-3 right-3 z-10 flex size-9 items-center justify-center rounded-full border border-white/20 bg-background/80 text-foreground backdrop-blur-md transition-transform duration-200 hover:scale-110 active:scale-95"
+          className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10 flex size-7 sm:size-8 items-center justify-center rounded-full border border-white/20 bg-background/85 text-foreground shadow-sm backdrop-blur-md transition-transform duration-200 hover:scale-110 active:scale-95"
         >
           <Heart
-            className={cn("size-4 transition-colors", saved ? "fill-red-500 text-red-500" : "text-foreground")}
+            className={cn(
+              "size-3.5 sm:size-4 transition-colors",
+              saved ? "fill-red-500 text-red-500" : "text-foreground",
+            )}
             strokeWidth={2}
           />
         </button>
 
-        {/* Quick Add To Bag Pill Button */}
+        {/* Sleek Quick Add To Bag Pill Button */}
         <button
           type="button"
           onClick={() => add(product)}
-          className="absolute inset-x-3 bottom-3 z-10 flex h-11 items-center justify-center gap-2 rounded-full bg-ink px-4 text-bone shadow-lg transition-all duration-300 ease-[var(--ease-brand)] hover:scale-[1.02] hover:bg-[#ADF831] hover:text-ink active:scale-95"
+          className="absolute inset-x-2 sm:inset-x-3 bottom-2 sm:bottom-3 z-10 flex h-8 sm:h-10 items-center justify-center gap-1.5 rounded-full bg-ink px-3 text-bone shadow-md transition-all duration-300 ease-[var(--ease-brand)] hover:scale-[1.02] hover:bg-[#ADF831] hover:text-ink active:scale-95"
         >
-          <Plus className="size-4" strokeWidth={2.5} />
-          <span className="text-xs font-bold tracking-tight">Add to Bag</span>
+          <Plus className="size-3.5 sm:size-4 shrink-0" strokeWidth={2.5} />
+          <span className="text-[11px] sm:text-xs font-bold tracking-tight">Add to Bag</span>
         </button>
       </div>
 
-      {/* Product Details Section */}
-      <div className="flex flex-1 flex-col justify-between p-4 sm:p-5">
+      {/* Product Details Section with Balanced Padding */}
+      <div className="flex flex-1 flex-col justify-between p-3 sm:p-4.5">
         <div>
           {/* Rating + Firmness Spec Bar */}
-          <div className="flex items-center justify-between gap-2">
+          <div className="flex flex-wrap items-center justify-between gap-1">
             <div className="flex items-center gap-1">
-              <Star className="size-3.5 fill-[#ADF831] text-[#ADF831]" />
-              <span className="text-xs font-bold text-foreground">{product.rating.toFixed(1)}</span>
-              <span className="text-[11px] text-muted-foreground">({product.reviews})</span>
+              <Star className="size-3 sm:size-3.5 fill-[#ADF831] text-[#ADF831]" />
+              <span className="text-[11px] sm:text-xs font-bold text-foreground">{product.rating.toFixed(1)}</span>
+              <span className="text-[10px] sm:text-[11px] text-muted-foreground">({product.reviews})</span>
             </div>
 
-            {/* Firmness / Feel Tag */}
+            {/* Firmness Tag */}
             {product.activity && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-secondary px-2 py-0.5 text-[10px] font-medium text-muted-foreground">
-                <span className="size-1.5 rounded-full bg-[#ADF831]" />
-                {product.activity}
+              <span className="inline-flex items-center gap-1 rounded-full bg-secondary px-1.5 py-0.5 text-[9px] sm:text-[10px] font-medium text-muted-foreground">
+                <span className="size-1 sm:size-1.5 rounded-full bg-[#ADF831]" />
+                <span className="truncate max-w-[75px] sm:max-w-none">{product.activity}</span>
               </span>
             )}
           </div>
 
           {/* Product Title */}
-          <h3 className="mt-2 text-base font-bold tracking-tight text-foreground transition-colors group-hover:text-foreground">
+          <h3 className="mt-1.5 sm:mt-2 text-xs sm:text-base font-bold tracking-tight text-foreground line-clamp-1">
             <Link to="/product/$id" params={{ id: product.id }} className="hover:underline">
               {product.name}
             </Link>
           </h3>
 
           {/* Category & Warranty Subtitle */}
-          <p className="mt-0.5 text-xs text-muted-foreground">{product.category} · 10-Yr Warranty</p>
+          <p className="mt-0.5 text-[10px] sm:text-xs text-muted-foreground truncate">
+            {product.category} · 10-Yr Warranty
+          </p>
         </div>
 
         {/* Pricing Block */}
-        <div className="mt-4 flex items-baseline justify-between border-t border-border/50 pt-3">
-          <div className="flex items-baseline gap-2">
-            <span className="text-base font-extrabold tracking-tight text-foreground sm:text-lg">
+        <div className="mt-3 flex items-baseline justify-between border-t border-border/50 pt-2.5">
+          <div className="flex items-baseline gap-1.5">
+            <span className="text-sm font-extrabold tracking-tight text-foreground sm:text-lg">
               {rupee(product.price)}
             </span>
-            {product.mrp && <span className="text-xs text-muted-foreground line-through">{rupee(product.mrp)}</span>}
+            {product.mrp && (
+              <span className="text-[10px] sm:text-xs text-muted-foreground line-through">{rupee(product.mrp)}</span>
+            )}
           </div>
 
           {off > 0 && (
-            <span className="rounded-full bg-[#ADF831]/20 px-2 py-0.5 text-[11px] font-black text-ink dark:text-[#ADF831]">
+            <span className="rounded-full bg-[#ADF831]/20 px-1.5 sm:px-2 py-0.5 text-[9px] sm:text-[11px] font-black text-ink dark:text-[#ADF831]">
               {off}% OFF
             </span>
           )}
