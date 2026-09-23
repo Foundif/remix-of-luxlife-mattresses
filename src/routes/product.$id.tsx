@@ -216,7 +216,12 @@ function ProductPage() {
                     <span className="text-xs font-bold">{item.dimension}″</span>
                     <span className="text-[10px] opacity-75">{item.label.split(" (")[0]}</span>
                     <span className="mt-1 text-[11px] font-semibold">
-                      ₹{(item.prices[thickness] ?? item.prices[product.thicknesses[0]!]).toLocaleString("en-IN")}
+                      ₹
+                      {(
+                        item.prices[thickness] ??
+                        item.prices[product.thicknesses[0] ?? ""] ??
+                        product.price
+                      ).toLocaleString("en-IN")}
                     </span>
                   </button>
                 ))}
