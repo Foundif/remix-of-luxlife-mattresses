@@ -173,7 +173,7 @@ function ShopPage() {
         list.sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
         break;
       case "new":
-        list.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
+        list.sort((a, b) => (b.badge === "NEW" ? 1 : 0) - (a.badge === "NEW" ? 1 : 0));
         break;
       default:
         // featured
