@@ -6,7 +6,7 @@ import { Footer } from "@/components/site/Footer";
 import { BestSellersGrid, NewThisWeek } from "@/components/site/HomeShop";
 import { OfferBanner, ShopByCategory } from "@/components/site/HomeSections";
 import { TestimonialsCarousel } from "@/components/site/TestimonialsCarousel";
-import { AnatomySection } from "@/components/site/AnatomySection";
+import { AnatomySection } from "@/components/site/Anatomysection";
 
 const title = "Luxlife Mattresses — Sleep Better, Live Better";
 const description =
