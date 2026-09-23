@@ -111,11 +111,12 @@ function ShopPage() {
   };
 
   // Recommended products while typing
+  // Recommended products while typing
   const liveRecommendations = useMemo(() => {
     const term = query.trim().toLowerCase();
     if (!term) return [];
     return products
-      .filter((p) => [p.name, p.category, p.activity, p.description].some((v) => v.toLowerCase().includes(term)))
+      .filter((p) => [p.name, p.category, p.activity].filter(Boolean).some((v) => v?.toLowerCase().includes(term)))
       .slice(0, 3);
   }, [query]);
 
