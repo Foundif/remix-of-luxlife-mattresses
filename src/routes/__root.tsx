@@ -1,6 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Outlet, Link, createRootRouteWithContext, useRouter, HeadContent, Scripts } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { WishlistProvider } from "@/components/site/wishlist-store";
+import { WishlistDrawer } from "@/components/site/WishlistDrawer";
 
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/lib/auth";
@@ -129,11 +131,14 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <CartProvider>
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-          <Outlet />
-          <FlyCart />
-          <BottomNav />
-          <Toaster position="bottom-right" richColors />
+          <WishlistProvider>
+            {/* Required: nested routes render here */}
+            <Outlet />
+            <FlyCart />
+            <WishlistDrawer />
+            <BottomNav />
+            <Toaster position="bottom-right" richColors />
+          </WishlistProvider>
         </CartProvider>
       </AuthProvider>
     </QueryClientProvider>
