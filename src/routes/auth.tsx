@@ -71,28 +71,9 @@ function AuthPage() {
 
   return (
     <Shell>
-      <div className="edge grid gap-12 py-14 md:py-20 lg:grid-cols-2 lg:gap-24">
-        <div>
-          <p className="label-xs text-muted-foreground">Member access</p>
-          <h1 className="display-md mt-4 max-w-[18ch]">
-            {mode === "login" ? "Welcome back to Luxlife" : "Become a Luxlife member"}
-          </h1>
-          <p className="mt-4 max-w-md text-sm text-muted-foreground">
-            Members get order tracking, faster checkout, early access to drops and free shipping on
-            orders above ₹999.
-          </p>
-          <ul className="mt-8 divide-y divide-border border-y border-border text-sm">
-            {["Track every order", "Save your addresses", "Early access to new drops", "Member-only offers"].map(
-              (t) => (
-                <li key={t} className="py-4 text-muted-foreground">
-                  {t}
-                </li>
-              ),
-            )}
-          </ul>
-        </div>
-
-        <div className="lg:max-w-md">
+      <div className="edge grid gap-10 py-8 sm:py-12 md:py-20 lg:grid-cols-2 lg:gap-24">
+        {/* Form Container: First on mobile (order-1), right column on desktop (lg:order-2) */}
+        <div className="order-1 lg:order-2 lg:max-w-md">
           <div className="flex border border-border">
             {(["login", "register"] as const).map((m) => (
               <button
@@ -100,7 +81,7 @@ function AuthPage() {
                 onClick={() => setMode(m)}
                 className={cn(
                   "label-xs flex-1 py-3.5 transition-colors",
-                  mode === m ? "bg-primary text-primary-foreground" : "hover:bg-secondary",
+                  mode === m ? "bg-primary text-primary-foreground font-semibold" : "hover:bg-secondary",
                 )}
               >
                 {m === "login" ? "Sign in" : "Join us"}
@@ -117,6 +98,7 @@ function AuthPage() {
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   autoComplete="name"
+                  placeholder="Enter your name"
                   className="mt-2 h-12 w-full border border-border bg-background px-4 text-sm outline-none focus:border-foreground"
                 />
               </label>
@@ -129,6 +111,7 @@ function AuthPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 autoComplete="email"
+                placeholder="name@example.com"
                 className="mt-2 h-12 w-full border border-border bg-background px-4 text-sm outline-none focus:border-foreground"
               />
             </label>
@@ -141,13 +124,14 @@ function AuthPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete={mode === "login" ? "current-password" : "new-password"}
+                placeholder="••••••••"
                 className="mt-2 h-12 w-full border border-border bg-background px-4 text-sm outline-none focus:border-foreground"
               />
             </label>
             <button
               type="submit"
               disabled={busy}
-              className="label-xs w-full bg-primary py-4 text-primary-foreground transition-colors duration-500 hover:bg-charcoal disabled:opacity-50"
+              className="label-xs w-full bg-primary py-4 text-primary-foreground font-semibold transition-colors duration-300 hover:opacity-90 disabled:opacity-50"
             >
               {mode === "login" ? "Sign in" : "Create account"}
             </button>
@@ -188,6 +172,30 @@ function AuthPage() {
               Keep shopping
             </Link>
           </p>
+        </div>
+
+        {/* Member Benefits Block: Bottom on mobile (order-2), left column on desktop (lg:order-1) */}
+        <div className="order-2 lg:order-1 border-t border-border pt-8 lg:border-t-0 lg:pt-0">
+          <p className="label-xs text-muted-foreground">Member access</p>
+          <h1 className="display-md mt-3 max-w-[18ch]">
+            {mode === "login" ? "Welcome back to Luxlife" : "Become a Luxlife member"}
+          </h1>
+          <p className="mt-3 max-w-md text-sm text-muted-foreground">
+            Members get order tracking, faster checkout, early access to new launches, and free delivery on orders above
+            ₹999.
+          </p>
+          <ul className="mt-6 divide-y divide-border border-y border-border text-sm">
+            {[
+              "Track every mattress order live",
+              "Save delivery addresses for quick re-order",
+              "Priority customer care via WhatsApp",
+              "Member-exclusive discounts & seasonal offers",
+            ].map((t) => (
+              <li key={t} className="py-3 text-muted-foreground">
+                {t}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </Shell>
