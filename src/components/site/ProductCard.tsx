@@ -1,3 +1,4 @@
+import { useWishlist } from "@/components/site/wishlist-store";
 import { Link } from "@tanstack/react-router";
 import { Heart, Plus, Star } from "lucide-react";
 import { useState } from "react";
@@ -31,7 +32,9 @@ export function ProductCard({
   ratio?: string;
 }) {
   const { add } = useCart();
-  const [saved, setSaved] = useState(false);
+    const { has, toggle } = useWishlist();
+  const saved = has(product.id);
+
   const off = product.mrp ? Math.round(((product.mrp - product.price) / product.mrp) * 100) : 0;
 
   return (
@@ -77,13 +80,16 @@ export function ProductCard({
             </span>
           </div>
         )}
-
         {/* Wishlist Heart Button */}
         <button
           type="button"
           aria-label={`Save ${product.name}`}
           aria-pressed={saved}
-          onClick={() => setSaved((v) => !v)}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggle(product);
+          }}
           className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10 flex size-7 sm:size-8 items-center justify-center rounded-full border border-white/20 bg-background/85 text-foreground shadow-sm backdrop-blur-md transition-transform duration-200 hover:scale-110 active:scale-95"
         >
           <Heart
@@ -94,6 +100,7 @@ export function ProductCard({
             strokeWidth={2}
           />
         </button>
+
 
         {/* Quick Add To Bag Pill Button */}
         <button
