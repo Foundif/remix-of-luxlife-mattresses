@@ -140,9 +140,9 @@ function ShopPage() {
       const catLower = activeCategory.toLowerCase();
       list = list.filter(
         (p) =>
-          p.category.toLowerCase().includes(catLower) ||
-          p.activity.toLowerCase().includes(catLower) ||
-          (catLower === "latex" && p.category.toLowerCase().includes("latex")),
+          p.category?.toLowerCase().includes(catLower) ||
+          p.activity?.toLowerCase().includes(catLower) ||
+          (catLower === "latex" && p.category?.toLowerCase().includes("latex")),
       );
     }
 
@@ -151,15 +151,15 @@ function ShopPage() {
       const term = q.trim().toLowerCase();
       list = list.filter(
         (p) =>
-          p.name.toLowerCase().includes(term) ||
-          p.category.toLowerCase().includes(term) ||
-          p.activity.toLowerCase().includes(term),
+          p.name?.toLowerCase().includes(term) ||
+          p.category?.toLowerCase().includes(term) ||
+          p.activity?.toLowerCase().includes(term),
       );
     }
 
     // Firmness / Feel
     if (activeFeel !== "All Feels") {
-      list = list.filter((p) => p.activity.toLowerCase() === activeFeel.toLowerCase());
+      list = list.filter((p) => p.activity?.toLowerCase() === activeFeel.toLowerCase());
     }
 
     // Rating
