@@ -53,12 +53,7 @@ const sorts = [
 ];
 
 // Replace lines 55-64 with actual client categories:
-const categoryList = [
-  "All Mattresses",
-  "Spring Mattress",
-  "Aurosoft Foam",
-  "Hybrid Eco",
-];
+const categoryList = ["All Mattresses", "Spring Mattress", "Aurosoft Foam", "Hybrid Eco"];
 const feelOptions = ["All Feels", "Plush", "Medium Soft", "Medium", "Medium Firm", "Firm", "Extra Firm"];
 
 const ratingOptions = [
@@ -107,19 +102,15 @@ function ShopPage() {
   };
 
   // Recommended products while typing
-// Replace lines 113-121 (Resolves the blank-screen crash):
-const liveRecommendations = useMemo(() => {
-  const term = query.trim().toLowerCase();
-  if (!term) return [];
-  return products
-    .filter((p) =>
-      [p.name, p.category, p.activity]
-        .filter(Boolean)
-        .some((v) => v?.toLowerCase().includes(term))
-    )
-    .slice(0, 3);
-}, [query]);
-  
+  // Replace lines 113-121 (Resolves the blank-screen crash):
+  const liveRecommendations = useMemo(() => {
+    const term = query.trim().toLowerCase();
+    if (!term) return [];
+    return products
+      .filter((p) => [p.name, p.category, p.activity].filter(Boolean).some((v) => v?.toLowerCase().includes(term)))
+      .slice(0, 3);
+  }, [query]);
+
   // Count active filters (excluding sort)
   const activeFilterCount = useMemo(() => {
     let count = 0;
@@ -131,19 +122,67 @@ const liveRecommendations = useMemo(() => {
     return count;
   }, [activeCategory, activeFeel, activeRating, activePriceLabel, q]);
 
-// Replace lines 134-185 (Filtered memo):
-const filtered = useMemo(() => {
-  let list = [...products];
+  // Filtered products list
+  const filtered = useMemo(() => {
+    let list = [...products];
 
-  // Category
-  if (activeCategory !== "All Mattresses") {
-    const catLower = activeCategory.toLowerCase();
-    list = list.filter(
-      (p) =>
-        p.category?.toLowerCase() === catLower ||
-        p.activity?.toLowerCase().includes(catLower)
-    );
-  }
+    // Category
+    if (activeCategory !== "All Mattresses") {
+      const catLower = activeCategory.toLowerCase();
+      list = list.filter((p) => p.category?.toLowerCase() === catLower || p.activity?.toLowerCase().includes(catLower));
+    }
+
+    // Firmness / Feel
+    if (activeFeel !== "All Feels") {
+      list = list.filter((p) => p.activity?.toLowerCase() === activeFeel.toLowerCase());
+    }
+
+    // Rating
+    if (activeRating > 0) {
+      list = list.filter((p) => (p.rating ?? 0) >= activeRating);
+    }
+
+    // Price
+    if (activePriceLabel !== "All Prices") {
+      const opt = priceOptions.find((o) => o.label === activePriceLabel);
+      if (opt) {
+        list = list.filter((p) => p.price >= opt.min && p.price <= opt.max);
+      }
+    }
+
+    // Search query
+    if (q?.trim()) {
+      const term = q.trim().toLowerCase();
+      list = list.filter(
+        (p) =>
+          p.name?.toLowerCase().includes(term) ||
+          p.category?.toLowerCase().includes(term) ||
+          p.activity?.toLowerCase().includes(term),
+      );
+    }
+
+    // Sorting
+    switch (sort) {
+      case "price-asc":
+        list.sort((a, b) => a.price - b.price);
+        break;
+      case "price-desc":
+        list.sort((a, b) => b.price - a.price);
+        break;
+      case "rating":
+        list.sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
+        break;
+      case "new":
+        list.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
+        break;
+      default:
+        // featured
+        break;
+    }
+
+    return list;
+  }, [activeCategory, activeFeel, activeRating, activePriceLabel, q, sort]);
+
   // Reusable Filter Block (Passed directly to eliminate focus drops)
   const renderFilterContent = () => (
     <div className="space-y-7 text-sm">
