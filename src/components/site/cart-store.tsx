@@ -59,7 +59,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [lines]);
 
   const add = useCallback((product: Product, chosenSize?: string, qty = 1) => {
-    const selectedSize = chosenSize ?? product.sizes[1] ?? product.sizes[0] ?? "Queen";
+    const selectedSize = chosenSize ?? product.sizes[0] ?? "Single";
 
     setLines((prev) => {
       const idx = prev.findIndex((l) => l.id === product.id && l.size === selectedSize);
@@ -74,7 +74,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
           id: product.id,
           name: product.name,
           category: product.category,
-          price: product.price,
+          price: product.price, // Uses the dynamic unitPrice passed into handleAdd
           image: product.image,
           size: selectedSize,
           qty,
@@ -82,8 +82,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
         ...prev,
       ];
     });
-    // ✅ Replace line 85 with:
-    setOpen(true);
   }, []);
 
   const remove = useCallback((key: string) => {
