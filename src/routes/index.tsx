@@ -6,8 +6,7 @@ import { Footer } from "@/components/site/Footer";
 import { BestSellersGrid, NewThisWeek } from "@/components/site/HomeShop";
 import { OfferBanner, ShopByCategory } from "@/components/site/HomeSections";
 import { TestimonialsCarousel } from "@/components/site/TestimonialsCarousel";
-
-
+import { AnatomySection } from "@/components/site/AnatomySection";
 
 const title = "Luxlife Mattresses — Sleep Better, Live Better";
 const description =
@@ -36,13 +35,12 @@ function Index() {
         <Hero />
         <NewThisWeek />
         <BestSellersGrid />
+        <AnatomySection />
         <ShopByCategory />
         <TestimonialsCarousel />
         <OfferBanner />
       </main>
       <Footer />
     </>
-
   );
-
 }
