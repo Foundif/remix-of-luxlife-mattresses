@@ -12,21 +12,21 @@ const slides = [
   {
     src: heroLoop1.url,
     poster: poster1.url,
-    title: "Sleep Better",
-    copy: "Luxury comfort, made in Salem",
+    title: "SLEEP BETTER",
+    copy: "The standard in orthopedic comfort",
     alt: "Luxlife mattress illuminated by warm morning sunlight",
   },
   {
     src: heroLoop2.url,
     poster: poster2.url,
-    title: "Crafted Fine",
-    copy: "Every stitch built to last",
+    title: "CRAFTED FINE",
+    copy: "Hand-stitched precision in Salem",
     alt: "Close-up of fine stitching on a Luxlife mattress",
   },
   {
     src: heroLoop3.url,
     poster: poster3.url,
-    title: "Rise Renewed",
+    title: "RISE RENEWED",
     copy: "Better mornings begin here",
     alt: "Beautiful bedroom with a Luxlife mattress at sunrise",
   },
@@ -39,7 +39,7 @@ export function Hero() {
   const refs = useRef<(HTMLVideoElement | null)[]>([]);
   const slide = slides[index]!;
 
-  // Only ever decode the active clip; warm the next one once the current is running.
+  // Warm up next slide smoothly without overloading video decoders
   useEffect(() => {
     setLoaded((prev) => (prev.includes(index) ? prev : [...prev, index]));
     const next = (index + 1) % slides.length;
@@ -88,30 +88,33 @@ export function Hero() {
         />
       ))}
 
-      <div className="absolute inset-0 bg-ink/25" />
-      <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-ink/85 via-ink/35 to-transparent" />
+      {/* Subtle overlays that let the product pop */}
+      <div className="absolute inset-0 bg-ink/20" />
+      <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-ink/90 via-ink/40 to-transparent" />
 
-      {/* Nike-style lower third: title, one line of copy, single pill button */}
+      {/* Nike-Style Lower-Third Layout */}
       <div className="edge absolute inset-x-0 bottom-24 flex flex-col items-center text-center md:bottom-28">
         <div key={index} className="anim-rise flex flex-col items-center">
-          <h1 className="text-[13vw] font-black uppercase leading-[0.92] tracking-[-0.03em] drop-shadow-[0_2px_18px_rgba(0,0,0,0.45)] sm:text-6xl md:text-7xl lg:text-8xl">
+          {/* Exact Nike-style bold headline font */}
+          <h1 className="font-['Anton',Impact,'Arial_Black',sans-serif] text-[13vw] uppercase leading-[0.92] tracking-wide text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)] sm:text-6xl md:text-7xl lg:text-8xl">
             {slide.title}
           </h1>
-          <p className="mt-4 text-sm font-medium text-bone/90 md:text-base">{slide.copy}</p>
+          <p className="mt-3 text-sm font-medium tracking-normal text-bone/90 md:text-base">{slide.copy}</p>
           <a
             href="#new-this-week"
-            className="group mt-6 inline-flex items-center gap-2.5 rounded-full bg-bone px-8 py-3.5 text-ink transition-colors duration-500 ease-[var(--ease-brand)] hover:bg-volt"
+            className="group mt-6 inline-flex items-center justify-center rounded-full bg-bone px-8 py-3 text-sm font-semibold text-ink shadow-md transition-all duration-300 hover:scale-105 hover:bg-volt"
           >
-            <span className="label-xs">Shop</span>
+            <span>Shop</span>
             <ArrowRight
-              className="size-4 transition-transform duration-500 ease-[var(--ease-brand)] group-hover:translate-x-1"
-              strokeWidth={2}
+              className="ml-2 size-4 transition-transform duration-300 group-hover:translate-x-1"
+              strokeWidth={2.2}
             />
           </a>
         </div>
       </div>
 
-      <div className="absolute inset-x-0 bottom-8 flex items-center justify-center gap-2.5">
+      {/* Center pagination dots */}
+      <div className="absolute inset-x-0 bottom-8 flex items-center justify-center gap-2">
         {slides.map((s, i) => (
           <button
             key={s.src}
@@ -119,32 +122,33 @@ export function Hero() {
             aria-current={i === index}
             onClick={() => setIndex(i)}
             className={cn(
-              "size-2 rounded-full transition-all duration-500",
-              i === index ? "w-6 bg-bone" : "bg-bone/50 hover:bg-bone/80",
+              "h-1.5 rounded-full transition-all duration-500",
+              i === index ? "w-6 bg-bone" : "w-1.5 bg-bone/40 hover:bg-bone/80",
             )}
           />
         ))}
       </div>
 
+      {/* Bottom right controls */}
       <div className="absolute bottom-6 right-5 hidden items-center gap-2 md:flex">
         <button
           onClick={() => setPlaying((v) => !v)}
           aria-label={playing ? "Pause film" : "Play film"}
-          className="grid size-10 place-items-center rounded-full border border-bone/40 text-bone transition-colors hover:bg-bone/15"
+          className="grid size-10 place-items-center rounded-full border border-bone/40 text-bone backdrop-blur-sm transition-colors hover:bg-bone/15"
         >
           {playing ? <Pause className="size-4" strokeWidth={2} /> : <Play className="size-4" strokeWidth={2} />}
         </button>
         <button
           onClick={() => go(-1)}
           aria-label="Previous film"
-          className="grid size-10 place-items-center rounded-full border border-bone/40 text-bone transition-colors hover:bg-bone/15"
+          className="grid size-10 place-items-center rounded-full border border-bone/40 text-bone backdrop-blur-sm transition-colors hover:bg-bone/15"
         >
           <ChevronLeft className="size-4" strokeWidth={2} />
         </button>
         <button
           onClick={() => go(1)}
           aria-label="Next film"
-          className="grid size-10 place-items-center rounded-full border border-bone/40 text-bone transition-colors hover:bg-bone/15"
+          className="grid size-10 place-items-center rounded-full border border-bone/40 text-bone backdrop-blur-sm transition-colors hover:bg-bone/15"
         >
           <ChevronRight className="size-4" strokeWidth={2} />
         </button>
