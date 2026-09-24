@@ -16,7 +16,7 @@ const LAYERS: Layer[] = [
     num: "01",
     name: "Knitted Jacquard Top Quilt",
     badge: "Breathable Surface",
-    desc: "High-GSM organic jacquard with deep geometric quilting. Soft touch with anti-dust mite yarn.",
+    desc: "High-GSM organic jacquard with deep geometric quilting. Silky soft touch with anti-dust mite yarn.",
     specs: '1.0" Ultra Plush · Hypoallergenic',
   },
   {
@@ -37,7 +37,7 @@ const LAYERS: Layer[] = [
     num: "04",
     name: "Zero-Disturbance Pocket Spring Core",
     badge: "Zero Motion Transfer",
-    desc: "Individually encased carbon steel barrel coils. When one side moves, the other stays still.",
+    desc: "Individually encased carbon steel barrel coils. When one side moves, the other stays perfectly still.",
     specs: "High-Tensile Steel · Edge-Reinforced",
   },
 ];
@@ -49,7 +49,6 @@ export function AnatomySection() {
   const [activeLayer, setActiveLayer] = useState(0);
   const [progress, setProgress] = useState(0);
 
-  // Smooth video scrubbing via requestAnimationFrame
   useEffect(() => {
     const video = videoRef.current;
     const container = containerRef.current;
@@ -59,7 +58,7 @@ export function AnatomySection() {
     let animId: number;
     let isTicking = false;
 
-    // Pause native playback so scroll controls currentTime completely
+    // Pause native playback so page scroll drives the video frame
     video.pause();
 
     const onScroll = () => {
@@ -69,17 +68,14 @@ export function AnatomySection() {
 
       if (scrollableDist <= 0) return;
 
-      // Calculate progress from 0 to 1
       const currentScroll = -rect.top;
       const rawProgress = Math.max(0, Math.min(1, currentScroll / scrollableDist));
 
       setProgress(rawProgress);
 
-      // Determine active layer (0 to 3)
       const layerIdx = Math.min(3, Math.floor(rawProgress * 4));
       setActiveLayer(layerIdx);
 
-      // Map progress to video duration (approx 10.0s)
       const duration = video.duration || 10;
       targetTime = rawProgress * duration;
 
@@ -92,7 +88,6 @@ export function AnatomySection() {
     const smoothScrub = () => {
       if (!video) return;
 
-      // Smooth lerp towards target time
       const diff = targetTime - video.currentTime;
       if (Math.abs(diff) > 0.03) {
         video.currentTime += diff * 0.25;
@@ -116,9 +111,9 @@ export function AnatomySection() {
 
   return (
     <section ref={containerRef} aria-label="Inside a Luxlife mattress" className="relative h-[340vh] bg-ink text-bone">
-      {/* Sticky viewport pinned while scrolling */}
+      {/* Pinned viewport frame */}
       <div className="sticky top-0 flex h-screen w-full flex-col justify-between overflow-hidden">
-        {/* Background 3D video */}
+        {/* 3D deconstruction video */}
         <video
           ref={videoRef}
           src={cutawayVideo.url}
@@ -131,7 +126,7 @@ export function AnatomySection() {
           className="absolute inset-0 h-full w-full object-cover [transform:translateZ(0)]"
         />
 
-        {/* Ambient darkening overlays for text legibility */}
+        {/* Cinematic contrast overlays */}
         <div className="pointer-events-none absolute inset-0 bg-ink/30" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink/90 via-ink/40 to-transparent" />
         <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ink/80 to-transparent" />
@@ -145,7 +140,6 @@ export function AnatomySection() {
             </h2>
           </div>
 
-          {/* 1, 2, 3, 4 Layer Stepper */}
           <div className="flex items-center gap-2">
             {LAYERS.map((l, i) => (
               <div
@@ -164,7 +158,7 @@ export function AnatomySection() {
           </div>
         </div>
 
-        {/* Floating Layer Details (Bottom Left) */}
+        {/* Bottom Floating Glass Card */}
         <div className="edge relative z-10 pb-20 md:pb-16">
           <div className="max-w-md rounded-2xl border border-white/15 bg-ink/75 p-6 backdrop-blur-xl shadow-2xl transition-all duration-500">
             <div className="flex items-center justify-between">
@@ -187,7 +181,7 @@ export function AnatomySection() {
           </div>
         </div>
 
-        {/* Global Progress Bar at very bottom */}
+        {/* Subtle Bottom Progress Strip */}
         <div className="absolute inset-x-0 bottom-0 h-1 bg-white/10">
           <div className="h-full bg-volt transition-all duration-75 ease-out" style={{ width: `${progress * 100}%` }} />
         </div>
