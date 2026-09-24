@@ -32,12 +32,25 @@ function Index() {
       <NoticeBar />
       <Header />
       <main>
+        {/* 1. Cinematic Nike-style video hero */}
         <Hero />
+
+        {/* 2. New releases rail */}
         <NewThisWeek />
+
+        {/* 3. Bestsellers grid */}
         <BestSellersGrid />
+
+        {/* 4. 3D Cutaway scroll-driven engineering showcase */}
         <AnatomySection />
+
+        {/* 5. Category breakdown (Spring, Aurosoft Foam, Hybrid Eco) */}
         <ShopByCategory />
+
+        {/* 6. Continuous marquee customer reviews */}
         <TestimonialsCarousel />
+
+        {/* 7. Special factory offer banner */}
         <OfferBanner />
       </main>
       <Footer />
