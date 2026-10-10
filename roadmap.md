@@ -1,5 +1,12 @@
 # Luxlife mattress conversion
 
+## Current requested updates
+- [ ] Rename New Comforts, remove installation and street wording.
+- [ ] Add bulk-customer offer popup.
+- [ ] Add 50% advance / full-payment choices and saved order terms.
+- [ ] Add dedicated Natural Latex enquiry page without invented prices.
+- [ ] Verify requested flows and payment calculations.
+
 - [ ] Replace KRUX branding, metadata, contact details, menus, notices, and PWA identity with Luxlife Mattresses.
 - [ ] Upload and wire the supplied logo and three mattress films; restore normal autoplaying hero slides.
 - [ ] Replace the complete local and live catalog concept with mattress products, sizes, categories, copy, and imagery.
