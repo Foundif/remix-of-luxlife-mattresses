@@ -8,3 +8,7 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep payment-term calculations in a shared browser-safe module so checkout and order displays use the same split.
+- Keep enquiry-only products on dedicated routes outside the priced catalog until verified product specifications and pricing are supplied.
+- Use the shared dialog for bulk enquiries above navigation layers so offers remain accessible on all screen sizes.

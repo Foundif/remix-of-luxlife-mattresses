@@ -179,7 +179,11 @@ export function Header({ solid = false }: { solid?: boolean }) {
                               <ul className="space-y-2.5">
                                 {group.items.map((sub) => (
                                   <li key={sub}>
-                                    <Link to="/shop" search={{ c: sub }} onClick={closeMenu} className="text-sm text-bone/70 transition-colors hover:text-bone">{sub}</Link>
+                                     {sub === "Latex" ? (
+                                       <Link to="/natural-latex" onClick={closeMenu} className="text-sm text-bone/70 transition-colors hover:text-bone">Natural Latex</Link>
+                                     ) : (
+                                       <Link to="/shop" search={{ c: sub }} onClick={closeMenu} className="text-sm text-bone/70 transition-colors hover:text-bone">{sub}</Link>
+                                     )}
                                   </li>
                                 ))}
                               </ul>
