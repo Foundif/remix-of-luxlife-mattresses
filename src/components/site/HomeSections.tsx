@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, Wind, Footprints, ShieldCheck, Ruler } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
+import { BulkOfferPopup } from "@/components/site/BulkOfferPopup";
 
 import { ProductCard } from "@/components/site/ProductCard";
 import { activities, categories, media, products } from "@/data/products";
@@ -246,6 +247,7 @@ export function OfferBanner() {
           <p className="mt-4 max-w-md text-sm font-medium">
             Premium mattresses made in Salem, delivered directly from our factory with expert guidance.
           </p>
+          <BulkOfferPopup />
         </div>
         <Link
           to="/shop"

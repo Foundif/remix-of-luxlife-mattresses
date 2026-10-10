@@ -44,7 +44,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/shop" search={{ c: "Natural Latex" }} className="hover:text-bone">
+                <Link to="/natural-latex" className="hover:text-bone">
                   100% Natural Latex
                 </Link>
               </li>
@@ -88,7 +88,7 @@ export function Footer() {
             <div className="mt-4 space-y-3 text-xs text-concrete">
               <div className="flex items-start gap-2.5">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-volt" />
-                <span>R.S.NO.78/3D, Mariamman Kovil Street, Seelanaickenpatti, Salem – 636201</span>
+                <span>R.S.NO.78/3D, Seelanaickenpatti, Salem – 636201</span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Phone className="h-4 w-4 shrink-0 text-volt" />

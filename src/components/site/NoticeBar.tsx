@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const notices = [
-  "Free delivery across Salem — installation included",
+  "Free delivery across Salem",
   "Premium comfort backed by up to 10-year warranty",
   "Call or WhatsApp 63826 54934 for expert guidance",
 ];

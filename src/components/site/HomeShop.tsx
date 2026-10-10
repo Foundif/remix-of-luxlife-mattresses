@@ -18,7 +18,7 @@ export function NewThisWeek() {
     <section id="new-this-week" className="bg-background py-14 md:py-20">
       <div className="edge flex flex-wrap items-end justify-between gap-4">
         <Reveal>
-          <h2 className="display-md">New Comforts</h2>
+          <h2 className="display-md">Newly arrived</h2>
         </Reveal>
         <div className="flex items-center gap-3">
           <a href="#best-sellers" className="group hidden items-center gap-2 sm:inline-flex">
