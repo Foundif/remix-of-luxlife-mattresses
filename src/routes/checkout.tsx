@@ -6,10 +6,11 @@ import { Shell } from "@/components/site/Shell";
 import { rupee, useCart } from "@/components/site/cart-store";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { orderPaymentMethod, paymentAmounts, type PaymentPlan } from "@/lib/payment-terms";
 
 const title = "Secure Checkout — Luxlife Mattresses";
-const description = "Complete your Luxlife mattress order with cash on delivery or UPI.";
+const description = "Order your Luxlife mattress with 50% advance and the balance later, or choose full payment.";
 
 export const Route = createFileRoute("/checkout")({
   ssr: false,
@@ -28,7 +29,6 @@ export const Route = createFileRoute("/checkout")({
 });
 
 const payments = [
-  { key: "cod", label: "Cash on delivery" },
   { key: "upi", label: "UPI / Netbanking" },
 ];
 
@@ -37,7 +37,9 @@ function CheckoutPage() {
   const { lines, subtotal, discount, shipping, total, clear } = useCart();
   const navigate = useNavigate();
   const [busy, setBusy] = useState(false);
-  const [payment, setPayment] = useState("cod");
+  const [payment, setPayment] = useState("upi");
+  const [paymentPlan, setPaymentPlan] = useState<PaymentPlan>("half_advance");
+  const amounts = paymentAmounts(total, paymentPlan);
   const [placed, setPlaced] = useState<string | null>(null);
   const [form, setForm] = useState({
     name: "",
@@ -74,7 +76,7 @@ function CheckoutPage() {
           ship_city: form.city,
           ship_state: form.state,
           ship_pincode: form.pincode,
-          payment_method: payment,
+          payment_method: orderPaymentMethod(payment, paymentPlan),
           subtotal,
           discount,
           shipping_fee: shipping,
@@ -118,8 +120,8 @@ function CheckoutPage() {
           </span>
           <h1 className="display-md">Order confirmed</h1>
           <p className="text-sm text-muted-foreground">
-            Order <span className="font-semibold text-foreground">{placed}</span> is on its way. We'll email
-            tracking details shortly.
+            Order <span className="font-semibold text-foreground">{placed}</span> has been received.
+            Our factory will contact you to confirm payment and delivery details.
           </p>
           <div className="mt-4 flex flex-wrap justify-center gap-3">
             <Link to="/account" className="label-xs bg-primary px-7 py-4 text-primary-foreground">
@@ -193,6 +195,21 @@ function CheckoutPage() {
               </section>
 
               <section>
+                <h2 className="label-xs">Payment plan</h2>
+                <div className="mt-5 divide-y divide-border border-y border-border">
+                  {([
+                    { key: "half_advance", label: "50% advance · Remaining 50% later" },
+                    { key: "full_payment", label: "Full payment" },
+                  ] as const).map((plan) => (
+                    <label key={plan.key} className="flex cursor-pointer items-center gap-3 py-4">
+                      <input type="radio" name="payment-plan" value={plan.key} checked={paymentPlan === plan.key} onChange={() => setPaymentPlan(plan.key)} className="size-4 accent-current" />
+                      <span className="text-sm">{plan.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </section>
+
+              <section>
                 <h2 className="label-xs">Payment method</h2>
                 <div className="mt-5 divide-y divide-border border-y border-border">
                   {payments.map((p) => (
@@ -210,19 +227,17 @@ function CheckoutPage() {
                   ))}
                 </div>
                 <p className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
-                  <Lock className="size-3.5" strokeWidth={1.6} /> Payments are processed securely.
+                  <Lock className="size-3.5" strokeWidth={1.6} /> The factory will confirm payment instructions. No money is collected on this page.
                 </p>
               </section>
 
-              <button
+              <Button
                 type="submit"
                 disabled={busy}
-                className={cn(
-                  "label-xs w-full bg-primary py-4 text-primary-foreground transition-colors duration-500 hover:bg-charcoal disabled:opacity-50",
-                )}
+                className="h-auto min-h-12 w-full whitespace-normal py-4"
               >
                 {busy ? "Placing order…" : `Place order · ${rupee(total)}`}
-              </button>
+              </Button>
             </form>
 
             <aside className="lg:sticky lg:top-28 lg:self-start">
@@ -259,6 +274,14 @@ function CheckoutPage() {
                 <div className="flex justify-between border-t border-border pt-3 text-base">
                   <dt className="font-semibold">Total</dt>
                   <dd className="font-semibold">{rupee(total)}</dd>
+                </div>
+                <div className="flex justify-between gap-3">
+                  <dt className="text-muted-foreground">{paymentPlan === "half_advance" ? "50% advance" : "Full payment"}</dt>
+                  <dd className="font-semibold">{rupee(amounts.advance)}</dd>
+                </div>
+                <div className="flex justify-between gap-3">
+                  <dt className="text-muted-foreground">Balance payable later</dt>
+                  <dd className="font-semibold">{rupee(amounts.balance)}</dd>
                 </div>
               </dl>
               <Link to="/cart" className="label-xs mt-6 block border border-border py-4 text-center hover:bg-secondary">

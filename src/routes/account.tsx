@@ -6,6 +6,7 @@ import { useAuth } from "@/lib/auth";
 import { supabase } from "@/integrations/supabase/client";
 import { rupee } from "@/components/site/cart-store";
 import { toast } from "sonner";
+import { paymentLabel } from "@/lib/payment-terms";
 
 const title = "My Account — Luxlife Mattresses";
 const description = "Manage your Luxlife profile and track every mattress order you've placed.";
@@ -196,7 +197,7 @@ function AccountPage() {
                             month: "short",
                             year: "numeric",
                           })}{" "}
-                          · {order.payment_method.toUpperCase()} · {order.ship_city}, {order.ship_state}
+                          · {paymentLabel(order.payment_method)} · {order.ship_city}, {order.ship_state}
                         </p>
                       </div>
                       <div className="text-right">
