@@ -313,7 +313,7 @@ function ProductPage() {
                 <Check className="size-4 text-[#ADF831]" /> 100% Knitted Quilt Fabric & Long Lasting Comfort
               </li>
               <li className="flex items-center gap-3">
-                <Check className="size-4 text-[#ADF831]" /> Factory: Mariamman Kovil St, Seelanaickenpatti, Salem
+                <Check className="size-4 text-volt" /> Factory: Seelanaickenpatti, Salem
               </li>
             </ul>
           </div>
